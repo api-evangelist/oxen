@@ -1,0 +1,362 @@
+openapi: 3.0.0
+info:
+  title: oxen Ai Files API
+  version: 0.243.1
+servers:
+- url: https://hub.oxen.ai
+  variables: {}
+security: []
+tags:
+- name: Files
+paths:
+  /api/repos/{namespace}/{repo_name}/file/{resource}:
+    delete:
+      description: Remove a file from the repository. Stage the file as removed to a workspace and commit the removal. Can remove files or directories.
+      operationId: delete
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Path to the file to be deleted (including branch)
+        example: main/train/images/n01440764_10026.JPEG
+        in: path
+        name: resource
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUploadBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitResponse'
+          description: File removed successfully
+        '404':
+          description: Branch or path not found
+      summary: Delete file
+      tags:
+      - Files
+    get:
+      description: Download a file from the repository. Supports image resizing and video thumbnail generation via query parameters.
+      operationId: get
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: Voice-Data
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Path to the file (including branch/commit info)
+        example: main/audio/moo.wav
+        in: path
+        name: resource
+        required: true
+        schema:
+          type: string
+      - description: Width for image resize or video thumbnail
+        example: 320
+        in: query
+        name: width
+        required: false
+        schema:
+          format: int32
+          minimum: 0
+          type: integer
+      - description: Height for image resize or video thumbnail
+        example: 240
+        in: query
+        name: height
+        required: false
+        schema:
+          format: int32
+          minimum: 0
+          type: integer
+      - description: 'Timestamp in seconds to extract video thumbnail from (default: 1.0)'
+        example: 1.0
+        in: query
+        name: timestamp
+        required: false
+        schema:
+          format: double
+          type: number
+      - description: Set to true to generate a video thumbnail instead of returning the full video
+        example: true
+        in: query
+        name: thumbnail
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          content:
+            application/octet-stream:
+              schema:
+                items:
+                  format: int32
+                  minimum: 0
+                  type: integer
+                type: array
+          description: File content stream
+        '404':
+          description: File not found
+      summary: Download File
+      tags:
+      - Files
+    patch:
+      description: Move or rename a file within the repository and commit the change.
+      operationId: mv
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Path to the source file (including branch)
+        example: main/train/images/old_name.jpg
+        in: path
+        name: resource
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileMoveBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitResponse'
+          description: File moved/renamed successfully
+        '400':
+          description: Bad Request
+        '404':
+          description: Branch or file not found
+      summary: Move/Rename file
+      tags:
+      - Files
+    put:
+      description: Upload files via multipart form and commit them. Use `files[]` for directory uploads, or `file` for a single full-path upload. For backward compatibility, `file` also uploads into the target directory when `{resource}` already resolves to a directory.
+      operationId: put
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Path of the directory to add files in (including branch)
+        example: main/train/images
+        in: path
+        name: resource
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUploadBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitResponse'
+          description: Files committed successfully
+        '400':
+          description: Bad Request
+        '404':
+          description: Branch or path not found
+      summary: Upload files
+      tags:
+      - Files
+components:
+  schemas:
+    FileUploadBody:
+      description: Multipart form for uploading files. Use `file` for a single full-path upload, or `files[]` for uploading one or more files into a directory.
+      example:
+        email: bessie@oxen.ai
+        files[]:
+        - <binary data>
+        message: Adding a picture of a cow
+        name: bessie
+      properties:
+        email:
+          example: bessie@oxen.ai
+          type:
+          - string
+          - 'null'
+        file:
+          deprecated: true
+          description: 'Deprecated: use `files[]` instead.'
+          format: binary
+          type:
+          - string
+          - 'null'
+        files:
+          items:
+            format: binary
+            type: string
+          type: array
+        message:
+          example: Adding a new image to the training set
+          type:
+          - string
+          - 'null'
+        name:
+          example: bessie
+          type:
+          - string
+          - 'null'
+      required:
+      - files
+      title: FileUploadBody
+      type: object
+    Commit:
+      example:
+        author: ox
+        email: ox@example.com
+        id: a1b2c3d4e5f67890abcdef1234567890
+        message: Refactor data loading pipeline.
+        parent_ids:
+        - f1e2d3c4b5a67890fedcba9876543210
+        timestamp: '2025-01-01T10:00:00Z'
+      properties:
+        author:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        message:
+          type: string
+        parent_ids:
+          items:
+            type: string
+          type: array
+        timestamp:
+          format: date-time
+          type: string
+      required:
+      - id
+      - parent_ids
+      - message
+      - author
+      - email
+      - timestamp
+      type: object
+    CommitResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          commit:
+            $ref: '#/components/schemas/Commit'
+        required:
+        - commit
+        type: object
+      example:
+        commit:
+          author: ox
+          email: ox@example.com
+          id: a1b2c3d4e5f67890abcdef1234567890
+          message: Refactor data loading pipeline.
+          parent_ids:
+          - f1e2d3c4b5a67890fedcba9876543210
+          timestamp: '2025-01-01T10:00:00Z'
+        status: success
+        status_message: resource_found
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
+    FileMoveBody:
+      description: Body for moving/renaming a file
+      example:
+        email: bessie@oxen.ai
+        message: Renamed file to new location
+        name: bessie
+        new_path: new/path/to/file.txt
+      properties:
+        email:
+          example: bessie@oxen.ai
+          type:
+          - string
+          - 'null'
+        message:
+          example: Moved file to new location
+          type:
+          - string
+          - 'null'
+        name:
+          example: bessie
+          type:
+          - string
+          - 'null'
+        new_path:
+          example: new/path/to/file.txt
+          type: string
+      required:
+      - new_path
+      title: FileMoveBody
+      type: object
+  securitySchemes:
+    authorization:
+      scheme: bearer
+      type: http

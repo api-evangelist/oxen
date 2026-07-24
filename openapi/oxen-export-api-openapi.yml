@@ -1,0 +1,54 @@
+openapi: 3.0.0
+info:
+  title: oxen Ai Export API
+  version: 0.243.1
+servers:
+- url: https://hub.oxen.ai
+  variables: {}
+security: []
+tags:
+- name: Export
+paths:
+  /api/repos/{namespace}/{repo_name}/export/download/{resource}:
+    get:
+      description: Download a directory as a zip archive. Subject to size limits.
+      operationId: download_zip
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: Wiki-Text
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Path to directory and branch/commit (e.g. main/data)
+        example: main/data
+        in: path
+        name: resource
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/zip: {}
+          description: Zip archive of the directory
+        '400':
+          description: Download size exceeds limit
+        '404':
+          description: Repository or resource not found
+      summary: Export resource as a zip
+      tags:
+      - Export
+components:
+  securitySchemes:
+    authorization:
+      scheme: bearer
+      type: http

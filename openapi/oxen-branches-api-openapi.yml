@@ -1,0 +1,537 @@
+openapi: 3.0.0
+info:
+  title: oxen Ai Branches API
+  version: 0.243.1
+servers:
+- url: https://hub.oxen.ai
+  variables: {}
+security: []
+tags:
+- name: Branches
+paths:
+  /api/repos/{namespace}/{repo_name}/branches/{branch_name}/merge:
+    post:
+      description: Merge a client commit into a branch during push. Returns merge commit on success, or original server commit if conflicts occur.
+      operationId: maybe_create_merge
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Name of the branch to merge into (the target branch)
+        example: main
+        in: path
+        name: branch_name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              client_commit_id: abc1234567890def1234567890fedcba
+              server_commit_id: 84c76a5b2e9a2637f9091991475c404d
+            schema:
+              $ref: '#/components/schemas/BranchRemoteMerge'
+        description: Client and Server commit IDs for performing the merge.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitResponse'
+          description: Merge successful or merge conflicts encountered. Returns the new head commit.
+        '400':
+          description: Bad Request (e.g., malformed body)
+        '404':
+          description: Branch or Commit not found
+      summary: Merge a commit into a branch
+      tags:
+      - Branches
+  /api/repos/{namespace}/{repo_name}/branches/{branch_name}:
+    delete:
+      description: Force delete a branch by name.
+      operationId: delete
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Name of the branch to delete
+        example: development
+        in: path
+        name: branch_name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BranchResponse'
+          description: Branch deleted
+        '404':
+          description: Branch not found
+      summary: Delete a branch
+      tags:
+      - Branches
+    get:
+      description: Get a branch by name, returning its details and current commit.
+      operationId: show
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Name of the branch
+        example: main
+        in: path
+        name: branch_name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BranchResponse'
+          description: Branch found
+        '404':
+          description: Branch not found
+      summary: Get an existing branch
+      tags:
+      - Branches
+    put:
+      description: Update a branch to point to a different commit ID.
+      operationId: update
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Name of the branch to update
+        example: main
+        in: path
+        name: branch_name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              commit_id: 84c76a5b2e9a2637f9091991475c404d
+            schema:
+              $ref: '#/components/schemas/BranchUpdate'
+        description: The commit ID to update the branch head to.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BranchResponse'
+          description: Branch updated
+        '400':
+          description: Bad Request
+        '404':
+          description: Branch or Commit not found
+      summary: Update a branch to a new commit
+      tags:
+      - Branches
+  /api/repos/{namespace}/{repo_name}/branches/{branch_name}/versions/{path}:
+    get:
+      description: List paginated historical versions of a file across commits on a branch, including schema hash for tabular files.
+      operationId: list_entry_versions
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Name of the branch
+        example: main
+        in: path
+        name: branch_name
+        required: true
+        schema:
+          type: string
+      - description: Path to the file or dir
+        example: images/train.jpg
+        in: path
+        name: path
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: page
+        required: true
+        schema:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      - in: path
+        name: page_size
+        required: true
+        schema:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEntryVersionsResponse'
+          description: List of entry versions found
+        '404':
+          description: Repository, branch or path not found
+      summary: Get all versions of a file on a branch
+      tags:
+      - Branches
+  /api/repos/{namespace}/{repo_name}/branches:
+    get:
+      description: List all branches in the repository with their current commit information.
+      operationId: index
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                branches:
+                - commit:
+                    author: Bessie Oxington
+                    email: hello@oxen.ai
+                    id: 592d564750031fa1431000472c2d721d
+                    message: update README
+                    timestamp: '2024-11-25T21:11:12Z'
+                  commit_id: 592d564750031fa1431000472c2d721d
+                  name: main
+                - commit:
+                    author: Daisy Oxington
+                    email: daisy@oxen.ai
+                    id: abc1234567890def1234567890fedcba
+                    message: added new validation data
+                    timestamp: '2024-11-25T20:00:00Z'
+                  commit_id: abc1234567890def1234567890fedcba
+                  name: development
+                oxen_version: 0.22.2
+                status: success
+                status_message: resource_found
+              schema:
+                $ref: '#/components/schemas/ListBranchesResponse'
+          description: List of branches
+        '404':
+          description: Repository not found
+      summary: List all branches
+      tags:
+      - Branches
+    post:
+      description: Create a new branch from another branch name or commit ID. Returns existing branch if name already exists.
+      operationId: create
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              from_name: main
+              new_name: development
+            schema:
+              $ref: '#/components/schemas/BranchNewFromBranchName'
+        description: Branch creation details. Can be created from another branch or a commit ID.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BranchResponse'
+          description: Branch created
+        '400':
+          description: Invalid request body
+        '404':
+          description: Repository or source branch/commit not found
+      summary: Create a new branch
+      tags:
+      - Branches
+components:
+  schemas:
+    PaginatedEntryVersions:
+      allOf:
+      - $ref: '#/components/schemas/Pagination'
+      - properties:
+          versions:
+            items:
+              $ref: '#/components/schemas/CommitEntryVersion'
+            type: array
+        required:
+        - versions
+        type: object
+    BranchResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          branch:
+            $ref: '#/components/schemas/Branch'
+        required:
+        - branch
+        type: object
+    Commit:
+      example:
+        author: ox
+        email: ox@example.com
+        id: a1b2c3d4e5f67890abcdef1234567890
+        message: Refactor data loading pipeline.
+        parent_ids:
+        - f1e2d3c4b5a67890fedcba9876543210
+        timestamp: '2025-01-01T10:00:00Z'
+      properties:
+        author:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        message:
+          type: string
+        parent_ids:
+          items:
+            type: string
+          type: array
+        timestamp:
+          format: date-time
+          type: string
+      required:
+      - id
+      - parent_ids
+      - message
+      - author
+      - email
+      - timestamp
+      type: object
+    ResourceVersion:
+      properties:
+        path:
+          type: string
+        version:
+          type: string
+      required:
+      - path
+      - version
+      type: object
+    CommitResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          commit:
+            $ref: '#/components/schemas/Commit'
+        required:
+        - commit
+        type: object
+      example:
+        commit:
+          author: ox
+          email: ox@example.com
+          id: a1b2c3d4e5f67890abcdef1234567890
+          message: Refactor data loading pipeline.
+          parent_ids:
+          - f1e2d3c4b5a67890fedcba9876543210
+          timestamp: '2025-01-01T10:00:00Z'
+        status: success
+        status_message: resource_found
+    Pagination:
+      properties:
+        page_number:
+          minimum: 0
+          type: integer
+        page_size:
+          minimum: 0
+          type: integer
+        total_entries:
+          minimum: 0
+          type: integer
+        total_pages:
+          minimum: 0
+          type: integer
+      required:
+      - page_size
+      - page_number
+      - total_pages
+      - total_entries
+      type: object
+    CommitEntryVersion:
+      properties:
+        commit:
+          $ref: '#/components/schemas/Commit'
+        resource:
+          $ref: '#/components/schemas/ResourceVersion'
+        schema_hash:
+          type:
+          - string
+          - 'null'
+      required:
+      - commit
+      - resource
+      type: object
+    BranchRemoteMerge:
+      properties:
+        client_commit_id:
+          type: string
+        server_commit_id:
+          type: string
+      required:
+      - client_commit_id
+      - server_commit_id
+      type: object
+    BranchUpdate:
+      properties:
+        commit_id:
+          type: string
+      required:
+      - commit_id
+      type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
+    BranchNewFromBranchName:
+      properties:
+        from_name:
+          type: string
+        new_name:
+          type: string
+      required:
+      - new_name
+      - from_name
+      type: object
+    ListBranchesResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          branches:
+            items:
+              $ref: '#/components/schemas/Branch'
+            type: array
+        required:
+        - branches
+        type: object
+    PaginatedEntryVersionsResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - $ref: '#/components/schemas/PaginatedEntryVersions'
+      - properties:
+          branch:
+            $ref: '#/components/schemas/Branch'
+          path:
+            type: string
+        required:
+        - branch
+        - path
+        type: object
+    Branch:
+      properties:
+        commit_id:
+          type: string
+        name:
+          type: string
+      required:
+      - name
+      - commit_id
+      type: object
+  securitySchemes:
+    authorization:
+      scheme: bearer
+      type: http

@@ -1,0 +1,45 @@
+openapi: 3.0.0
+info:
+  title: oxen Ai Health API
+  version: 0.243.1
+servers:
+- url: https://hub.oxen.ai
+  variables: {}
+security: []
+tags:
+- name: Health
+paths:
+  /api/version:
+    get:
+      description: Check if the Oxen server is running and responsive.
+      operationId: index
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusMessage'
+          description: Server is running
+      summary: Check Oxen server status
+      tags:
+      - Health
+components:
+  schemas:
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
+  securitySchemes:
+    authorization:
+      scheme: bearer
+      type: http

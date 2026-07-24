@@ -1,0 +1,1040 @@
+openapi: 3.0.0
+info:
+  title: oxen Ai Commits API
+  version: 0.243.1
+servers:
+- url: https://hub.oxen.ai
+  variables: {}
+security: []
+tags:
+- name: Commits
+paths:
+  /api/repos/{namespace}/{repo_name}/commits/upload:
+    post:
+      description: Upload the commits database tarball to the server during push.
+      operationId: upload
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              items:
+                format: int32
+                minimum: 0
+                type: integer
+              type: array
+        description: Compressed commit database (tar.gz)
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusMessage'
+          description: Commits DB uploaded successfully
+      summary: Upload commits DB
+      tags:
+      - Commits
+  /api/repos/{namespace}/{repo_name}/commits_db:
+    get:
+      description: Download the commits database as a compressed tarball for cloning.
+      operationId: download_commits_db
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tarball of commits DB
+        '404':
+          description: Repository not found
+      summary: Download commits DB
+      tags:
+      - Commits
+  /api/repos/{namespace}/{repo_name}/commits/upload_chunk:
+    post:
+      description: Upload a chunk of file data for use in large file uploads.
+      operationId: upload_chunk
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - example: a2c3d4e5f67890b1c2d3e4f5a6b7c8d9
+        in: path
+        name: hash
+        required: true
+        schema:
+          type: string
+      - example: 1
+        in: path
+        name: chunk_num
+        required: true
+        schema:
+          minimum: 0
+          type: integer
+      - example: 10
+        in: path
+        name: total_chunks
+        required: true
+        schema:
+          minimum: 0
+          type: integer
+      - example: 100000000
+        in: path
+        name: total_size
+        required: true
+        schema:
+          minimum: 0
+          type: integer
+      - example: true
+        in: path
+        name: is_compressed
+        required: true
+        schema:
+          type: boolean
+      - example: images/cow.jpg
+        in: path
+        name: filename
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              items:
+                format: int32
+                minimum: 0
+                type: integer
+              type: array
+        description: Chunk of data (binary bytes)
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusMessage'
+          description: Chunk uploaded successfully
+      summary: Upload data chunk
+      tags:
+      - Commits
+  /api/repos/{namespace}/{repo_name}/commits/{commit_id}/complete:
+    post:
+      description: Notify the server that the commit has finished uploading.
+      operationId: complete
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: ID of the commit to complete
+        example: 84c76a5b2e9a2637f9091991475c404d
+        in: path
+        name: commit_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitResponse'
+          description: Commit push completed successfully
+        '404':
+          description: Repository or commit not found
+      summary: Notify upload complete
+      tags:
+      - Commits
+  /api/repos/{namespace}/{repo_name}/commits/mark_commits_as_synced:
+    post:
+      description: DEPRECATED - This operation is a no-op that echoes the hashes from the request, and will be removed in a future release.
+      operationId: mark_commits_as_synced
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              hashes:
+              - abc1234567890def1234567890fedcba
+              - 84c76a5b2e9a2637f9091991475c404d
+            schema:
+              $ref: '#/components/schemas/MerkleHashes'
+        description: DEPRECATED - Deprecated no-op response echoing the submitted hashes
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerkleHashesResponse'
+          description: Deprecated no-op response echoing the submitted hashes
+        '404':
+          description: Repository not found
+      summary: Mark commits as synced
+      tags:
+      - Commits
+  /api/repos/{namespace}/{repo_name}/commits/root:
+    get:
+      description: Get the root (initial) commit of the repository, or None if empty.
+      operationId: root_commit
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RootCommitResponse'
+          description: Root commit found (None if empty repository)
+      summary: Get root commit
+      tags:
+      - Commits
+  /api/repos/{namespace}/{repo_name}/commits/{commit_id}:
+    get:
+      description: Get details of a specific commit by its ID.
+      operationId: show
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Hash ID of the commit
+        example: 84c76a5b2e9a2637f9091991475c404d
+        in: path
+        name: commit_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitResponse'
+          description: Commit
+        '404':
+          description: Commit not found
+      summary: Get commit
+      tags:
+      - Commits
+  /api/repos/{namespace}/{repo_name}/commits/{commit_or_branch}/commit_entries_db:
+    get:
+      description: Download the commit entries database for a specific commit as a tarball.
+      operationId: download_commit_entries_db
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Commit ID or Branch name
+        example: main
+        in: path
+        name: commit_or_branch
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tarball of commit entries DB
+        '404':
+          description: Repository or commit not found
+      summary: Download commit entries DB
+      tags:
+      - Commits
+  /api/repos/{namespace}/{repo_name}/commits:
+    get:
+      description: List all commits in the repository's history.
+      operationId: index
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCommitResponse'
+          description: List of commits
+        '404':
+          description: Repository not found
+      summary: List commits
+      tags:
+      - Commits
+    post:
+      description: Upload a commit to a branch on the server. This creates an empty commit. To create a commit with children, use the upload_tree endpoint.
+      operationId: create
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              author: Bessie Oxington
+              branch_name: main
+              email: bessie@oxen.ai
+              id: abc1234567890def1234567890fedcba
+              message: Empty commit for testing
+            schema:
+              $ref: '#/components/schemas/Commit'
+        description: Commit object and target branch name.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitResponse'
+          description: Commit created
+        '400':
+          description: Invalid commit data or mismatched remote history
+      summary: Upload commit
+      tags:
+      - Commits
+  /api/repos/{namespace}/{repo_name}/commits/history/{resource}:
+    get:
+      description: List paginated commit history for a revision or file path. Supports revision ranges (base..head) and path-specific history.
+      operationId: history
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Commit ID, Branch name, or path to a file/directory
+        example: main/data/train/image.jpg
+        in: path
+        name: resource
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: page
+        required: true
+        schema:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      - in: path
+        name: page_size
+        required: true
+        schema:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCommits'
+          description: Paginated list of commits with total count and cache status
+        '404':
+          description: Repository or resource not found
+      summary: List commit history
+      tags:
+      - Commits
+  /api/repos/{namespace}/{repo_name}/commits/missing:
+    get:
+      description: From a list of commit hashes, list the ones not present on the server
+      operationId: list_missing
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              hashes:
+              - abc1234567890def1234567890fedcba
+              - 84c76a5b2e9a2637f9091991475c404d
+            schema:
+              $ref: '#/components/schemas/MerkleHashes'
+        description: List of commit hashes present on the client.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerkleHashesResponse'
+          description: List of commit hashes missing on the server
+        '400':
+          description: Invalid JSON body
+        '404':
+          description: Repository not found
+      summary: List missing commits
+      tags:
+      - Commits
+  /api/repos/{namespace}/{repo_name}/commits/missing_files:
+    get:
+      description: List files that are referenced in a commit but not present on the server. Accept a commit range.
+      operationId: list_missing_files
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - example: abc1234567890def1234567890fedcba
+        in: path
+        name: base
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+      - example: 84c76a5b2e9a2637f9091991475c404d
+        in: path
+        name: head
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCommitEntryResponse'
+          description: List of missing file entries
+        '404':
+          description: Repository or commit not found
+      summary: List missing files from commits
+      tags:
+      - Commits
+  /api/repos/{namespace}/{repo_name}/commits/{commit_id}/upload_tree:
+    post:
+      description: Upload a commit's merkle tree data as a compressed tarball.
+      operationId: upload_tree
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Client head commit ID
+        example: 84c76a5b2e9a2637f9091991475c404d
+        in: path
+        name: commit_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              items:
+                format: int32
+                minimum: 0
+                type: integer
+              type: array
+        description: Compressed tree data (tar.gz)
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitResponse'
+          description: Tree uploaded successfully
+      summary: Upload commit tree
+      tags:
+      - Commits
+  /api/repos/{namespace}/{repo_name}/commits/all:
+    get:
+      description: List all commits in a repository
+      operationId: list_all
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: page
+        required: true
+        schema:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      - in: path
+        name: page_size
+        required: true
+        schema:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCommits'
+          description: Paginated list of all commits
+        '404':
+          description: Repository not found
+      summary: List all commits
+      tags:
+      - Commits
+  /api/repos/{namespace}/{repo_name}/commits/{base_head}/dir_hashes_db:
+    get:
+      description: Download directory hashes database for a commit range as a tarball.
+      operationId: download_dir_hashes_db
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Commit ID range (base..head) or single commit ID
+        example: abc1234..84c76a5
+        in: path
+        name: base_head
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tarball of dir hashes DB
+        '400':
+          description: Invalid base_head format
+        '404':
+          description: Repository or commit not found
+      summary: Download dir hashes DB
+      tags:
+      - Commits
+  /api/repos/{namespace}/{repo_name}/compare/{base_head}/commits:
+    get:
+      description: List commits between a 'base' and 'head' commit.
+      operationId: commits
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: satellite-images
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The base and head revisions separated by '..'
+        example: main..feature/add-labels
+        in: path
+        name: base_head
+        required: true
+        schema:
+          type: string
+      - description: Page number for pagination (starts at 1)
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+      - description: Page size for pagination
+        in: query
+        name: page_size
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompareCommitsResponse'
+          description: Commits found successfully
+        '404':
+          description: Repository or one of the revisions not found
+      summary: List commits between two revisions
+      tags:
+      - Commits
+  /api/repos/{namespace}/{repo_name}/commits/{commit_or_branch}/parents:
+    get:
+      description: Get the parent commits of a specific commit or the tip of a branch.
+      operationId: parents
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Commit ID or Branch name
+        example: main
+        in: path
+        name: commit_or_branch
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCommitResponse'
+          description: List of parent commits
+        '404':
+          description: Commit or Branch not found
+      summary: Get a commit's parents
+      tags:
+      - Commits
+components:
+  schemas:
+    PaginatedCommits:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - $ref: '#/components/schemas/Pagination'
+      - properties:
+          commits:
+            items:
+              $ref: '#/components/schemas/Commit'
+            type: array
+        required:
+        - commits
+        type: object
+      example:
+        commits:
+        - author: ox
+          email: ox@example.com
+          id: a1b2c3d4e5f67890abcdef1234567890
+          message: Refactor data loading pipeline.
+          parent_ids:
+          - f1e2d3c4b5a67890fedcba9876543210
+          timestamp: '2025-01-01T10:00:00Z'
+        page_number: 1
+        page_size: 10
+        status: success
+        status_message: resource_found
+        total_entries: 45
+        total_pages: 5
+    CommitEntry:
+      description: 'Represents a file or directory entry at a specific commit.
+
+
+        `Hash` and `Eq` are based on the content hash field, so `HashSet<CommitEntry>`
+
+        deduplicates by file content. This is used during fetch and push to avoid
+
+        transferring the same content twice.'
+      properties:
+        commit_id:
+          type: string
+        hash:
+          type: string
+        last_modified_nanoseconds:
+          format: int32
+          minimum: 0
+          type: integer
+        last_modified_seconds:
+          format: int64
+          type: integer
+        num_bytes:
+          format: int64
+          minimum: 0
+          type: integer
+        path:
+          type: string
+      required:
+      - commit_id
+      - path
+      - hash
+      - num_bytes
+      - last_modified_seconds
+      - last_modified_nanoseconds
+      type: object
+    ListCommitResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          commits:
+            items:
+              $ref: '#/components/schemas/Commit'
+            type: array
+        required:
+        - commits
+        type: object
+      example:
+        commits:
+        - author: ox
+          email: ox@example.com
+          id: a1b2c3d4e5f67890abcdef1234567890
+          message: Refactor data loading pipeline.
+          parent_ids:
+          - f1e2d3c4b5a67890fedcba9876543210
+          timestamp: '2025-01-01T10:00:00Z'
+        - author: bessie
+          email: bessie@example.com
+          id: b0a9f8e7d6c543210fedcba987654321
+          message: Update ImageNet-1k labels.
+          parent_ids:
+          - a1b2c3d4e5f67890abcdef1234567890
+          timestamp: '2025-01-02T11:00:00Z'
+        status: success
+        status_message: resource_found
+    Commit:
+      example:
+        author: ox
+        email: ox@example.com
+        id: a1b2c3d4e5f67890abcdef1234567890
+        message: Refactor data loading pipeline.
+        parent_ids:
+        - f1e2d3c4b5a67890fedcba9876543210
+        timestamp: '2025-01-01T10:00:00Z'
+      properties:
+        author:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        message:
+          type: string
+        parent_ids:
+          items:
+            type: string
+          type: array
+        timestamp:
+          format: date-time
+          type: string
+      required:
+      - id
+      - parent_ids
+      - message
+      - author
+      - email
+      - timestamp
+      type: object
+    MerkleHashesResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          hashes:
+            items:
+              $ref: '#/components/schemas/MerkleHash'
+            type: array
+            uniqueItems: true
+        required:
+        - hashes
+        type: object
+    ListCommitEntryResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          entries:
+            items:
+              $ref: '#/components/schemas/CommitEntry'
+            type: array
+        required:
+        - entries
+        type: object
+    CompareCommits:
+      properties:
+        base_commit:
+          $ref: '#/components/schemas/Commit'
+        commits:
+          items:
+            $ref: '#/components/schemas/Commit'
+          type: array
+        head_commit:
+          $ref: '#/components/schemas/Commit'
+      required:
+      - base_commit
+      - head_commit
+      - commits
+      type: object
+    CommitResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          commit:
+            $ref: '#/components/schemas/Commit'
+        required:
+        - commit
+        type: object
+      example:
+        commit:
+          author: ox
+          email: ox@example.com
+          id: a1b2c3d4e5f67890abcdef1234567890
+          message: Refactor data loading pipeline.
+          parent_ids:
+          - f1e2d3c4b5a67890fedcba9876543210
+          timestamp: '2025-01-01T10:00:00Z'
+        status: success
+        status_message: resource_found
+    Pagination:
+      properties:
+        page_number:
+          minimum: 0
+          type: integer
+        page_size:
+          minimum: 0
+          type: integer
+        total_entries:
+          minimum: 0
+          type: integer
+        total_pages:
+          minimum: 0
+          type: integer
+      required:
+      - page_size
+      - page_number
+      - total_pages
+      - total_entries
+      type: object
+    RootCommitResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          commit:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/Commit'
+        type: object
+      example:
+        commit:
+          author: ox
+          email: ox@example.com
+          id: a1b2c3d4e5f67890abcdef1234567890
+          message: Initial empty repository commit.
+          parent_ids: []
+          timestamp: '2025-01-01T10:00:00Z'
+        status: success
+        status_message: resource_found
+    MerkleHashes:
+      properties:
+        hashes:
+          items:
+            $ref: '#/components/schemas/MerkleHash'
+          type: array
+          uniqueItems: true
+      required:
+      - hashes
+      type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
+    MerkleHash:
+      type: string
+    CompareCommitsResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - $ref: '#/components/schemas/Pagination'
+      - properties:
+          compare:
+            $ref: '#/components/schemas/CompareCommits'
+        required:
+        - compare
+        type: object
+  securitySchemes:
+    authorization:
+      scheme: bearer
+      type: http

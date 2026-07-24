@@ -1,0 +1,116 @@
+openapi: 3.0.0
+info:
+  title: oxen Ai Namespaces API
+  version: 0.243.1
+  description: Namespace management endpoints
+servers:
+- url: https://hub.oxen.ai
+  variables: {}
+security: []
+tags:
+- description: Namespace management endpoints
+  name: Namespaces
+paths:
+  /api/namespaces/{namespace}:
+    get:
+      description: Get details of a specific namespace by name.
+      operationId: show
+      parameters:
+      - description: Name of the namespace
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamespaceResponse'
+          description: Namespace details
+        '400':
+          description: Missing namespace parameter
+        '404':
+          description: Namespace not found
+      summary: Get namespace
+      tags:
+      - Namespaces
+  /api/namespaces:
+    get:
+      description: List all namespaces on the server.
+      operationId: index
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListNamespacesResponse'
+          description: List of namespaces
+      summary: List namespaces
+      tags:
+      - Namespaces
+components:
+  schemas:
+    NamespaceView:
+      properties:
+        namespace:
+          type: string
+      required:
+      - namespace
+      type: object
+    ListNamespacesResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          namespaces:
+            items:
+              $ref: '#/components/schemas/NamespaceView'
+            type: array
+        required:
+        - namespaces
+        type: object
+      example:
+        namespaces:
+        - name: my_namespace
+        - name: oxen
+        status: success
+        status_message: resource_found
+    NamespaceResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          namespace:
+            $ref: '#/components/schemas/Namespace'
+        required:
+        - namespace
+        type: object
+    Namespace:
+      properties:
+        name:
+          type: string
+        storage_usage_gb:
+          format: double
+          type: number
+      required:
+      - name
+      - storage_usage_gb
+      type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
+  securitySchemes:
+    authorization:
+      scheme: bearer
+      type: http

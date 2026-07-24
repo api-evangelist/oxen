@@ -1,0 +1,439 @@
+openapi: 3.0.0
+info:
+  title: oxen Ai Workspace Files API
+  version: 0.243.1
+servers:
+- url: https://hub.oxen.ai
+  variables: {}
+security: []
+tags:
+- name: Workspace Files
+paths:
+  /api/repos/{namespace}/{repo_name}/workspaces/{workspace_id}/files/batch/{directory}:
+    post:
+      description: Stage file nodes to a workspace. Do not upload file contents to the repository.
+      operationId: add_version_files
+      parameters:
+      - description: The namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: The name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The UUID of the workspace
+        example: 580c0587-c157-417b-9118-8686d63d2745
+        in: path
+        name: workspace_id
+        required: true
+        schema:
+          type: string
+      - description: The directory to stage the files into
+        example: data/train
+        in: path
+        name: directory
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+            - hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+              path: images/train/dog.jpg
+            schema:
+              items:
+                $ref: '#/components/schemas/FileWithHash'
+              type: array
+        description: List of files and their pre-calculated hashes (must exist in version store).
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFilesResponse'
+          description: Files staged successfully
+        '404':
+          description: Workspace not found
+      summary: Stage files to workspace
+      tags:
+      - Workspace Files
+  /api/repos/{namespace}/{repo_name}/workspaces/{workspace_id}/files/{path}:
+    get:
+      description: Get a file from a workspace.
+      operationId: get
+      parameters:
+      - description: The namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: The name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The UUID of the workspace
+        example: 580c0587-c157-417b-9118-8686d63d2745
+        in: path
+        name: workspace_id
+        required: true
+        schema:
+          type: string
+      - description: The path to the file in the workspace
+        example: images/train/dog_1.jpg
+        in: path
+        name: path
+        required: true
+        schema:
+          type: string
+      - description: Width for image resize or video thumbnail
+        example: 320
+        in: query
+        name: width
+        required: false
+        schema:
+          format: int32
+          minimum: 0
+          type: integer
+      - description: Height for image resize or video thumbnail
+        example: 240
+        in: query
+        name: height
+        required: false
+        schema:
+          format: int32
+          minimum: 0
+          type: integer
+      - description: Timestamp in seconds to extract video thumbnail from
+        example: 1.0
+        in: query
+        name: timestamp
+        required: false
+        schema:
+          format: double
+          type: number
+      - description: Set to true to generate a video thumbnail instead of returning the full video
+        example: true
+        in: query
+        name: thumbnail
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          content:
+            application/octet-stream:
+              schema:
+                items:
+                  format: int32
+                  minimum: 0
+                  type: integer
+                type: array
+          description: 'File content returned as a stream. Content-Type varies: matches the file''s MIME type for regular files and image resizes, or ''image/jpeg'' for video thumbnails'
+          headers:
+            oxen-revision-id:
+              description: The commit ID of the file version
+              schema:
+                type: string
+        '400':
+          description: Invalid parameters
+        '404':
+          description: Workspace or File not found
+      summary: Get file from workspace
+      tags:
+      - Workspace Files
+    post:
+      description: Upload and stage files to a workspace. Accept a multipart with either gzipped or uncompressed file parts. Use the filename from the file part and compute the file hash from the content.
+      operationId: add
+      parameters:
+      - description: The namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: The name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The UUID of the workspace
+        example: 580c0587-c157-417b-9118-8686d63d2745
+        in: path
+        name: workspace_id
+        required: true
+        schema:
+          type: string
+      - description: The target path to upload the file to
+        example: data/train
+        in: path
+        name: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUpload'
+        description: Multipart upload of file. Each file should be sent as a separate file part
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilePathsResponse'
+          description: File successfully uploaded to workspace
+        '400':
+          description: Invalid upload request
+        '404':
+          description: Workspace not found
+      summary: Add files to workspace
+      tags:
+      - Workspace Files
+  /api/repos/{namespace}/{repo_name}/workspaces/{workspace_id}/changes/{path}:
+    delete:
+      description: Unstage a file from workspace staging
+      operationId: unstage
+      parameters:
+      - description: The namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: The name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The UUID of the workspace
+        example: 580c0587-c157-417b-9118-8686d63d2745
+        in: path
+        name: workspace_id
+        required: true
+        schema:
+          type: string
+      - description: The path to the file to delete (unstage)
+        example: images/train/dog_1.jpg
+        in: path
+        name: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusMessage'
+          description: File marked for deletion
+        '404':
+          description: Workspace or File not found
+      summary: Unstage a file from the workspace
+      tags:
+      - Workspace Files
+  /api/repos/{namespace}/{repo_name}/workspaces/{workspace_id}/changes:
+    delete:
+      description: Unstage files from a workspace. Accepts both files and directories.
+      operationId: unstage_many
+      parameters:
+      - description: The namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: The name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The UUID of the workspace
+        example: 580c0587-c157-417b-9118-8686d63d2745
+        in: path
+        name: workspace_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+            - images/train/revert_me.jpg
+            - data/config.json
+            schema:
+              items:
+                type: string
+              type: array
+        description: List of paths to unstage from the workspace staging area
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusMessage'
+          description: Files unstaged from staging
+        '206':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilePathsResponse'
+          description: Some files could not be unstaged (returns paths of files not found)
+        '404':
+          description: Workspace not found
+      summary: Unstage files
+      tags:
+      - Workspace Files
+  /api/repos/{namespace}/{repo_name}/workspaces/{workspace_id}/files:
+    delete:
+      description: Stage files for removal from the repository. Accepts both files and directories.
+      operationId: rm_files
+      parameters:
+      - description: The namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: The name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The UUID of the workspace
+        example: 580c0587-c157-417b-9118-8686d63d2745
+        in: path
+        name: workspace_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+            - images/train/dog_1.jpg
+            - annotations/incorrect.xml
+            schema:
+              items:
+                type: string
+              type: array
+        description: List of paths to stage for removal
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilePathsResponse'
+          description: Files successfully removed
+        '206':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilePathsResponse'
+          description: Some files could not be found/removed (returns paths of files not found)
+        '404':
+          description: Workspace not found
+      summary: Stage files for removal
+      tags:
+      - Workspace Files
+components:
+  schemas:
+    ErrorFileInfo:
+      properties:
+        error:
+          type: string
+        hash:
+          type: string
+        path:
+          type:
+          - string
+          - 'null'
+      required:
+      - hash
+      - error
+      type: object
+    FileWithHash:
+      properties:
+        hash:
+          type: string
+        path:
+          type: string
+      required:
+      - hash
+      - path
+      type: object
+    FilePathsResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          paths:
+            items:
+              type: string
+            type: array
+        required:
+        - paths
+        type: object
+    FileUpload:
+      properties:
+        file:
+          format: binary
+          type: string
+      required:
+      - file
+      type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
+    ErrorFilesResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          err_files:
+            items:
+              $ref: '#/components/schemas/ErrorFileInfo'
+            type: array
+        type: object
+  securitySchemes:
+    authorization:
+      scheme: bearer
+      type: http

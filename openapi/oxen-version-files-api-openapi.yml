@@ -1,0 +1,264 @@
+openapi: 3.0.0
+info:
+  title: oxen Ai Version Files API
+  version: 0.243.1
+servers:
+- url: https://hub.oxen.ai
+  variables: {}
+security: []
+tags:
+- name: Version Files
+paths:
+  /api/repos/{namespace}/{repo_name}/versions/batch-download:
+    post:
+      description: Download multiple files as a gzipped tarball by providing their hashes.
+      operationId: batch_download
+      parameters:
+      - description: The namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: The name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/gzip:
+            schema:
+              items:
+                format: int32
+                minimum: 0
+                type: integer
+              type: array
+        description: Gzip compressed binary payload containing a line-delimited list of merkle hashes to download
+        required: true
+      responses:
+        '200':
+          content:
+            application/gzip: {}
+          description: Tarball of all requested files, gzipped.
+      summary: Batch download files (Tarball)
+      tags:
+      - Version Files
+  /api/repos/{namespace}/{repo_name}/versions/{resource}:
+    get:
+      description: Download a file by its resource path, with optional image resizing.
+      operationId: download
+      parameters:
+      - description: The namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: The name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The resource identifier (e.g., 'main/path/to/file.ext' or a commit ID/branch name followed by the file path)
+        example: main/images/dog_1.jpg
+        in: path
+        name: resource
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: width
+        required: true
+        schema:
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      - in: path
+        name: height
+        required: true
+        schema:
+          format: int32
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      responses:
+        '200':
+          content:
+            application/octet-stream:
+              schema:
+                items:
+                  format: int32
+                  minimum: 0
+                  type: integer
+                type: array
+          description: File content returned as a stream. Content-Type matches the file's MIME type (e.g., image/jpeg), or the resized image's MIME type.
+          headers:
+            oxen-revision-id:
+              description: The commit ID of the file version
+              schema:
+                type: string
+        '404':
+          description: Repository, commit, or file not found
+      summary: Download version file
+      tags:
+      - Version Files
+  /api/repos/{namespace}/{repo_name}/versions/{version_id}/metadata:
+    get:
+      description: Get metadata for a specific file version by its hash.
+      operationId: metadata
+      parameters:
+      - description: The namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: The name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The hash ID of the file version
+        example: 1eb45ac94f3eab120f3a
+        in: path
+        name: version_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionFileResponse'
+          description: File metadata found
+        '404':
+          description: Version file not found
+      summary: Get version file metadata
+      tags:
+      - Version Files
+  /api/repos/{namespace}/{repo_name}/versions:
+    post:
+      description: Upload multiple files via multipart form, identified by their content hashes.
+      operationId: batch_upload
+      parameters:
+      - description: The namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: The name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadVersionFile'
+        description: Multipart upload of files. Each form field 'file[]' or 'file' should contain the file content (optionally gzip compressed), and the filename should be the content hash (e.g., 'file.jpg' is not used, the hash is the identifier).
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFilesResponse'
+          description: Files successfully uploaded (check err_files for failures)
+        '400':
+          description: Invalid multipart request
+        '404':
+          description: Repository not found
+      summary: Batch upload files (Multipart)
+      tags:
+      - Version Files
+components:
+  schemas:
+    ErrorFileInfo:
+      properties:
+        error:
+          type: string
+        hash:
+          type: string
+        path:
+          type:
+          - string
+          - 'null'
+      required:
+      - hash
+      - error
+      type: object
+    VersionFileResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          version:
+            $ref: '#/components/schemas/VersionFile'
+        required:
+        - version
+        type: object
+    UploadVersionFile:
+      properties:
+        file:
+          format: binary
+          type: string
+      required:
+      - file
+      type: object
+    VersionFile:
+      properties:
+        hash:
+          type: string
+        size:
+          format: int64
+          minimum: 0
+          type: integer
+      required:
+      - hash
+      - size
+      type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
+    ErrorFilesResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          err_files:
+            items:
+              $ref: '#/components/schemas/ErrorFileInfo'
+            type: array
+        type: object
+  securitySchemes:
+    authorization:
+      scheme: bearer
+      type: http

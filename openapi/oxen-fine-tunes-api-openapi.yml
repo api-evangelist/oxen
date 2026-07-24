@@ -1,0 +1,1215 @@
+openapi: 3.0.0
+info:
+  title: oxen Ai fine_tunes API
+  version: 0.243.1
+servers:
+- url: https://hub.oxen.ai
+  variables: {}
+security: []
+tags:
+- name: fine_tunes
+paths:
+  /api/orgs/{name}/fine_tunes:
+    get:
+      callbacks: {}
+      description: Return all fine-tune jobs in repositories belonging to the given organization. Requires the authenticated user to be a member of the organization.
+      operationId: OxenApiWeb.Controllers.FineTuneController.list_for_org
+      parameters:
+      - description: Organization name
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+      - description: Page number (1-indexed)
+        in: query
+        name: page
+        required: false
+        schema:
+          type: integer
+      - description: Number of items per page
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+      - description: 'Search across fine-tune name, display name, base model, and repository (case-insensitive substring match). For example: ''qwen'', ''ox/Delorean'', ''customer-support''.'
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - description: 'Filter by status. One of: created, tokenizing, enqueued, running, completed, stopped, errored, deployed'
+        in: query
+        name: status
+        required: false
+        schema:
+          type: string
+      - description: Filter by creator username (exact match)
+        in: query
+        name: created_by
+        required: false
+        schema:
+          type: string
+      - description: 'Sort order by creation date: ''newest'' (default) or ''oldest'''
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FineTuneListResponse'
+          description: List fine-tunes response
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Not authenticated or not a member
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Organization not found
+      security:
+      - authorization: []
+      summary: List fine-tunes for an organization
+      tags:
+      - fine_tunes
+  /api/repos/{namespace}/{repo_name}/fine_tunes:
+    get:
+      callbacks: {}
+      description: Return the fine-tune jobs associated with a given repository.
+      operationId: OxenApiWeb.Controllers.FineTuneController.index
+      parameters:
+      - description: Page number (1-indexed)
+        in: query
+        name: page
+        required: false
+        schema:
+          type: integer
+      - description: Number of items per page
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+      - description: 'Search across fine-tune name, display name, base model, and repository (case-insensitive substring match). For example: ''qwen'', ''ox/Delorean'', ''customer-support''.'
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - description: 'Filter by status. One of: created, tokenizing, enqueued, running, completed, stopped, errored, deployed'
+        in: query
+        name: status
+        required: false
+        schema:
+          type: string
+      - description: Filter by creator username (exact match)
+        in: query
+        name: created_by
+        required: false
+        schema:
+          type: string
+      - description: 'Sort order by creation date: ''newest'' (default) or ''oldest'''
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FineTuneListResponse'
+          description: List fine-tunes response
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Repository not found
+      security:
+      - authorization: []
+      summary: List fine-tunes in a repository
+      tags:
+      - fine_tunes
+    post:
+      callbacks: {}
+      description: Start a new fine-tune for a given repository.
+      operationId: OxenApiWeb.Controllers.FineTuneController.create
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFineTuneRequest'
+        description: Create fine-tune request
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FineTuneResponse'
+          description: Create fine-tune response
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Invalid fine-tune parameters
+      security:
+      - authorization: []
+      summary: Create a fine-tune job
+      tags:
+      - fine_tunes
+  /api/repos/{namespace}/{repo_name}/fine_tunes/{id}:
+    delete:
+      callbacks: {}
+      description: Delete a fine-tune job and any associated model metadata.
+      operationId: OxenApiWeb.Controllers.FineTuneController.delete
+      parameters:
+      - description: Fine-tune ID
+        example: ft_123
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FineTuneResponse'
+          description: Deleted fine-tune response
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Fine-tune not found
+      security:
+      - authorization: []
+      summary: Delete a fine-tune job
+      tags:
+      - fine_tunes
+    get:
+      callbacks: {}
+      description: Fetch a single fine-tune job by ID within a repository.
+      operationId: OxenApiWeb.Controllers.FineTuneController.show
+      parameters:
+      - description: Fine-tune ID
+        example: ft_123
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FineTuneResponse'
+          description: Fine-tune response
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Fine-tune not found
+      security:
+      - authorization: []
+      summary: Get a fine-tune job
+      tags:
+      - fine_tunes
+    patch:
+      callbacks: {}
+      description: Partially update a fine-tune job's attributes.
+      operationId: OxenApiWeb.Controllers.FineTuneController.update
+      parameters:
+      - description: Fine-tune ID
+        example: ft_123
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              description: Subset of fine-tune fields to update
+              type: object
+        description: Fine-tune update request
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FineTuneResponse'
+          description: Updated fine-tune response
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Fine-tune not found
+      security:
+      - authorization: []
+      summary: Update a fine-tune job
+      tags:
+      - fine_tunes
+  /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/actions/run:
+    post:
+      callbacks: {}
+      description: Kick off a run for an existing fine-tune. The job must be in a runnable state (created or tokenizing).
+      operationId: OxenApiWeb.Controllers.FineTuneController.run
+      parameters:
+      - description: Fine-tune ID
+        example: ft_123
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FineTuneRunResponse'
+          description: Run fine-tune response
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Fine-tune not found
+      security:
+      - authorization: []
+      summary: Run a fine-tune job
+      tags:
+      - fine_tunes
+  /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/actions/stop:
+    post:
+      callbacks: {}
+      description: Stop a fine-tune if it is currently running or queued.
+      operationId: OxenApiWeb.Controllers.FineTuneController.stop
+      parameters:
+      - description: Fine-tune ID
+        example: ft_123
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FineTuneStopResponse'
+          description: Stop fine-tune response
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Fine-tune not found
+      security:
+      - authorization: []
+      summary: Stop a running fine-tune job
+      tags:
+      - fine_tunes
+  /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/checkpoints:
+    get:
+      callbacks: {}
+      description: Retrieve all saved checkpoints for a fine-tune training run. Returns an empty list if the model branch has not been created yet (e.g. before training has produced checkpoints).
+      operationId: OxenApiWeb.Controllers.FineTuneController.checkpoints
+      parameters:
+      - description: Fine-tune ID
+        example: ft_123
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckpointListResponse'
+          description: Checkpoints list
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Fine-tune not found
+      security:
+      - authorization: []
+      summary: List checkpoints for a fine-tune job
+      tags:
+      - fine_tunes
+  /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/checkpoints/{step}/deploy:
+    post:
+      callbacks: {}
+      description: Deploy a specific training checkpoint to make it available for inference. Pass `retry=true` to tear down any existing deployment for this checkpoint before creating a new one.
+      operationId: OxenApiWeb.Controllers.FineTuneController.create_checkpoint_deployment
+      parameters:
+      - description: Fine-tune ID
+        example: ft_123
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Checkpoint step number
+        example: 100
+        in: path
+        name: step
+        required: true
+        schema:
+          type: integer
+      - description: If true, cleanup the existing deployment and model for this checkpoint before creating a new one.
+        in: query
+        name: retry
+        required: false
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCheckpointDeploymentRequest'
+        description: Deployment configuration
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckpointDeploymentResponse'
+          description: Deployment created response
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Fine-tune not found
+      security:
+      - authorization: []
+      summary: Deploy a checkpoint from a fine-tune job
+      tags:
+      - fine_tunes
+  /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/logs:
+    get:
+      callbacks: {}
+      description: Fetch aggregated logs for a specific fine-tune run.
+      operationId: OxenApiWeb.Controllers.FineTuneController.logs
+      parameters:
+      - description: Fine-tune ID
+        example: ft_123
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: Fine-tune log payload
+                type: object
+          description: Fine-tune logs response
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Fine-tune not found
+      security:
+      - authorization: []
+      summary: Get logs for a fine-tune job
+      tags:
+      - fine_tunes
+  /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/tokenize:
+    post:
+      callbacks: {}
+      description: Trigger tokenization for a fine-tune that is in created state.
+      operationId: OxenApiWeb.Controllers.FineTuneController.tokenize
+      parameters:
+      - description: Fine-tune ID
+        example: ft_123
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: Wrapped fine-tune object
+                type: object
+          description: Tokenize fine-tune response
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Fine-tune not found
+      security:
+      - authorization: []
+      summary: Tokenize data for a fine-tune job
+      tags:
+      - fine_tunes
+  /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/train_status:
+    get:
+      callbacks: {}
+      description: Retrieve the current training status of a fine-tune job.
+      operationId: OxenApiWeb.Controllers.FineTuneController.get_train_status
+      parameters:
+      - description: Fine-tune ID
+        example: ft_123
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: Training status information
+                type: object
+          description: Training status response
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Fine-tune not found
+      security:
+      - authorization: []
+      summary: Get training status for a fine-tune job
+      tags:
+      - fine_tunes
+  /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/train_status/{new_status}:
+    put:
+      callbacks: {}
+      description: Update the training status of a fine-tune job.
+      operationId: OxenApiWeb.Controllers.FineTuneController.update_train_status
+      parameters:
+      - description: Fine-tune ID
+        example: ft_123
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                new_status:
+                  description: New training status
+                  type: string
+              required:
+              - new_status
+              type: object
+        description: Training status update
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: Updated training status
+                type: object
+          description: Training status updated
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Fine-tune not found
+      security:
+      - authorization: []
+      summary: Update training status for a fine-tune job
+      tags:
+      - fine_tunes
+  /api/user/fine_tunes:
+    get:
+      callbacks: {}
+      description: Return all fine-tune jobs the authenticated user has access to, including their own repositories and repositories in organizations they belong to.
+      operationId: OxenApiWeb.Controllers.FineTuneController.list_accessible
+      parameters:
+      - description: Page number (1-indexed)
+        in: query
+        name: page
+        required: false
+        schema:
+          type: integer
+      - description: Number of items per page
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+      - description: 'Search across fine-tune name, display name, base model, and repository (case-insensitive substring match). For example: ''qwen'', ''ox/Delorean'', ''customer-support''.'
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - description: 'Filter by status. One of: created, tokenizing, enqueued, running, completed, stopped, errored, deployed'
+        in: query
+        name: status
+        required: false
+        schema:
+          type: string
+      - description: Filter by creator username (exact match)
+        in: query
+        name: created_by
+        required: false
+        schema:
+          type: string
+      - description: 'Sort order by creation date: ''newest'' (default) or ''oldest'''
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FineTuneListResponse'
+          description: List fine-tunes response
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Not authenticated
+      security:
+      - authorization: []
+      summary: List all fine-tunes accessible to the current user
+      tags:
+      - fine_tunes
+  /api/users/{username}/fine_tunes:
+    get:
+      callbacks: {}
+      description: Return all fine-tune jobs in repositories belonging to the given user. Only the user themselves can access this endpoint.
+      operationId: OxenApiWeb.Controllers.FineTuneController.list_for_user
+      parameters:
+      - description: Username
+        in: path
+        name: username
+        required: true
+        schema:
+          type: string
+      - description: Page number (1-indexed)
+        in: query
+        name: page
+        required: false
+        schema:
+          type: integer
+      - description: Number of items per page
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+      - description: 'Search across fine-tune name, display name, base model, and repository (case-insensitive substring match). For example: ''qwen'', ''ox/Delorean'', ''customer-support''.'
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - description: 'Filter by status. One of: created, tokenizing, enqueued, running, completed, stopped, errored, deployed'
+        in: query
+        name: status
+        required: false
+        schema:
+          type: string
+      - description: Filter by creator username (exact match)
+        in: query
+        name: created_by
+        required: false
+        schema:
+          type: string
+      - description: 'Sort order by creation date: ''newest'' (default) or ''oldest'''
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FineTuneListResponse'
+          description: List fine-tunes response
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Not authenticated or not authorized
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: User not found
+      security:
+      - authorization: []
+      summary: List fine-tunes for a user
+      tags:
+      - fine_tunes
+components:
+  schemas:
+    FineTuneStopResponse:
+      description: Standard wrapper for fine-tune /stop responses.
+      properties:
+        fine_tune:
+          anyOf:
+          - $ref: '#/components/schemas/FineTuneRun'
+          description: Fine-tune job resource as returned by /stop
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+      title: FineTuneStopResponse
+      type: object
+    FineTuneRunResponse:
+      description: Standard wrapper for fine-tune /run responses.
+      properties:
+        fine_tune:
+          anyOf:
+          - $ref: '#/components/schemas/FineTuneRun'
+          description: Fine-tune job resource as returned by /run
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+      title: FineTuneRunResponse
+      type: object
+    CreateCheckpointDeploymentRequest:
+      description: Request payload to deploy a specific checkpoint from a fine-tune job.
+      properties:
+        deployment_type:
+          default: normal
+          description: 'Deployment type: ''fast'' for faster inference instances, ''normal'' for standard instances.'
+          enum:
+          - fast
+          - normal
+          type: string
+      title: CreateCheckpointDeploymentRequest
+      type: object
+    CheckpointListResponse:
+      description: Standard wrapper for the list-checkpoints response.
+      properties:
+        branch:
+          description: Oxen branch where the model and its checkpoints are stored.
+          type: string
+        checkpoints:
+          description: Checkpoints saved during the fine-tune run, sorted by step ascending.
+          items:
+            $ref: '#/components/schemas/Checkpoint'
+          type: array
+        fine_tune_id:
+          description: ID of the fine-tune job these checkpoints belong to.
+          type: string
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+        total_checkpoints:
+          description: Total number of checkpoints returned.
+          type: integer
+      title: CheckpointListResponse
+      type: object
+    Checkpoint:
+      description: 'A single training checkpoint produced by a fine-tune run. Each checkpoint
+
+        corresponds to a step directory in the model''s Oxen branch and may carry
+
+        metrics, inference samples, and (if previously deployed) deployment status.
+
+        '
+      properties:
+        created_at:
+          description: Timestamp of the commit that produced this checkpoint.
+          format: date_time
+          nullable: true
+          type: string
+        deployment_status:
+          description: Current Baseten deployment status for this checkpoint, if it has been deployed.
+          nullable: true
+          type: string
+        inference_samples:
+          description: Sample generations produced at this checkpoint, if any.
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        metrics:
+          additionalProperties: true
+          description: Training metrics recorded at this step (when training logs are available).
+          properties:
+            epoch:
+              format: float
+              nullable: true
+              type: number
+            grad_norm:
+              format: float
+              nullable: true
+              type: number
+            learning_rate:
+              format: float
+              nullable: true
+              type: number
+            loss:
+              format: float
+              nullable: true
+              type: number
+            mean_token_accuracy:
+              format: float
+              nullable: true
+              type: number
+          type: object
+        model_id:
+          description: ID of the deployed Model row backing this checkpoint, if it has been deployed.
+          nullable: true
+          type: string
+        model_name:
+          description: Canonical model name used when this checkpoint is deployed (e.g. '<fine_tune_name>-step-<step>').
+          type: string
+        path:
+          description: Path within the model branch where the checkpoint is stored.
+          type: string
+        size_bytes:
+          description: Total size in bytes of the checkpoint directory.
+          nullable: true
+          type: integer
+        step:
+          description: Training step number this checkpoint was saved at.
+          type: integer
+      title: Checkpoint
+      type: object
+    FineTuneResponse:
+      description: Standard wrapper for fine-tune responses.
+      properties:
+        fine_tune:
+          anyOf:
+          - $ref: '#/components/schemas/FineTune'
+          description: Fine-tune job resource
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+      title: FineTuneResponse
+      type: object
+    CheckpointDeploymentResponse:
+      description: Standard wrapper for checkpoint deployment responses.
+      properties:
+        deployment_id:
+          description: ID of the created Baseten deployment.
+          type: string
+        fine_tune:
+          anyOf:
+          - $ref: '#/components/schemas/FineTuneRun'
+          description: Fine-tune job the deployed checkpoint belongs to.
+        model:
+          additionalProperties: true
+          description: Model record created for this checkpoint deployment.
+          type: object
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+      title: CheckpointDeploymentResponse
+      type: object
+    FineTuneListResponse:
+      description: Standard wrapper for fine-tune list responses.
+      properties:
+        fine_tunes:
+          description: List of fine-tune job resources
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/FineTune'
+          type: array
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+      title: FineTuneListResponse
+      type: object
+    CreateFineTuneRequest:
+      description: 'Request payload to create a fine-tune job for a repository.
+
+        '
+      properties:
+        base_model:
+          description: Canonical name of the base model to fine-tune
+          type: string
+        is_public:
+          default: false
+          description: Whether the resulting fine-tuned model should be public. Defaults to false.
+          type: boolean
+        oxen_model_path:
+          description: Optional override for where the resulting model weights live in Oxen. Defaults to the fine-tune resource.
+          nullable: true
+          type: string
+        resource:
+          description: Repository path to the training data file or directory
+          type: string
+        script_type:
+          description: Name of the fine-tune script to run
+          type: string
+        training_params:
+          additionalProperties: true
+          description: Training configuration parameters
+          properties:
+            batch_size:
+              description: Per-device batch size used during training.
+              type: integer
+            caption_column:
+              description: Name of the column containing text captions or prompts.
+              type: string
+            gradient_accumulation:
+              description: Number of steps to accumulate gradients before an optimizer step.
+              type: integer
+            image_column:
+              description: Name of the column containing image file paths.
+              type: string
+            learning_rate:
+              description: Base learning rate for the optimizer.
+              format: float
+              type: number
+            lora_alpha:
+              description: LoRA alpha scaling factor for LoRA fine-tuning approaches.
+              type: integer
+            lora_rank:
+              description: LoRA rank used for low-rank adaptation layers.
+              type: integer
+            sample_every:
+              description: Interval (in steps) at which to generate samples.
+              type: integer
+            samples:
+              description: Number of sample generations to produce at each sampling interval.
+              type: integer
+            steps:
+              description: Total number of training steps to run.
+              type: integer
+            timestep_type:
+              description: Strategy for sampling timesteps during training (for example, 'weighted').
+              type: string
+            use_lora:
+              default: true
+              description: Whether to use LoRA fine-tuning (true) or full fine-tuning (false). If omitted, defaults to true.
+              type: boolean
+          type: object
+      required:
+      - resource
+      - base_model
+      - script_type
+      title: CreateFineTuneRequest
+      type: object
+    FineTune:
+      description: 'Fine-tune job resource.
+
+        This is a simplified view meant for OpenAPI docs; extend as needed to match your views.
+
+        '
+      properties:
+        base_model:
+          description: Canonical name of the base model
+          type: string
+        created_at:
+          description: Creation time
+          format: date_time
+          type: string
+        id:
+          description: Fine-tune ID
+          type: string
+        name:
+          description: Fine-tune name
+          type: string
+        status:
+          description: Current status of the fine-tune
+          type: string
+        updated_at:
+          description: Last update time
+          format: date_time
+          type: string
+      title: FineTune
+      type: object
+    FineTuneRun:
+      additionalProperties: true
+      description: Fine-tune job payload as returned by the /run API.
+      properties:
+        base_model:
+          description: Canonical name of the base model, e.g. 'Qwen/Qwen3-0.6B'
+          type: string
+        created_by:
+          description: User who created the fine-tune job
+          properties:
+            id:
+              description: User ID
+              type: string
+            image:
+              description: Avatar image URL
+              nullable: true
+              type: string
+            name:
+              description: Display name
+              nullable: true
+              type: string
+            username:
+              description: Username
+              type: string
+          type: object
+        credits_used:
+          description: Credits used so far for this fine-tune
+          type: string
+        deployed_model:
+          additionalProperties: true
+          description: Deployment information for the resulting model, if deployed
+          nullable: true
+          type: object
+        description:
+          description: Optional description of the fine-tune
+          nullable: true
+          type: string
+        display_name:
+          description: Optional display name for the fine-tune
+          nullable: true
+          type: string
+        error:
+          description: Error message if the fine-tune failed
+          nullable: true
+          type: string
+        fine_tune_script:
+          description: Fine-tune script configuration used for this run
+          properties:
+            description:
+              description: Description of what the script does
+              type: string
+            display_name:
+              description: Human-friendly name for the script
+              type: string
+            docker_image_name:
+              description: Docker image used to run the script
+              type: string
+            fine_tune_schema:
+              additionalProperties: true
+              description: Fine-tune configuration schema used by the script
+              properties:
+                description:
+                  description: Schema description
+                  type: string
+                id:
+                  description: Fine-tune schema ID
+                  type: string
+                name:
+                  description: Schema name
+                  type: string
+                schema:
+                  additionalProperties: true
+                  description: JSON schema describing training params UI
+                  properties:
+                    additionalProperties:
+                      type: boolean
+                    basic:
+                      items:
+                        type: string
+                      type: array
+                    properties:
+                      additionalProperties: true
+                      description: Per-parameter schema; structure is flexible
+                      type: object
+                    required:
+                      items:
+                        type: string
+                      type: array
+                    type:
+                      type: string
+                  type: object
+              type: object
+            id:
+              description: Fine-tune script ID
+              type: string
+            name:
+              description: Fine-tune script name
+              type: string
+            script_type:
+              description: Type of script (for example, 'text_generation')
+              type: string
+          type: object
+        finished_at:
+          description: Time when training finished
+          format: date_time
+          nullable: true
+          type: string
+        gpu_count:
+          description: Number of GPUs requested for the job
+          type: integer
+        gpu_model:
+          description: GPU model requested for the job (for example, 'A10G')
+          type: string
+        id:
+          description: Fine-tune ID
+          type: string
+        inserted_at:
+          description: Creation timestamp
+          format: date_time
+          type: string
+        last_credit_check:
+          description: Last time credits were checked for this job
+          format: date_time
+          nullable: true
+          type: string
+        name:
+          description: Fine-tune name
+          type: string
+        output_resource:
+          additionalProperties: true
+          description: Optional output resource produced by this fine-tune
+          nullable: true
+          type: object
+        queue_position:
+          description: Queue position if the job is queued
+          nullable: true
+          type: integer
+        rate_per_second:
+          description: Billing rate per second for this fine-tune
+          type: string
+        repository_id:
+          description: ID of the repository this fine-tune belongs to
+          type: string
+        resource:
+          description: Training data resource used for this fine-tune
+          properties:
+            path:
+              description: Path to the resource inside the repository
+              type: string
+            version:
+              description: Commit or version identifier
+              type: string
+          type: object
+        source_model:
+          additionalProperties: true
+          description: Base model that is being fine-tuned
+          type: object
+        started_at:
+          description: Time when training actually started
+          format: date_time
+          nullable: true
+          type: string
+        status:
+          description: Current status of the fine-tune
+          type: string
+        total_token_count:
+          default: 0
+          description: Total number of tokens processed
+          type: integer
+        training_params:
+          description: Training parameters used for this fine-tune run
+          properties:
+            answer_column:
+              description: Column containing assistant responses
+              type: string
+            batch_size:
+              description: Per-device batch size used during training
+              type: integer
+            enable_thinking:
+              description: Whether to enable thinking tokens during training
+              type: boolean
+            epochs:
+              description: Number of epochs to train for
+              type: integer
+            grad_accum:
+              description: Gradient accumulation steps
+              type: integer
+            learning_rate:
+              description: Base learning rate for the optimizer
+              format: float
+              type: number
+            logging_steps:
+              description: Interval (in steps) at which logs are written
+              type: integer
+            lora_alpha:
+              description: LoRA alpha scaling factor
+              type: integer
+            lora_rank:
+              description: LoRA rank for low-rank adapters
+              type: integer
+            neftune_noise_alpha:
+              description: NEFTune noise alpha
+              format: float
+              type: number
+            question_column:
+              description: Column containing user prompts
+              type: string
+            save_steps_ratio:
+              description: Ratio of steps at which to save checkpoints
+              format: float
+              type: number
+            save_strategy:
+              description: Save strategy, e.g. 'epoch'
+              type: string
+            seq_length:
+              description: Sequence length used during training
+              type: integer
+            use_lora:
+              description: Whether LoRA is enabled for this run
+              type: boolean
+          type: object
+        updated_at:
+          description: Last update timestamp
+          format: date_time
+          type: string
+        use_lora:
+          description: Whether LoRA fine-tuning is enabled
+          type: boolean
+      title: FineTuneRun
+      type: object
+  securitySchemes:
+    authorization:
+      scheme: bearer
+      type: http

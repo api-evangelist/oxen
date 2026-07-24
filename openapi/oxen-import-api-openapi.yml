@@ -1,0 +1,250 @@
+openapi: 3.0.0
+info:
+  title: oxen Ai Import API
+  version: 0.243.1
+servers:
+- url: https://hub.oxen.ai
+  variables: {}
+security: []
+tags:
+- name: Import
+paths:
+  /api/repos/{namespace}/{repo_name}/import/{resource}:
+    post:
+      description: Import a file from a remote URL and commit it to the repository.
+      operationId: import
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: Common-Crawl
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Destination path (including branch)
+        example: main/data
+        in: path
+        name: resource
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              auth: Bearer <token>
+              download_url: https://example.com/datasets/data.csv
+              email: ox@oxen.ai
+              name: ox
+            schema:
+              $ref: '#/components/schemas/ImportFileBody'
+        description: Import configuration
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitResponse'
+          description: File imported and committed
+        '400':
+          description: Bad Request / Invalid URL
+      summary: Import file from URL
+      tags:
+      - Import
+  /api/repos/{namespace}/{repo_name}/import/upload/{resource}:
+    post:
+      description: Upload and decompress a zip archive into the repository and commit the contents.
+      operationId: upload_zip
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: Wiki-Text
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Destination path (including branch)
+        example: main/archive
+        in: path
+        name: resource
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ZipUploadBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitResponse'
+          description: Zip archive decompressed and committed
+        '400':
+          description: Bad Request
+      summary: Upload zip archive
+      tags:
+      - Import
+components:
+  schemas:
+    ZipUploadBody:
+      description: Body for uploading a zip archive via multipart/form-data
+      example:
+        commit_message: Importing full archive of grazing data
+        email: ox@oxen.ai
+        file: <binary zip data>
+        name: ox
+      properties:
+        commit_message:
+          example: Importing dataset archive
+          type:
+          - string
+          - 'null'
+        email:
+          example: ox@oxen.ai
+          type:
+          - string
+          - 'null'
+        file:
+          format: binary
+          type: string
+        name:
+          example: ox
+          type:
+          - string
+          - 'null'
+      required:
+      - file
+      title: ZipUploadBody
+      type: object
+    Commit:
+      example:
+        author: ox
+        email: ox@example.com
+        id: a1b2c3d4e5f67890abcdef1234567890
+        message: Refactor data loading pipeline.
+        parent_ids:
+        - f1e2d3c4b5a67890fedcba9876543210
+        timestamp: '2025-01-01T10:00:00Z'
+      properties:
+        author:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        message:
+          type: string
+        parent_ids:
+          items:
+            type: string
+          type: array
+        timestamp:
+          format: date-time
+          type: string
+      required:
+      - id
+      - parent_ids
+      - message
+      - author
+      - email
+      - timestamp
+      type: object
+    CommitResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          commit:
+            $ref: '#/components/schemas/Commit'
+        required:
+        - commit
+        type: object
+      example:
+        commit:
+          author: ox
+          email: ox@example.com
+          id: a1b2c3d4e5f67890abcdef1234567890
+          message: Refactor data loading pipeline.
+          parent_ids:
+          - f1e2d3c4b5a67890fedcba9876543210
+          timestamp: '2025-01-01T10:00:00Z'
+        status: success
+        status_message: resource_found
+    ImportFileBody:
+      description: Body for importing a file from a URL
+      example:
+        auth: Bearer <token>
+        download_url: https://example.com/datasets/data.csv
+        email: ox@oxen.ai
+        filename: data.csv
+        message: Import dataset
+        name: ox
+      properties:
+        auth:
+          example: Bearer <token>
+          type:
+          - string
+          - 'null'
+        download_url:
+          example: https://example.com/datasets/data.csv
+          type: string
+        email:
+          example: ox@oxen.ai
+          type:
+          - string
+          - 'null'
+        filename:
+          example: data.csv
+          type:
+          - string
+          - 'null'
+        message:
+          example: Import dataset
+          type:
+          - string
+          - 'null'
+        name:
+          example: ox
+          type:
+          - string
+          - 'null'
+      required:
+      - download_url
+      title: ImportFileBody
+      type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
+  securitySchemes:
+    authorization:
+      scheme: bearer
+      type: http

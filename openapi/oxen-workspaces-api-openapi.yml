@@ -1,0 +1,478 @@
+openapi: 3.0.0
+info:
+  title: oxen Ai Workspaces API
+  version: 0.243.1
+servers:
+- url: https://hub.oxen.ai
+  variables: {}
+security: []
+tags:
+- name: Workspaces
+paths:
+  /api/repos/{namespace}/{repo_name}/workspaces/clear:
+    delete:
+      description: Deletes all workspaces for the repo
+      operationId: clear
+      parameters:
+      - description: Namespace for the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusMessage'
+          description: Workspaces cleared
+        '404':
+          description: Repository not found
+      summary: Clear workspaces for repo
+      tags:
+      - Workspaces
+  /api/repos/{namespace}/{repo_name}/workspaces/{workspace_id}/merge/{branch}:
+    get:
+      description: Checks if a workspace can be committed and merged onto a branch
+      operationId: mergeability
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: ID of the workspace
+        example: b3f27f05-0955-4076-805f-39575853b27b
+        in: path
+        name: workspace_id
+        required: true
+        schema:
+          type: string
+      - description: Target branch name to merge into
+        example: main
+        in: path
+        name: branch
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MergeableResponse'
+          description: Mergeability status found
+        '404':
+          description: Workspace or target branch not found
+      summary: Check workspace mergeability
+      tags:
+      - Workspaces
+    post:
+      description: Commit and merge workspace into the specified branch
+      operationId: commit
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: ID of the workspace
+        example: b3f27f05-0955-4076-805f-39575853b27b
+        in: path
+        name: workspace_id
+        required: true
+        schema:
+          type: string
+      - description: Target branch name to commit to
+        example: main
+        in: path
+        name: branch
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              author: bessie
+              email: bessie@oxen.ai
+              message: Commit changes from bessie_workspace
+            schema:
+              $ref: '#/components/schemas/NewCommitBody'
+        description: Commit details for the workspace merge.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitResponse'
+          description: Workspace committed successfully
+        '400':
+          description: Invalid request body
+        '404':
+          description: Workspace or branch not found
+        '422':
+          description: Unprocessable Entity, e.g., workspace is behind main branch
+      summary: Merge workspace into branch
+      tags:
+      - Workspaces
+  /api/repos/{namespace}/{repo_name}/workspaces/{workspace_id}:
+    delete:
+      description: Delete a workspace by ID
+      operationId: delete
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: ID of the workspace
+        example: b3f27f05-0955-4076-805f-39575853b27b
+        in: path
+        name: workspace_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceResponseView'
+          description: Workspace deleted
+        '404':
+          description: Workspace or Repository not found
+      summary: Delete workspace
+      tags:
+      - Workspaces
+    get:
+      description: Get an existing workspace by ID
+      operationId: get
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: ID of the workspace
+        example: b3f27f05-0955-4076-805f-39575853b27b
+        in: path
+        name: workspace_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceResponseView'
+          description: Workspace found
+        '404':
+          description: Workspace not found
+      summary: Get workspace
+      tags:
+      - Workspaces
+  /api/repos/{namespace}/{repo_name}/workspaces/get_or_create:
+    put:
+      description: Create a workspace. If the workspace exists, return it
+      operationId: get_or_create
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              branch_name: main
+              name: bessie_workspace
+              workspace_id: b3f27f05-0955-4076-805f-39575853b27b
+            schema:
+              $ref: '#/components/schemas/NewWorkspace'
+        description: Workspace creation details, including base branch and optional name/ID.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceResponseView'
+          description: Workspace found or created
+        '400':
+          description: Invalid payload or branch not found
+        '404':
+          description: Repository not found
+      summary: Get or create workspace
+      tags:
+      - Workspaces
+  /api/repos/{namespace}/{repo_name}/workspaces:
+    get:
+      description: List workspaces in the repository
+      operationId: list
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: name
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListWorkspaceResponseView'
+          description: List of workspaces
+        '404':
+          description: Repository not found
+      summary: List workspaces
+      tags:
+      - Workspaces
+components:
+  schemas:
+    NewCommitBody:
+      description: NewCommitBody is used to parse the json into a Commit from the API
+      properties:
+        author:
+          type: string
+        email:
+          type: string
+        message:
+          type: string
+      required:
+      - message
+      - author
+      - email
+      type: object
+    MergeConflictFile:
+      properties:
+        path:
+          type: string
+      required:
+      - path
+      type: object
+    Commit:
+      example:
+        author: ox
+        email: ox@example.com
+        id: a1b2c3d4e5f67890abcdef1234567890
+        message: Refactor data loading pipeline.
+        parent_ids:
+        - f1e2d3c4b5a67890fedcba9876543210
+        timestamp: '2025-01-01T10:00:00Z'
+      properties:
+        author:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        message:
+          type: string
+        parent_ids:
+          items:
+            type: string
+          type: array
+        timestamp:
+          format: date-time
+          type: string
+      required:
+      - id
+      - parent_ids
+      - message
+      - author
+      - email
+      - timestamp
+      type: object
+    ListWorkspaceResponseView:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          workspaces:
+            items:
+              $ref: '#/components/schemas/WorkspaceResponse'
+            type: array
+        required:
+        - workspaces
+        type: object
+    WorkspaceResponseView:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          workspace:
+            $ref: '#/components/schemas/WorkspaceResponse'
+        required:
+        - workspace
+        type: object
+    Mergeable:
+      properties:
+        commits:
+          items:
+            $ref: '#/components/schemas/Commit'
+          type: array
+        conflicts:
+          items:
+            $ref: '#/components/schemas/MergeConflictFile'
+          type: array
+        is_mergeable:
+          type: boolean
+      required:
+      - is_mergeable
+      - conflicts
+      - commits
+      type: object
+    CommitResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          commit:
+            $ref: '#/components/schemas/Commit'
+        required:
+        - commit
+        type: object
+      example:
+        commit:
+          author: ox
+          email: ox@example.com
+          id: a1b2c3d4e5f67890abcdef1234567890
+          message: Refactor data loading pipeline.
+          parent_ids:
+          - f1e2d3c4b5a67890fedcba9876543210
+          timestamp: '2025-01-01T10:00:00Z'
+        status: success
+        status_message: resource_found
+    MergeableResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - $ref: '#/components/schemas/Mergeable'
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
+    WorkspaceResponse:
+      properties:
+        commit:
+          $ref: '#/components/schemas/Commit'
+        id:
+          type: string
+        name:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - commit
+      type: object
+    NewWorkspace:
+      properties:
+        branch_name:
+          type: string
+        entity_type:
+          type:
+          - string
+          - 'null'
+        force:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        resource_path:
+          type:
+          - string
+          - 'null'
+        workspace_id:
+          type: string
+      required:
+      - workspace_id
+      - branch_name
+      type: object
+  securitySchemes:
+    authorization:
+      scheme: bearer
+      type: http

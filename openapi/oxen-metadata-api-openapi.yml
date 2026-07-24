@@ -1,0 +1,552 @@
+openapi: 3.0.0
+info:
+  title: oxen Ai Metadata API
+  version: 0.243.1
+servers:
+- url: https://hub.oxen.ai
+  variables: {}
+security: []
+tags:
+- name: Metadata
+paths:
+  /api/repos/{namespace}/{repo_name}/metadata/{resource}:
+    get:
+      description: Get metadata for a file or directory entry, with optional workspace support.
+      operationId: file
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Path to the file/dir (including branch/commit info)
+        example: main/images/train/dog_1.jpg
+        in: path
+        name: resource
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EMetadataEntryResponseView'
+          description: Metadata for the entry found
+        '400':
+          description: Invalid resource path
+        '404':
+          description: Entry not found
+      summary: Get file metadata
+      tags:
+      - Metadata
+    put:
+      description: Update metadata for a file version in the version store.
+      operationId: update_metadata
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Path to the file (including version to update)
+        example: versions/files/b4/158b417c800c7322d711f1816f5c00e1215b4d7c001c9b6892556d11/data
+        in: path
+        name: resource
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusMessage'
+          description: Metadata updated
+        '400':
+          description: Missing version in resource path
+        '404':
+          description: Repository not found
+      summary: Update file metadata
+      tags:
+      - Metadata
+components:
+  schemas:
+    GenericMetadata:
+      oneOf:
+      - $ref: '#/components/schemas/MetadataDir'
+      - $ref: '#/components/schemas/MetadataText'
+      - $ref: '#/components/schemas/MetadataImage'
+      - $ref: '#/components/schemas/MetadataVideo'
+      - $ref: '#/components/schemas/MetadataAudio'
+      - $ref: '#/components/schemas/MetadataTabular'
+    EMetadataEntry:
+      oneOf:
+      - $ref: '#/components/schemas/MetadataEntry'
+      - $ref: '#/components/schemas/WorkspaceMetadataEntry'
+    MetadataVideoImpl:
+      properties:
+        height:
+          minimum: 0
+          type: integer
+        num_seconds:
+          format: double
+          type: number
+        width:
+          minimum: 0
+          type: integer
+      required:
+      - num_seconds
+      - width
+      - height
+      type: object
+    MetadataImageImpl:
+      properties:
+        color_space:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ImgColorSpace'
+        height:
+          format: int32
+          minimum: 0
+          type: integer
+        width:
+          format: int32
+          minimum: 0
+          type: integer
+      required:
+      - width
+      - height
+      type: object
+    MetadataText:
+      properties:
+        text:
+          $ref: '#/components/schemas/MetadataTextImpl'
+      required:
+      - text
+      type: object
+    WorkspaceView:
+      description: 'Used to send workspace state across the wire. The `Workspace`''s other fields (like
+
+        `LocalRepository`) would bloat the response and leak internal state.'
+      properties:
+        commit:
+          $ref: '#/components/schemas/Commit'
+        id:
+          type: string
+        name:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - commit
+      type: object
+    WorkspaceMetadataEntry:
+      properties:
+        changes:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/WorkspaceChanges'
+        children:
+          items:
+            $ref: '#/components/schemas/WorkspaceMetadataEntry'
+          type:
+          - array
+          - 'null'
+        data_type:
+          $ref: '#/components/schemas/EntryDataType'
+        extension:
+          type: string
+        filename:
+          type: string
+        hash:
+          type: string
+        is_dir:
+          type: boolean
+        is_queryable:
+          type:
+          - boolean
+          - 'null'
+        latest_commit:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Commit'
+        metadata:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/GenericMetadata'
+        mime_type:
+          type: string
+        resource:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ParsedResourceView'
+        size:
+          format: int64
+          minimum: 0
+          type: integer
+      required:
+      - filename
+      - hash
+      - is_dir
+      - size
+      - data_type
+      - mime_type
+      - extension
+      type: object
+    MetadataTabular:
+      properties:
+        tabular:
+          $ref: '#/components/schemas/MetadataTabularImpl'
+      required:
+      - tabular
+      type: object
+    DataTypeCount:
+      properties:
+        count:
+          minimum: 0
+          type: integer
+        data_type:
+          type: string
+      required:
+      - count
+      - data_type
+      type: object
+    MetadataDir:
+      properties:
+        dir:
+          $ref: '#/components/schemas/MetadataDirImpl'
+      required:
+      - dir
+      type: object
+    Schema:
+      properties:
+        fields:
+          items:
+            $ref: '#/components/schemas/Field'
+          type: array
+        hash:
+          type: string
+        metadata: {}
+      required:
+      - hash
+      - fields
+      type: object
+    Changes:
+      properties:
+        previous:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/PreviousField'
+        status:
+          type: string
+      required:
+      - status
+      type: object
+    ImgColorSpace:
+      enum:
+      - RGB
+      - RGBA
+      - Grayscale
+      - GrayscaleAlpha
+      - Rgb16
+      - Rgba16
+      - Grayscale16
+      - GrayscaleAlpha16
+      - Rgb32F
+      - Rgba32F
+      - Unknown
+      type: string
+    MetadataEntry:
+      additionalProperties: false
+      description: '`deny_unknown_fields` is the discriminator for the untagged `EMetadataEntry` enum:
+
+        payloads with a `changes` field (i.e. `WorkspaceMetadataEntry`) fail to deserialize here
+
+        and fall through to the workspace variant.'
+      properties:
+        children:
+          items:
+            $ref: '#/components/schemas/MetadataEntry'
+          type:
+          - array
+          - 'null'
+        data_type:
+          $ref: '#/components/schemas/EntryDataType'
+        extension:
+          type: string
+        filename:
+          type: string
+        hash:
+          type: string
+        is_dir:
+          type: boolean
+        is_queryable:
+          type:
+          - boolean
+          - 'null'
+        latest_commit:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Commit'
+        metadata:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/GenericMetadata'
+        mime_type:
+          type: string
+        resource:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ParsedResourceView'
+        size:
+          format: int64
+          minimum: 0
+          type: integer
+      required:
+      - filename
+      - hash
+      - is_dir
+      - size
+      - data_type
+      - mime_type
+      - extension
+      type: object
+    WorkspaceChanges:
+      properties:
+        status:
+          $ref: '#/components/schemas/StagedEntryStatus'
+      required:
+      - status
+      type: object
+    Field:
+      properties:
+        changes:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Changes'
+        dtype:
+          type: string
+        metadata: {}
+        name:
+          type: string
+      required:
+      - name
+      - dtype
+      type: object
+    MetadataAudio:
+      properties:
+        audio:
+          $ref: '#/components/schemas/MetadataAudioImpl'
+      required:
+      - audio
+      type: object
+    MetadataAudioImpl:
+      properties:
+        num_channels:
+          minimum: 0
+          type: integer
+        num_seconds:
+          format: double
+          type: number
+        sample_rate:
+          minimum: 0
+          type: integer
+      required:
+      - num_seconds
+      - num_channels
+      - sample_rate
+      type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
+    StagedEntryStatus:
+      enum:
+      - Added
+      - Modified
+      - Removed
+      - Unmodified
+      type: string
+    PreviousField:
+      properties:
+        dtype:
+          type: string
+        metadata: {}
+        name:
+          type: string
+      required:
+      - name
+      - dtype
+      type: object
+    EMetadataEntryResponseView:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          entry:
+            $ref: '#/components/schemas/EMetadataEntry'
+        required:
+        - entry
+        type: object
+    Branch:
+      properties:
+        commit_id:
+          type: string
+        name:
+          type: string
+      required:
+      - name
+      - commit_id
+      type: object
+    EntryDataType:
+      enum:
+      - dir
+      - text
+      - image
+      - video
+      - audio
+      - tabular
+      - binary
+      type: string
+    Commit:
+      example:
+        author: ox
+        email: ox@example.com
+        id: a1b2c3d4e5f67890abcdef1234567890
+        message: Refactor data loading pipeline.
+        parent_ids:
+        - f1e2d3c4b5a67890fedcba9876543210
+        timestamp: '2025-01-01T10:00:00Z'
+      properties:
+        author:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        message:
+          type: string
+        parent_ids:
+          items:
+            type: string
+          type: array
+        timestamp:
+          format: date-time
+          type: string
+      required:
+      - id
+      - parent_ids
+      - message
+      - author
+      - email
+      - timestamp
+      type: object
+    MetadataImage:
+      properties:
+        image:
+          $ref: '#/components/schemas/MetadataImageImpl'
+      required:
+      - image
+      type: object
+    MetadataTabularImpl:
+      properties:
+        height:
+          minimum: 0
+          type: integer
+        schema:
+          $ref: '#/components/schemas/Schema'
+        width:
+          minimum: 0
+          type: integer
+      required:
+      - width
+      - height
+      - schema
+      type: object
+    MetadataTextImpl:
+      properties:
+        num_chars:
+          minimum: 0
+          type: integer
+        num_lines:
+          minimum: 0
+          type: integer
+      required:
+      - num_lines
+      - num_chars
+      type: object
+    ParsedResourceView:
+      description: External (view) model that is returned to the client with fewer fields.
+      properties:
+        branch:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Branch'
+        commit:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Commit'
+        path:
+          type: string
+        resource:
+          type: string
+        version:
+          type: string
+        workspace:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/WorkspaceView'
+      required:
+      - path
+      - version
+      - resource
+      type: object
+    MetadataDirImpl:
+      properties:
+        data_types:
+          items:
+            $ref: '#/components/schemas/DataTypeCount'
+          type: array
+      required:
+      - data_types
+      type: object
+    MetadataVideo:
+      properties:
+        video:
+          $ref: '#/components/schemas/MetadataVideoImpl'
+      required:
+      - video
+      type: object
+  securitySchemes:
+    authorization:
+      scheme: bearer
+      type: http

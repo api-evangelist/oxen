@@ -1,0 +1,768 @@
+openapi: 3.0.0
+info:
+  title: oxen Ai Repositories API
+  version: 0.243.1
+  description: Repository management endpoints.
+servers:
+- url: https://hub.oxen.ai
+  variables: {}
+security: []
+tags:
+- description: Repository management endpoints.
+  name: Repositories
+paths:
+  /api/repos/{namespace}/{repo_name}/stats:
+    get:
+      description: Get the total number of files, the total size of the files, and the number of different file types.
+      operationId: stats
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RepositoryStatsResponse'
+          description: Repository statistics
+        '404':
+          description: Repository not found
+      summary: Get repository stats
+      tags:
+      - Repositories
+  /api/repos/{namespace}:
+    get:
+      description: List all repositories in a namespace.
+      operationId: index
+      parameters:
+      - description: Namespace to list repositories from
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListRepositoryResponse'
+          description: List of repositories
+        '404':
+          description: Namespace not found
+      summary: List repositories
+      tags:
+      - Repositories
+  /api/repos/{namespace}/{repo_name}/transfer:
+    patch:
+      description: Transfer a repository to a different namespace.
+      operationId: transfer_namespace
+      parameters:
+      - description: Current namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: Cat-Dog-Classifier
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              namespace: new_org
+            schema:
+              $ref: '#/components/schemas/NamespaceView'
+        description: Target namespace to transfer the repository to.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RepositoryResponse'
+          description: Repository transferred successfully
+        '400':
+          description: Invalid body or target namespace
+        '404':
+          description: Repository not found
+      summary: Transfer repository namespace
+      tags:
+      - Repositories
+  /api/repos/{namespace}/{repo_name}/size:
+    get:
+      description: Get the cached size of the repository in bytes.
+      operationId: get_size
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            text/plain:
+              schema:
+                format: int64
+                minimum: 0
+                type: integer
+          description: Repository size in bytes
+        '404':
+          description: Repository not found
+      summary: Get repository size
+      tags:
+      - Repositories
+    put:
+      description: Recalculate and update the cached repository size.
+      operationId: update_size
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusMessage'
+          description: Repository size updated
+        '404':
+          description: Repository not found
+      summary: Update repository size
+      tags:
+      - Repositories
+  /api/repos/{namespace}/{repo_name}:
+    delete:
+      description: Delete a repository. Deletion runs in the background.
+      operationId: delete
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: Cat-Dog-Classifier
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusMessage'
+          description: Repository deletion started
+        '404':
+          description: Repository not found
+      summary: Delete repository
+      tags:
+      - Repositories
+    get:
+      description: Get repository details including size and data types from the main branch.
+      operationId: show
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RepositoryDataTypesResponse'
+          description: Repository details
+        '404':
+          description: Repository not found
+      summary: Get repository details
+      tags:
+      - Repositories
+  /api/repos:
+    post:
+      description: Create a new repository, optionally with initial files via JSON or multipart form.
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            example:
+              description: A repository for image classification
+              name: Cat-Dog-Classifier
+              namespace: ox
+              user:
+                email: bessie@oxen.ai
+                name: bessie
+            schema:
+              $ref: '#/components/schemas/RepoNew'
+        description: Repository creation payload (JSON or Multipart)
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RepositoryCreationResponse'
+          description: Repository created
+        '400':
+          description: Invalid payload
+        '409':
+          description: Repository already exists
+      summary: Create repository
+      tags:
+      - Repositories
+components:
+  schemas:
+    RepositoryStatsResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          repository:
+            $ref: '#/components/schemas/RepositoryStatsView'
+        required:
+        - repository
+        type: object
+      example:
+        repository:
+          data_size: 1074288000
+          data_types:
+          - data_size: 524288000
+            data_type: image
+            file_count: 500
+          - data_size: 550000000
+            data_type: tabular
+            file_count: 5
+        status: success
+        status_message: resource_found
+    RepositoryDataTypesView:
+      allOf:
+      - $ref: '#/components/schemas/RepositoryView'
+      - properties:
+          branch_count:
+            minimum: 0
+            type: integer
+          data_types:
+            items:
+              $ref: '#/components/schemas/DataTypeCount'
+            type: array
+          default_resource:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/ParsedResourceView'
+          size:
+            format: int64
+            minimum: 0
+            type: integer
+        required:
+        - size
+        - data_types
+        type: object
+      example:
+        branch_count: 3
+        data_types:
+        - count: 1000
+          data_type: image
+        - count: 5
+          data_type: tabular
+        is_empty: false
+        name: my-corn-pics
+        namespace: bessie
+        size: 1073741824
+        storage_kind: s3
+    DataTypeView:
+      example:
+        data_size: 524288000
+        data_type: image
+        file_count: 500
+      properties:
+        data_size:
+          format: int64
+          minimum: 0
+          type: integer
+        data_type:
+          $ref: '#/components/schemas/EntryDataType'
+        file_count:
+          minimum: 0
+          type: integer
+      required:
+      - data_type
+      - data_size
+      - file_count
+      type: object
+    WorkspaceView:
+      description: 'Used to send workspace state across the wire. The `Workspace`''s other fields (like
+
+        `LocalRepository`) would bloat the response and leak internal state.'
+      properties:
+        commit:
+          $ref: '#/components/schemas/Commit'
+        id:
+          type: string
+        name:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - commit
+      type: object
+    FileContents:
+      oneOf:
+      - properties:
+          Text:
+            type: string
+        required:
+        - Text
+        type: object
+      - properties:
+          Binary:
+            items:
+              format: int32
+              minimum: 0
+              type: integer
+            type: array
+        required:
+        - Binary
+        type: object
+    RepositoryCreationView:
+      example:
+        latest_commit:
+          author: ox
+          email: ox@example.com
+          id: a1b2c3d4e5f67890abcdef1234567890
+          message: Initial dataset import.
+          parent_ids:
+          - f1e2d3c4b5a67890fedcba9876543210
+          timestamp: '2025-01-01T10:00:00Z'
+        name: ImageNet-1k
+        namespace: ox
+        storage_kind: s3
+      properties:
+        latest_commit:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Commit'
+        min_version:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        namespace:
+          type: string
+        storage_kind:
+          $ref: '#/components/schemas/StorageKind'
+      required:
+      - namespace
+      - name
+      - storage_kind
+      type: object
+    NamespaceView:
+      properties:
+        namespace:
+          type: string
+      required:
+      - namespace
+      type: object
+    DataTypeCount:
+      properties:
+        count:
+          minimum: 0
+          type: integer
+        data_type:
+          type: string
+      required:
+      - count
+      - data_type
+      type: object
+    RepositoryResponse:
+      example:
+        repository:
+          is_empty: false
+          name: ImageNet-1k
+          namespace: ox
+        status: success
+        status_message: resource_found
+      properties:
+        repository:
+          $ref: '#/components/schemas/RepositoryView'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      - repository
+      type: object
+    FileNew:
+      properties:
+        contents:
+          $ref: '#/components/schemas/FileContents'
+        path:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+      - path
+      - contents
+      - user
+      type: object
+    RepositoryListView:
+      example:
+        name: my-farm-data
+        namespace: bessie
+      properties:
+        min_version:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        namespace:
+          type: string
+      required:
+      - namespace
+      - name
+      type: object
+    RepoNew:
+      description: 'Only used between client and server for creating a new remote repository.
+
+        '
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        files:
+          items:
+            $ref: '#/components/schemas/FileNew'
+          type:
+          - array
+          - 'null'
+        host:
+          type:
+          - string
+          - 'null'
+        is_public:
+          type:
+          - boolean
+          - 'null'
+        name:
+          description: 'The name of the repository. When cloned locally, this is the name of the directory.
+
+            This name uniquely identifies it in the namespace.'
+          type: string
+        namespace:
+          description: 'The namespace that the repository lives in: dictates application-level repository ownership.
+
+            A namespace can be e.g. a user, a team, or an entire organization. Namespaces must be unique.'
+          type: string
+        root_commit:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Commit'
+        scheme:
+          type:
+          - string
+          - 'null'
+        storage_kind:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/StorageKind'
+            description: Which storage backend the server should use for this repo (e.g. "local", "s3").
+      required:
+      - namespace
+      - name
+      type: object
+    ListRepositoryResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          repositories:
+            example:
+            - name: data-fields
+              namespace: ox
+            - name: my-corn-pics
+              namespace: bessie
+            items:
+              $ref: '#/components/schemas/RepositoryListView'
+            type: array
+        required:
+        - repositories
+        type: object
+      example:
+        repositories:
+        - name: data-fields
+          namespace: ox
+        - name: my-corn-pics
+          namespace: bessie
+        status: success
+        status_message: resource_found
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
+    RepositoryCreationResponse:
+      example:
+        repository:
+          latest_commit:
+            author: ox
+            email: ox@example.com
+            id: a1b2c3d4e5f678902e41
+            message: Initial dataset import.
+            parent_ids:
+            - f1e2d3c4b5a67890fedc
+            timestamp: '2025-01-01T10:00:00Z'
+          name: ImageNet-1k
+          namespace: ox
+        status: success
+        status_message: resource_created
+      properties:
+        repository:
+          $ref: '#/components/schemas/RepositoryCreationView'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      - repository
+      type: object
+    Branch:
+      properties:
+        commit_id:
+          type: string
+        name:
+          type: string
+      required:
+      - name
+      - commit_id
+      type: object
+    RepositoryView:
+      example:
+        is_empty: false
+        name: ImageNet-1k
+        namespace: ox
+        storage_kind: s3
+      properties:
+        is_empty:
+          type: boolean
+        min_version:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        namespace:
+          type: string
+        storage_kind:
+          $ref: '#/components/schemas/StorageKind'
+      required:
+      - namespace
+      - name
+      - is_empty
+      - storage_kind
+      type: object
+    EntryDataType:
+      enum:
+      - dir
+      - text
+      - image
+      - video
+      - audio
+      - tabular
+      - binary
+      type: string
+    User:
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+      required:
+      - email
+      - name
+      type: object
+    StorageKind:
+      description: Storage backend kind. Serializes as `"local"` / `"s3"` on the wire and on disk.
+      enum:
+      - local
+      - s3
+      type: string
+    Commit:
+      example:
+        author: ox
+        email: ox@example.com
+        id: a1b2c3d4e5f67890abcdef1234567890
+        message: Refactor data loading pipeline.
+        parent_ids:
+        - f1e2d3c4b5a67890fedcba9876543210
+        timestamp: '2025-01-01T10:00:00Z'
+      properties:
+        author:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        message:
+          type: string
+        parent_ids:
+          items:
+            type: string
+          type: array
+        timestamp:
+          format: date-time
+          type: string
+      required:
+      - id
+      - parent_ids
+      - message
+      - author
+      - email
+      - timestamp
+      type: object
+    RepositoryDataTypesResponse:
+      example:
+        repository:
+          data_types:
+          - count: 1000
+            data_type: image
+          - count: 5
+            data_type: tabular
+          is_empty: false
+          name: my-corn-pics
+          namespace: bessie
+          size: 1074288000
+        status: success
+        status_message: resource_found
+      properties:
+        repository:
+          $ref: '#/components/schemas/RepositoryDataTypesView'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      - repository
+      type: object
+    ParsedResourceView:
+      description: External (view) model that is returned to the client with fewer fields.
+      properties:
+        branch:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Branch'
+        commit:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Commit'
+        path:
+          type: string
+        resource:
+          type: string
+        version:
+          type: string
+        workspace:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/WorkspaceView'
+      required:
+      - path
+      - version
+      - resource
+      type: object
+    RepositoryStatsView:
+      example:
+        data_size: 1074288000
+        data_types:
+        - data_size: 524288000
+          data_type: image
+          file_count: 500
+        - data_size: 550000000
+          data_type: tabular
+          file_count: 5
+      properties:
+        data_size:
+          format: int64
+          minimum: 0
+          type: integer
+        data_types:
+          items:
+            $ref: '#/components/schemas/DataTypeView'
+          type: array
+      required:
+      - data_size
+      - data_types
+      type: object
+  securitySchemes:
+    authorization:
+      scheme: bearer
+      type: http

@@ -1,0 +1,1185 @@
+openapi: 3.0.0
+info:
+  title: oxen Ai Compare API
+  version: 0.243.1
+servers:
+- url: https://hub.oxen.ai
+  variables: {}
+security: []
+tags:
+- name: Compare
+paths:
+  /api/repos/{namespace}/{repo_name}/compare/data_frames/{compare_id}/diff:
+    get:
+      description: Get the derived diff data frame rows with pagination and optional filtering.
+      operationId: get_derived_df
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: compare-datasets
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The unique ID of the comparison session
+        example: uuid-1234
+        in: path
+        name: compare_id
+        required: true
+        schema:
+          type: string
+      - description: Page number for pagination (starts at 1)
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+      - description: Page size for pagination
+        in: query
+        name: page_size
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonDataFrameViewResponse'
+          description: Derived data frame found successfully
+        '404':
+          description: Repository or comparison ID not found
+      summary: Get Derived Data Frame
+      tags:
+      - Compare
+  /api/repos/{namespace}/{repo_name}/compare/{base_head}/dir/{dir}/entries:
+    get:
+      description: List the files and sub-directories within a directory that have changed within a provided commit range.
+      operationId: dir_entries
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: satellite-images
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The base and head revisions separated by '..'
+        example: main..feature/add-labels
+        in: path
+        name: base_head
+        required: true
+        schema:
+          type: string
+      - description: The directory path to list entries for
+        example: data/test
+        in: path
+        name: dir
+        required: true
+        schema:
+          type: string
+      - description: Page number for pagination (starts at 1)
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+      - description: Page size for pagination
+        in: query
+        name: page_size
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompareEntriesResponse'
+          description: Entries found successfully
+        '404':
+          description: Repository, revision, or directory not found
+      summary: List changed files
+      tags:
+      - Compare
+  /api/repos/{namespace}/{repo_name}/compare/{base_head}/file/{resource}:
+    get:
+      description: Get the detailed diff for a specific file between two revisions.
+      operationId: file
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: compare-datasets
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The base and head revisions separated by '..'
+        example: main..feature/add-labels
+        in: path
+        name: base_head
+        required: true
+        schema:
+          type: string
+      - description: Path to the file (including branch)
+        example: data/test/file.txt
+        in: path
+        name: resource
+        required: true
+        schema:
+          type: string
+      - description: Page number for pagination (starts at 1)
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+      - description: Page size for pagination
+        in: query
+        name: page_size
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompareEntryResponse'
+          description: File diff found successfully
+        '404':
+          description: Repository, revision, or file not found
+      summary: Get file diff
+      tags:
+      - Compare
+  /api/repos/{namespace}/{repo_name}/compare/{base_head}/tree:
+    get:
+      description: Get a tree structure of directories that have changed between two revisions.
+      operationId: dir_tree
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: satellite-images
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The base and head revisions separated by '..'
+        example: main..feature/add-labels
+        in: path
+        name: base_head
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirTreeDiffResponse'
+          description: Directory diff tree found successfully
+        '404':
+          description: Repository or one of the revisions not found
+      summary: Get diff tree
+      tags:
+      - Compare
+  /api/repos/{namespace}/{repo_name}/compare/{base_head}/entries:
+    get:
+      description: List paginated entries (files and directories) that changed between two revisions with change counts.
+      operationId: entries
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: satellite-images
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The base and head revisions separated by '..'
+        example: main..feature/add-labels
+        in: path
+        name: base_head
+        required: true
+        schema:
+          type: string
+      - description: Page number for pagination (starts at 1)
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+      - description: Page size for pagination
+        in: query
+        name: page_size
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompareEntriesResponse'
+          description: Entries found successfully
+        '404':
+          description: Repository or one of the revisions not found
+      summary: List file and directory entries changed between base and head
+      tags:
+      - Compare
+  /api/repos/{namespace}/{repo_name}/compare/{base_head}/commits:
+    get:
+      description: List commits between a 'base' and 'head' commit.
+      operationId: commits
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: satellite-images
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The base and head revisions separated by '..'
+        example: main..feature/add-labels
+        in: path
+        name: base_head
+        required: true
+        schema:
+          type: string
+      - description: Page number for pagination (starts at 1)
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+      - description: Page size for pagination
+        in: query
+        name: page_size
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompareCommitsResponse'
+          description: Commits found successfully
+        '404':
+          description: Repository or one of the revisions not found
+      summary: List commits between two revisions
+      tags:
+      - Compare
+components:
+  schemas:
+    GenericMetadata:
+      oneOf:
+      - $ref: '#/components/schemas/MetadataDir'
+      - $ref: '#/components/schemas/MetadataText'
+      - $ref: '#/components/schemas/MetadataImage'
+      - $ref: '#/components/schemas/MetadataVideo'
+      - $ref: '#/components/schemas/MetadataAudio'
+      - $ref: '#/components/schemas/MetadataTabular'
+    TabularDiffWrapper:
+      properties:
+        tabular:
+          $ref: '#/components/schemas/TabularDiffSummaryImpl'
+      required:
+      - tabular
+      type: object
+    DirDiff:
+      allOf:
+      - $ref: '#/components/schemas/DirDiffSummary'
+    ChangeType:
+      enum:
+      - Added
+      - Removed
+      - Modified
+      - Unchanged
+      type: string
+    DirDiffTreeSummary:
+      properties:
+        can_display:
+          type: boolean
+        children:
+          items:
+            $ref: '#/components/schemas/DirDiffStatus'
+          type: array
+        name:
+          type: string
+        num_subdirs:
+          minimum: 0
+          type: integer
+        status:
+          $ref: '#/components/schemas/DiffEntryStatus'
+      required:
+      - name
+      - status
+      - num_subdirs
+      - can_display
+      - children
+      type: object
+    MetadataVideoImpl:
+      properties:
+        height:
+          minimum: 0
+          type: integer
+        num_seconds:
+          format: double
+          type: number
+        width:
+          minimum: 0
+          type: integer
+      required:
+      - num_seconds
+      - width
+      - height
+      type: object
+    MetadataImageImpl:
+      properties:
+        color_space:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ImgColorSpace'
+        height:
+          format: int32
+          minimum: 0
+          type: integer
+        width:
+          format: int32
+          minimum: 0
+          type: integer
+      required:
+      - width
+      - height
+      type: object
+    MetadataText:
+      properties:
+        text:
+          $ref: '#/components/schemas/MetadataTextImpl'
+      required:
+      - text
+      type: object
+    WorkspaceView:
+      description: 'Used to send workspace state across the wire. The `Workspace`''s other fields (like
+
+        `LocalRepository`) would bloat the response and leak internal state.'
+      properties:
+        commit:
+          $ref: '#/components/schemas/Commit'
+        id:
+          type: string
+        name:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - commit
+      type: object
+    TabularDiffSummaryImpl:
+      properties:
+        num_added_cols:
+          minimum: 0
+          type: integer
+        num_added_rows:
+          minimum: 0
+          type: integer
+        num_removed_cols:
+          minimum: 0
+          type: integer
+        num_removed_rows:
+          minimum: 0
+          type: integer
+        schema_has_changed:
+          type: boolean
+      required:
+      - num_added_rows
+      - num_added_cols
+      - num_removed_rows
+      - num_removed_cols
+      - schema_has_changed
+      type: object
+    DFOptsView:
+      properties:
+        opts:
+          items:
+            $ref: '#/components/schemas/DFOptView'
+          type: array
+      required:
+      - opts
+      type: object
+    LineDiff:
+      properties:
+        modification:
+          $ref: '#/components/schemas/ChangeType'
+        text:
+          type: string
+      required:
+      - modification
+      - text
+      type: object
+    JsonDataFrameViews:
+      properties:
+        source:
+          $ref: '#/components/schemas/DataFrameSchemaSize'
+        view:
+          $ref: '#/components/schemas/JsonDataFrameView'
+      required:
+      - source
+      - view
+      type: object
+    CompareEntriesResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - $ref: '#/components/schemas/Pagination'
+      - properties:
+          compare:
+            $ref: '#/components/schemas/CompareEntries'
+        required:
+        - compare
+        type: object
+    DerivedDFResource:
+      properties:
+        path:
+          type: string
+        resource_id:
+          type: string
+        resource_type:
+          $ref: '#/components/schemas/DFResourceType'
+      required:
+      - resource_id
+      - path
+      - resource_type
+      type: object
+    MetadataTabular:
+      properties:
+        tabular:
+          $ref: '#/components/schemas/MetadataTabularImpl'
+      required:
+      - tabular
+      type: object
+    TabularDiffSummary:
+      properties:
+        summary:
+          $ref: '#/components/schemas/TabularDiffSummaryImpl'
+      required:
+      - summary
+      type: object
+    CompareCommits:
+      properties:
+        base_commit:
+          $ref: '#/components/schemas/Commit'
+        commits:
+          items:
+            $ref: '#/components/schemas/Commit'
+          type: array
+        head_commit:
+          $ref: '#/components/schemas/Commit'
+      required:
+      - base_commit
+      - head_commit
+      - commits
+      type: object
+    Pagination:
+      properties:
+        page_number:
+          minimum: 0
+          type: integer
+        page_size:
+          minimum: 0
+          type: integer
+        total_entries:
+          minimum: 0
+          type: integer
+        total_pages:
+          minimum: 0
+          type: integer
+      required:
+      - page_size
+      - page_number
+      - total_pages
+      - total_entries
+      type: object
+    DataTypeCount:
+      properties:
+        count:
+          minimum: 0
+          type: integer
+        data_type:
+          type: string
+      required:
+      - count
+      - data_type
+      type: object
+    MetadataDir:
+      properties:
+        dir:
+          $ref: '#/components/schemas/MetadataDirImpl'
+      required:
+      - dir
+      type: object
+    Changes:
+      properties:
+        previous:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/PreviousField'
+        status:
+          type: string
+      required:
+      - status
+      type: object
+    Schema:
+      properties:
+        fields:
+          items:
+            $ref: '#/components/schemas/Field'
+          type: array
+        hash:
+          type: string
+        metadata: {}
+      required:
+      - hash
+      - fields
+      type: object
+    GenericDiff:
+      oneOf:
+      - $ref: '#/components/schemas/DirDiff'
+      - $ref: '#/components/schemas/TabularDiffView'
+      - $ref: '#/components/schemas/TextDiff'
+    DiffEntry:
+      properties:
+        base_entry:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/MetadataEntry'
+        base_resource:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ParsedResourceView'
+        data_type:
+          $ref: '#/components/schemas/EntryDataType'
+        diff:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/GenericDiff'
+        diff_summary:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/GenericDiffSummary'
+        filename:
+          type: string
+        head_entry:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/MetadataEntry'
+        head_resource:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ParsedResourceView'
+        is_dir:
+          type: boolean
+        size:
+          format: int64
+          minimum: 0
+          type: integer
+        status:
+          type: string
+      required:
+      - status
+      - data_type
+      - filename
+      - is_dir
+      - size
+      type: object
+    CompareEntryResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          compare:
+            $ref: '#/components/schemas/DiffEntry'
+        required:
+        - compare
+        type: object
+    DFResourceType:
+      enum:
+      - compare
+      - diff
+      - query
+      type: string
+    DataFrameSchemaSize:
+      properties:
+        schema:
+          $ref: '#/components/schemas/Schema'
+        size:
+          $ref: '#/components/schemas/DataFrameSize'
+      required:
+      - schema
+      - size
+      type: object
+    ImgColorSpace:
+      enum:
+      - RGB
+      - RGBA
+      - Grayscale
+      - GrayscaleAlpha
+      - Rgb16
+      - Rgba16
+      - Grayscale16
+      - GrayscaleAlpha16
+      - Rgb32F
+      - Rgba32F
+      - Unknown
+      type: string
+    MetadataEntry:
+      additionalProperties: false
+      description: '`deny_unknown_fields` is the discriminator for the untagged `EMetadataEntry` enum:
+
+        payloads with a `changes` field (i.e. `WorkspaceMetadataEntry`) fail to deserialize here
+
+        and fall through to the workspace variant.'
+      properties:
+        children:
+          items:
+            $ref: '#/components/schemas/MetadataEntry'
+          type:
+          - array
+          - 'null'
+        data_type:
+          $ref: '#/components/schemas/EntryDataType'
+        extension:
+          type: string
+        filename:
+          type: string
+        hash:
+          type: string
+        is_dir:
+          type: boolean
+        is_queryable:
+          type:
+          - boolean
+          - 'null'
+        latest_commit:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Commit'
+        metadata:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/GenericMetadata'
+        mime_type:
+          type: string
+        resource:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ParsedResourceView'
+        size:
+          format: int64
+          minimum: 0
+          type: integer
+      required:
+      - filename
+      - hash
+      - is_dir
+      - size
+      - data_type
+      - mime_type
+      - extension
+      type: object
+    TabularDiffViewImpl:
+      allOf:
+      - $ref: '#/components/schemas/TabularDiffSummary'
+      - properties:
+          added_cols:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/JsonDataFrame'
+          added_cols_view:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/JsonDataFrameView'
+          added_rows:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/JsonDataFrame'
+          added_rows_view:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/JsonDataFrameView'
+          base_schema:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/Schema'
+          head_schema:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/Schema'
+          removed_cols:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/JsonDataFrame'
+          removed_cols_view:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/JsonDataFrameView'
+          removed_rows:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/JsonDataFrame'
+          removed_rows_view:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/JsonDataFrameView'
+        type: object
+    DataFrameSize:
+      properties:
+        height:
+          minimum: 0
+          type: integer
+        width:
+          minimum: 0
+          type: integer
+      required:
+      - height
+      - width
+      type: object
+    AddRemoveModifyCounts:
+      properties:
+        added:
+          minimum: 0
+          type: integer
+        modified:
+          minimum: 0
+          type: integer
+        removed:
+          minimum: 0
+          type: integer
+      required:
+      - added
+      - removed
+      - modified
+      type: object
+    Field:
+      properties:
+        changes:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Changes'
+        dtype:
+          type: string
+        metadata: {}
+        name:
+          type: string
+      required:
+      - name
+      - dtype
+      type: object
+    MetadataAudio:
+      properties:
+        audio:
+          $ref: '#/components/schemas/MetadataAudioImpl'
+      required:
+      - audio
+      type: object
+    DirDiffStatus:
+      properties:
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/DiffEntryStatus'
+      required:
+      - name
+      - status
+      type: object
+    MetadataAudioImpl:
+      properties:
+        num_channels:
+          minimum: 0
+          type: integer
+        num_seconds:
+          format: double
+          type: number
+        sample_rate:
+          minimum: 0
+          type: integer
+      required:
+      - num_seconds
+      - num_channels
+      - sample_rate
+      type: object
+    DirTreeDiffResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          dirs:
+            items:
+              $ref: '#/components/schemas/DirDiffTreeSummary'
+            type: array
+        required:
+        - dirs
+        type: object
+    TabularDiffView:
+      properties:
+        tabular:
+          $ref: '#/components/schemas/TabularDiffViewImpl'
+      required:
+      - tabular
+      type: object
+    PreviousField:
+      properties:
+        dtype:
+          type: string
+        metadata: {}
+        name:
+          type: string
+      required:
+      - name
+      - dtype
+      type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
+    Branch:
+      properties:
+        commit_id:
+          type: string
+        name:
+          type: string
+      required:
+      - name
+      - commit_id
+      type: object
+    CompareEntries:
+      properties:
+        base_commit:
+          $ref: '#/components/schemas/Commit'
+        counts:
+          $ref: '#/components/schemas/AddRemoveModifyCounts'
+        entries:
+          items:
+            $ref: '#/components/schemas/DiffEntry'
+          type: array
+        head_commit:
+          $ref: '#/components/schemas/Commit'
+        self:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/DiffEntry'
+      required:
+      - base_commit
+      - head_commit
+      - counts
+      - entries
+      type: object
+    EntryDataType:
+      enum:
+      - dir
+      - text
+      - image
+      - video
+      - audio
+      - tabular
+      - binary
+      type: string
+    JsonDataFrame:
+      properties:
+        data: {}
+        full_size:
+          $ref: '#/components/schemas/DataFrameSize'
+        schema:
+          $ref: '#/components/schemas/Schema'
+        view_schema:
+          $ref: '#/components/schemas/Schema'
+        view_size:
+          $ref: '#/components/schemas/DataFrameSize'
+      required:
+      - schema
+      - view_schema
+      - view_size
+      - full_size
+      - data
+      type: object
+    JsonDataFrameView:
+      allOf:
+      - $ref: '#/components/schemas/DFOptsView'
+      - properties:
+          data: {}
+          pagination:
+            $ref: '#/components/schemas/Pagination'
+          schema:
+            $ref: '#/components/schemas/Schema'
+          size:
+            $ref: '#/components/schemas/DataFrameSize'
+        required:
+        - schema
+        - size
+        - data
+        - pagination
+        type: object
+    Commit:
+      example:
+        author: ox
+        email: ox@example.com
+        id: a1b2c3d4e5f67890abcdef1234567890
+        message: Refactor data loading pipeline.
+        parent_ids:
+        - f1e2d3c4b5a67890fedcba9876543210
+        timestamp: '2025-01-01T10:00:00Z'
+      properties:
+        author:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        message:
+          type: string
+        parent_ids:
+          items:
+            type: string
+          type: array
+        timestamp:
+          format: date-time
+          type: string
+      required:
+      - id
+      - parent_ids
+      - message
+      - author
+      - email
+      - timestamp
+      type: object
+    DirDiffSummary:
+      properties:
+        dir:
+          $ref: '#/components/schemas/DirDiffSummaryImpl'
+      required:
+      - dir
+      type: object
+    GenericDiffSummary:
+      oneOf:
+      - $ref: '#/components/schemas/DirDiffSummary'
+      - $ref: '#/components/schemas/TabularDiffWrapper'
+    MetadataImage:
+      properties:
+        image:
+          $ref: '#/components/schemas/MetadataImageImpl'
+      required:
+      - image
+      type: object
+    DiffEntryStatus:
+      enum:
+      - added
+      - modified
+      - removed
+      type: string
+    DFOptView:
+      properties:
+        name:
+          type: string
+        value: {}
+      required:
+      - name
+      - value
+      type: object
+    JsonDataFrameViewResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          commit:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/Commit'
+          data_frame:
+            $ref: '#/components/schemas/JsonDataFrameViews'
+          derived_resource:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/DerivedDFResource'
+          resource:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/ResourceVersion'
+        required:
+        - data_frame
+        type: object
+    ResourceVersion:
+      properties:
+        path:
+          type: string
+        version:
+          type: string
+      required:
+      - path
+      - version
+      type: object
+    DirDiffSummaryImpl:
+      properties:
+        file_counts:
+          $ref: '#/components/schemas/AddRemoveModifyCounts'
+      required:
+      - file_counts
+      type: object
+    MetadataTabularImpl:
+      properties:
+        height:
+          minimum: 0
+          type: integer
+        schema:
+          $ref: '#/components/schemas/Schema'
+        width:
+          minimum: 0
+          type: integer
+      required:
+      - width
+      - height
+      - schema
+      type: object
+    MetadataTextImpl:
+      properties:
+        num_chars:
+          minimum: 0
+          type: integer
+        num_lines:
+          minimum: 0
+          type: integer
+      required:
+      - num_lines
+      - num_chars
+      type: object
+    ParsedResourceView:
+      description: External (view) model that is returned to the client with fewer fields.
+      properties:
+        branch:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Branch'
+        commit:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Commit'
+        path:
+          type: string
+        resource:
+          type: string
+        version:
+          type: string
+        workspace:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/WorkspaceView'
+      required:
+      - path
+      - version
+      - resource
+      type: object
+    TextDiff:
+      properties:
+        filename1:
+          type:
+          - string
+          - 'null'
+        filename2:
+          type:
+          - string
+          - 'null'
+        lines:
+          items:
+            $ref: '#/components/schemas/LineDiff'
+          type: array
+      required:
+      - lines
+      type: object
+    MetadataDirImpl:
+      properties:
+        data_types:
+          items:
+            $ref: '#/components/schemas/DataTypeCount'
+          type: array
+      required:
+      - data_types
+      type: object
+    MetadataVideo:
+      properties:
+        video:
+          $ref: '#/components/schemas/MetadataVideoImpl'
+      required:
+      - video
+      type: object
+    CompareCommitsResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - $ref: '#/components/schemas/Pagination'
+      - properties:
+          compare:
+            $ref: '#/components/schemas/CompareCommits'
+        required:
+        - compare
+        type: object
+  securitySchemes:
+    authorization:
+      scheme: bearer
+      type: http

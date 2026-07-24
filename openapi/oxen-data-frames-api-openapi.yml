@@ -1,0 +1,951 @@
+openapi: 3.0.0
+info:
+  title: oxen Ai Data Frames API
+  version: 0.243.1
+servers:
+- url: https://hub.oxen.ai
+  variables: {}
+security: []
+tags:
+- name: Data Frames
+paths:
+  /api/repos/{namespace}/{repo_name}/data_frames/{resource}:
+    get:
+      description: Get a paginated slice of a tabular data frame with optional filtering and transformations.
+      operationId: get
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: ImageNet-1k
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Path to the tabular file (including branch/commit info)
+        example: main/data/labels.csv
+        in: path
+        name: resource
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: columns
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: path
+        name: delimiter
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: path
+        name: find_embedding_where
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: path
+        name: filter
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: path
+        name: output
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: path
+        name: output_column
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: path
+        name: page_size
+        required: true
+        schema:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      - in: path
+        name: page
+        required: true
+        schema:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      - in: path
+        name: row
+        required: true
+        schema:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      - in: path
+        name: randomize
+        required: true
+        schema:
+          type:
+          - boolean
+          - 'null'
+      - in: path
+        name: reverse
+        required: true
+        schema:
+          type:
+          - boolean
+          - 'null'
+      - in: path
+        name: slice
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: path
+        name: sort_by
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: path
+        name: sort_by_similarity_to
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: path
+        name: sql
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: path
+        name: take
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonDataFrameViewResponse'
+          description: Data frame slice found
+        '404':
+          description: File or resource not found
+      summary: Get data frame slice
+      tags:
+      - Data Frames
+  /api/repos/{namespace}/{repo_name}/compare/data_frames:
+    post:
+      description: Create and cache a tabular diff comparing two data frames with configurable keys and target columns.
+      operationId: create_df_diff
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: compare-datasets
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TabularCompareBody'
+        description: Tabular comparison configuration (files, revisions, keys, targets)
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompareTabularResponse'
+          description: Data frame diff created and cached successfully
+        '400':
+          description: Bad Request (e.g., failed to parse body)
+        '404':
+          description: Repository, revision, or file not found
+      summary: Create a tabular data frame diff
+      tags:
+      - Data Frames
+  /api/repos/{namespace}/{repo_name}/compare/data_frames/{compare_id}:
+    delete:
+      description: Delete a cached tabular diff comparison by its ID.
+      operationId: delete_df_diff
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: compare-datasets
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The unique ID of the comparison session to delete
+        example: uuid-1234
+        in: path
+        name: compare_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusMessage'
+          description: Data frame diff deleted successfully
+        '404':
+          description: Repository or comparison ID not found
+      summary: Delete DF Diff
+      tags:
+      - Data Frames
+    get:
+      description: Retrieve a previously cached tabular diff by its comparison ID.
+      operationId: get_df_diff
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: compare-datasets
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The unique ID of the comparison session
+        example: uuid-1234
+        in: path
+        name: compare_id
+        required: true
+        schema:
+          type: string
+      - description: The base and head revisions separated by '..'
+        example: main..feature/add-labels
+        in: path
+        name: base_head
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TabularCompareBody'
+        description: Tabular comparison information needed to fetch the correct cached diff (files, revisions)
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompareTabularResponse'
+          description: Cached data frame diff found successfully
+        '404':
+          description: Cached diff not found for the given ID and entries
+      summary: Get a cached tabular data frame diff
+      tags:
+      - Data Frames
+    put:
+      description: Update an existing cached tabular diff comparison with new configuration.
+      operationId: update_df_diff
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: compare-datasets
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The unique ID of the comparison session
+        example: uuid-1234
+        in: path
+        name: compare_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TabularCompareBody'
+        description: Updated tabular comparison configuration
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompareTabularResponse'
+          description: Data frame diff updated and cached successfully
+        '400':
+          description: Bad Request
+        '404':
+          description: Comparison ID, Repository, revision, or file not found
+      summary: Update tabular data frame diff
+      tags:
+      - Data Frames
+  /api/repos/{namespace}/{repo_name}/data_frames/from_directory/{resource}:
+    post:
+      description: Create a data frame by scanning directory contents and commit it to a branch.
+      operationId: from_directory
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: CattleData
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Directory path to read from (including branch/commit info)
+        example: main/data/images
+        in: path
+        name: resource
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              commit_message: Generated image index
+              extra_columns:
+              - size
+              - extension
+              output_path: data/image_index.csv
+              recursive: true
+              user_email: bessie@oxen.ai
+              user_name: Bessie
+            schema:
+              $ref: '#/components/schemas/FromDirectoryRequest'
+        description: Options for creating a data frame from a directory, including output path, columns, and commit message.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitResponse'
+          description: Data frame created and committed
+        '400':
+          description: Invalid request body or resource path
+        '404':
+          description: Repository or resource not found
+      summary: Create data frame from directory
+      tags:
+      - Data Frames
+  /api/repos/{namespace}/{repo_name}/data_frames/{resource}/index:
+    post:
+      description: Start indexing a tabular file for queryable access. Creates a workspace if the file is not already indexed.
+      operationId: index
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: CattleData
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: Path to the tabular file to index (including branch/commit info)
+        example: main/data/weights.csv
+        in: path
+        name: resource
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusMessage'
+          description: Indexing process started or completed
+        '404':
+          description: Resource not found
+        '409':
+          description: Dataset already indexed
+      summary: Start data frame indexing
+      tags:
+      - Data Frames
+components:
+  schemas:
+    NewColumn:
+      properties:
+        data_type:
+          type: string
+        name:
+          type: string
+      required:
+      - name
+      - data_type
+      type: object
+    TabularCompareBody:
+      properties:
+        compare:
+          items:
+            $ref: '#/components/schemas/TabularCompareTargetBody'
+          type: array
+        compare_id:
+          type: string
+        display:
+          items:
+            $ref: '#/components/schemas/TabularCompareTargetBody'
+          type: array
+        keys:
+          items:
+            $ref: '#/components/schemas/TabularCompareFieldBody'
+          type: array
+        left:
+          $ref: '#/components/schemas/TabularCompareResourceBody'
+        right:
+          $ref: '#/components/schemas/TabularCompareResourceBody'
+      required:
+      - compare_id
+      - left
+      - right
+      - keys
+      - compare
+      - display
+      type: object
+    CompareDupes:
+      properties:
+        left:
+          format: int64
+          minimum: 0
+          type: integer
+        right:
+          format: int64
+          minimum: 0
+          type: integer
+      required:
+      - left
+      - right
+      type: object
+    CompareSchemaColumn:
+      properties:
+        dtype:
+          type: string
+        key:
+          type: string
+        name:
+          type: string
+      required:
+      - name
+      - key
+      - dtype
+      type: object
+    MessageLevel:
+      enum:
+      - Info
+      - Warning
+      - Error
+      type: string
+    DFOptsView:
+      properties:
+        opts:
+          items:
+            $ref: '#/components/schemas/DFOptView'
+          type: array
+      required:
+      - opts
+      type: object
+    JsonDataFrameViews:
+      properties:
+        source:
+          $ref: '#/components/schemas/DataFrameSchemaSize'
+        view:
+          $ref: '#/components/schemas/JsonDataFrameView'
+      required:
+      - source
+      - view
+      type: object
+    DerivedDFResource:
+      properties:
+        path:
+          type: string
+        resource_id:
+          type: string
+        resource_type:
+          $ref: '#/components/schemas/DFResourceType'
+      required:
+      - resource_id
+      - path
+      - resource_type
+      type: object
+    CompareTabularResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          dfs:
+            $ref: '#/components/schemas/CompareTabular'
+          messages:
+            items:
+              $ref: '#/components/schemas/OxenMessage'
+            type: array
+        required:
+        - dfs
+        - messages
+        type: object
+    CompareTabular:
+      properties:
+        display:
+          items:
+            $ref: '#/components/schemas/TabularCompareTargetBody'
+          type:
+          - array
+          - 'null'
+        dupes:
+          $ref: '#/components/schemas/CompareDupes'
+        keys:
+          items:
+            $ref: '#/components/schemas/TabularCompareFieldBody'
+          type:
+          - array
+          - 'null'
+        schema_diff:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/CompareSchemaDiff'
+        source_schemas:
+          $ref: '#/components/schemas/CompareSourceSchemas'
+        summary:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/CompareSummary'
+        targets:
+          items:
+            $ref: '#/components/schemas/TabularCompareTargetBody'
+          type:
+          - array
+          - 'null'
+      required:
+      - dupes
+      - source_schemas
+      type: object
+    CommitResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          commit:
+            $ref: '#/components/schemas/Commit'
+        required:
+        - commit
+        type: object
+      example:
+        commit:
+          author: ox
+          email: ox@example.com
+          id: a1b2c3d4e5f67890abcdef1234567890
+          message: Refactor data loading pipeline.
+          parent_ids:
+          - f1e2d3c4b5a67890fedcba9876543210
+          timestamp: '2025-01-01T10:00:00Z'
+        status: success
+        status_message: resource_found
+    CompareSchemaDiff:
+      properties:
+        added_cols:
+          items:
+            $ref: '#/components/schemas/CompareSchemaColumn'
+          type: array
+        removed_cols:
+          items:
+            $ref: '#/components/schemas/CompareSchemaColumn'
+          type: array
+      required:
+      - added_cols
+      - removed_cols
+      type: object
+    TabularCompareFieldBody:
+      properties:
+        alias_as:
+          type:
+          - string
+          - 'null'
+        compare_method:
+          type:
+          - string
+          - 'null'
+        left:
+          type: string
+        right:
+          type: string
+      required:
+      - left
+      - right
+      type: object
+    Pagination:
+      properties:
+        page_number:
+          minimum: 0
+          type: integer
+        page_size:
+          minimum: 0
+          type: integer
+        total_entries:
+          minimum: 0
+          type: integer
+        total_pages:
+          minimum: 0
+          type: integer
+      required:
+      - page_size
+      - page_number
+      - total_pages
+      - total_entries
+      type: object
+    DataFrameSchemaSize:
+      properties:
+        schema:
+          $ref: '#/components/schemas/Schema'
+        size:
+          $ref: '#/components/schemas/DataFrameSize'
+      required:
+      - schema
+      - size
+      type: object
+    Changes:
+      properties:
+        previous:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/PreviousField'
+        status:
+          type: string
+      required:
+      - status
+      type: object
+    Schema:
+      properties:
+        fields:
+          items:
+            $ref: '#/components/schemas/Field'
+          type: array
+        hash:
+          type: string
+        metadata: {}
+      required:
+      - hash
+      - fields
+      type: object
+    DFResourceType:
+      enum:
+      - compare
+      - diff
+      - query
+      type: string
+    DataFrameSize:
+      properties:
+        height:
+          minimum: 0
+          type: integer
+        width:
+          minimum: 0
+          type: integer
+      required:
+      - height
+      - width
+      type: object
+    Field:
+      properties:
+        changes:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Changes'
+        dtype:
+          type: string
+        metadata: {}
+        name:
+          type: string
+      required:
+      - name
+      - dtype
+      type: object
+    CompareTabularMods:
+      properties:
+        added_rows:
+          minimum: 0
+          type: integer
+        modified_rows:
+          minimum: 0
+          type: integer
+        removed_rows:
+          minimum: 0
+          type: integer
+      required:
+      - added_rows
+      - removed_rows
+      - modified_rows
+      type: object
+    TabularCompareResourceBody:
+      properties:
+        path:
+          type: string
+        version:
+          type: string
+      required:
+      - path
+      - version
+      type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
+    PreviousField:
+      properties:
+        dtype:
+          type: string
+        metadata: {}
+        name:
+          type: string
+      required:
+      - name
+      - dtype
+      type: object
+    FromDirectoryRequest:
+      properties:
+        commit_message:
+          type:
+          - string
+          - 'null'
+        extra_columns:
+          items:
+            $ref: '#/components/schemas/NewColumn'
+          type:
+          - array
+          - 'null'
+        output_path:
+          type:
+          - string
+          - 'null'
+        recursive:
+          type:
+          - boolean
+          - 'null'
+        user_email:
+          type:
+          - string
+          - 'null'
+        user_name:
+          type:
+          - string
+          - 'null'
+      type: object
+    JsonDataFrameView:
+      allOf:
+      - $ref: '#/components/schemas/DFOptsView'
+      - properties:
+          data: {}
+          pagination:
+            $ref: '#/components/schemas/Pagination'
+          schema:
+            $ref: '#/components/schemas/Schema'
+          size:
+            $ref: '#/components/schemas/DataFrameSize'
+        required:
+        - schema
+        - size
+        - data
+        - pagination
+        type: object
+    Commit:
+      example:
+        author: ox
+        email: ox@example.com
+        id: a1b2c3d4e5f67890abcdef1234567890
+        message: Refactor data loading pipeline.
+        parent_ids:
+        - f1e2d3c4b5a67890fedcba9876543210
+        timestamp: '2025-01-01T10:00:00Z'
+      properties:
+        author:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        message:
+          type: string
+        parent_ids:
+          items:
+            type: string
+          type: array
+        timestamp:
+          format: date-time
+          type: string
+      required:
+      - id
+      - parent_ids
+      - message
+      - author
+      - email
+      - timestamp
+      type: object
+    JsonDataFrameViewResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          commit:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/Commit'
+          data_frame:
+            $ref: '#/components/schemas/JsonDataFrameViews'
+          derived_resource:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/DerivedDFResource'
+          resource:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/ResourceVersion'
+        required:
+        - data_frame
+        type: object
+    DFOptView:
+      properties:
+        name:
+          type: string
+        value: {}
+      required:
+      - name
+      - value
+      type: object
+    ResourceVersion:
+      properties:
+        path:
+          type: string
+        version:
+          type: string
+      required:
+      - path
+      - version
+      type: object
+    CompareSourceSchemas:
+      properties:
+        left:
+          $ref: '#/components/schemas/Schema'
+        right:
+          $ref: '#/components/schemas/Schema'
+      required:
+      - left
+      - right
+      type: object
+    TabularCompareTargetBody:
+      properties:
+        compare_method:
+          type:
+          - string
+          - 'null'
+        left:
+          type:
+          - string
+          - 'null'
+        right:
+          type:
+          - string
+          - 'null'
+      type: object
+    CompareSummary:
+      properties:
+        modifications:
+          $ref: '#/components/schemas/CompareTabularMods'
+        schema:
+          $ref: '#/components/schemas/Schema'
+      required:
+      - modifications
+      - schema
+      type: object
+    OxenMessage:
+      properties:
+        description:
+          type: string
+        level:
+          $ref: '#/components/schemas/MessageLevel'
+        title:
+          type: string
+      required:
+      - level
+      - title
+      - description
+      type: object
+  securitySchemes:
+    authorization:
+      scheme: bearer
+      type: http

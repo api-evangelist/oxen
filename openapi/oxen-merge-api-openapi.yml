@@ -1,0 +1,215 @@
+openapi: 3.0.0
+info:
+  title: oxen Ai Merge API
+  version: 0.243.1
+servers:
+- url: https://hub.oxen.ai
+  variables: {}
+security: []
+tags:
+- name: Merge
+paths:
+  /api/repos/{namespace}/{repo_name}/merge/{base_head}:
+    get:
+      description: Check if two branches can be merged and list any conflicts.
+      operationId: show
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: satellite-images
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The base and head revisions separated by '..'
+        example: main..feature/add-labels
+        in: path
+        name: base_head
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MergeableResponse'
+          description: Merge status returned successfully
+        '404':
+          description: Repository or one of the revisions not found
+      summary: Check if branches are mergeable
+      tags:
+      - Merge
+    post:
+      description: Merge the head branch into the base branch, creating a merge commit.
+      operationId: merge
+      parameters:
+      - description: Namespace of the repository
+        example: ox
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Name of the repository
+        example: satellite-images
+        in: path
+        name: repo_name
+        required: true
+        schema:
+          type: string
+      - description: The base and head revisions separated by '..'
+        example: main..feature/add-labels
+        in: path
+        name: base_head
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              email: bessie@oxen.ai
+              name: bessie
+            schema:
+              properties:
+                email:
+                  type: string
+                name:
+                  type: string
+              required:
+              - email
+              - name
+              type: object
+        description: 'Author for the merge commit (the user initiating the merge). Required: name and email must both be present and non-empty.'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MergeSuccessResponse'
+          description: Branches merged successfully
+        '400':
+          description: Missing merge author (name and email)
+        '404':
+          description: Repository or one of the revisions not found
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusMessage'
+          description: Merge conflict
+      summary: Merge branches
+      tags:
+      - Merge
+components:
+  schemas:
+    Commit:
+      example:
+        author: ox
+        email: ox@example.com
+        id: a1b2c3d4e5f67890abcdef1234567890
+        message: Refactor data loading pipeline.
+        parent_ids:
+        - f1e2d3c4b5a67890fedcba9876543210
+        timestamp: '2025-01-01T10:00:00Z'
+      properties:
+        author:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        message:
+          type: string
+        parent_ids:
+          items:
+            type: string
+          type: array
+        timestamp:
+          format: date-time
+          type: string
+      required:
+      - id
+      - parent_ids
+      - message
+      - author
+      - email
+      - timestamp
+      type: object
+    MergeConflictFile:
+      properties:
+        path:
+          type: string
+      required:
+      - path
+      type: object
+    Mergeable:
+      properties:
+        commits:
+          items:
+            $ref: '#/components/schemas/Commit'
+          type: array
+        conflicts:
+          items:
+            $ref: '#/components/schemas/MergeConflictFile'
+          type: array
+        is_mergeable:
+          type: boolean
+      required:
+      - is_mergeable
+      - conflicts
+      - commits
+      type: object
+    MergeResult:
+      properties:
+        base:
+          $ref: '#/components/schemas/Commit'
+        head:
+          $ref: '#/components/schemas/Commit'
+        merge:
+          $ref: '#/components/schemas/Commit'
+      required:
+      - head
+      - base
+      - merge
+      type: object
+    MergeableResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - $ref: '#/components/schemas/Mergeable'
+    MergeSuccessResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          commits:
+            $ref: '#/components/schemas/MergeResult'
+        required:
+        - commits
+        type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
+  securitySchemes:
+    authorization:
+      scheme: bearer
+      type: http

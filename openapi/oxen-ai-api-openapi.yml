@@ -1,0 +1,1535 @@
+openapi: 3.0.0
+info:
+  title: oxen Ai API
+  version: 0.243.1
+servers:
+- url: https://hub.oxen.ai
+  variables: {}
+security: []
+tags:
+- name: Ai
+paths:
+  /api/ai/audio/generate:
+    post:
+      callbacks: {}
+      description: Creates audio (e.g. speech) from a text prompt.
+      operationId: OxenApiWeb.Controllers.ModelController.generate_audio
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AudioGenerateRequest'
+        description: Audio generation request
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AudioGenerateResponse'
+          description: Generated audio
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Invalid request
+      summary: Generate audio
+      tags:
+      - Ai
+  /api/ai/chat/completions:
+    post:
+      callbacks: {}
+      description: Generates a model response for the given conversation. Compatible with the OpenAI chat completions API.
+      operationId: OxenApiWeb.Controllers.ModelController.get_model_response
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatCompletionRequest'
+        description: Chat completion request
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatCompletionResponse'
+          description: Chat completion
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Invalid request
+      summary: Create chat completion
+      tags:
+      - Ai
+  /api/ai/generations:
+    get:
+      callbacks: {}
+      description: Paginated browse view of completed and in-flight generations for a namespace. Use `/api/ai/queue` for the lean polling view of in-flight rows.
+      operationId: OxenApiWeb.Controllers.GenerationsController.index
+      parameters:
+      - description: ''
+        in: query
+        name: namespace
+        required: false
+        schema:
+          type: string
+      - description: ''
+        in: query
+        name: model
+        required: false
+        schema:
+          type: string
+      - description: ''
+        in: query
+        name: media_type
+        required: false
+        schema:
+          enum:
+          - image
+          - video
+          type: string
+      - description: ''
+        in: query
+        name: status
+        required: false
+        schema:
+          enum:
+          - queued
+          - processing
+          - succeeded
+          - failed
+          - cancelled
+          type: string
+      - description: ''
+        in: query
+        name: repo
+        required: false
+        schema:
+          type: string
+      - description: ''
+        in: query
+        name: folder
+        required: false
+        schema:
+          type: string
+      - description: ''
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+      - description: ''
+        in: query
+        name: page_size
+        required: false
+        schema:
+          default: 50
+          maximum: 1000
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationsListResponse'
+          description: Generation list
+      summary: List past generations
+      tags:
+      - Ai
+  /api/ai/generations/{generation_id}:
+    get:
+      callbacks: {}
+      description: Full metadata for a single generation, including cost and the user who triggered it.
+      operationId: OxenApiWeb.Controllers.GenerationsController.show
+      parameters:
+      - description: ''
+        in: path
+        name: generation_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationsShowResponse'
+          description: Generation details
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Generation not found
+      summary: Get generation details
+      tags:
+      - Ai
+  /api/ai/images/edit:
+    post:
+      callbacks: {}
+      description: Edits an image given a prompt and source image.
+      operationId: OxenApiWeb.Controllers.ModelController.edit_image
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageEditRequest'
+        description: Image edit request
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerateResponse'
+          description: Edited images
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Invalid request
+      summary: Edit image
+      tags:
+      - Ai
+  /api/ai/images/generate:
+    post:
+      callbacks: {}
+      description: Creates an image from a text prompt.
+      operationId: OxenApiWeb.Controllers.ModelController.generate_image
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageGenerateRequest'
+        description: Image generation request
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerateResponse'
+          description: Generated images
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Invalid request
+      summary: Generate image
+      tags:
+      - Ai
+  /api/ai/models:
+    get:
+      callbacks: {}
+      description: Lists all available models. OpenAI-compatible.
+      operationId: OxenApiWeb.Controllers.ModelsController.index
+      parameters:
+      - description: ''
+        in: query
+        name: provider_name
+        required: false
+        schema:
+          type: string
+      - description: ''
+        in: query
+        name: developer_name
+        required: false
+        schema:
+          type: string
+      - description: ''
+        in: query
+        name: action
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListModelsResponse'
+          description: Model list
+      summary: List models
+      tags:
+      - Ai
+  /api/ai/models/favorites:
+    get:
+      callbacks: {}
+      operationId: OxenApiWeb.Controllers.ModelsController.list_favorites
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListModelsResponse'
+          description: Favorite models
+      summary: List favorite models
+      tags:
+      - Ai
+  /api/ai/models/featured:
+    get:
+      callbacks: {}
+      operationId: OxenApiWeb.Controllers.ModelsController.list_featured
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListModelsResponse'
+          description: Featured models
+      summary: List featured models
+      tags:
+      - Ai
+  /api/ai/models/search:
+    get:
+      callbacks: {}
+      operationId: OxenApiWeb.Controllers.ModelsController.search
+      parameters:
+      - description: ''
+        in: query
+        name: search
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListModelsResponse'
+          description: Search results
+      summary: Search models
+      tags:
+      - Ai
+  /api/ai/models/{id}:
+    delete:
+      callbacks: {}
+      operationId: OxenApiWeb.Controllers.ModelsController.delete_custom_model
+      parameters:
+      - description: ''
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+          description: Deleted model
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Model not found
+      summary: Delete custom model
+      tags:
+      - Ai
+    get:
+      callbacks: {}
+      description: Retrieves a model by ID or name. OpenAI-compatible.
+      operationId: OxenApiWeb.Controllers.ModelsController.show
+      parameters:
+      - description: Model ID (UUID) or name
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Pass "live" to refresh deployment status from provider before responding
+        in: query
+        name: deployment_status
+        required: false
+        schema:
+          enum:
+          - live
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+          description: Model details
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Model not found
+      summary: Retrieve model
+      tags:
+      - Ai
+    put:
+      callbacks: {}
+      operationId: OxenApiWeb.Controllers.ModelsController.update
+      parameters:
+      - description: ''
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        description: Model update params
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+          description: Updated model
+      summary: Update model
+      tags:
+      - Ai
+  /api/ai/models/{id}/activate:
+    post:
+      callbacks: {}
+      description: Activates an inactive model deployment.
+      operationId: OxenApiWeb.Controllers.ModelsController.wake
+      parameters:
+      - description: ''
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+          description: Model activated
+      summary: Activate model deployment
+      tags:
+      - Ai
+  /api/ai/models/{id}/deactivate:
+    post:
+      callbacks: {}
+      operationId: OxenApiWeb.Controllers.ModelsController.deactivate
+      parameters:
+      - description: ''
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+          description: Model deactivated
+      summary: Deactivate model deployment
+      tags:
+      - Ai
+  /api/ai/models/{id}/favorite:
+    delete:
+      callbacks: {}
+      operationId: OxenApiWeb.Controllers.ModelsController.delete_favorite
+      parameters:
+      - description: ''
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+          description: Model unfavorited
+      summary: Unfavorite a model
+      tags:
+      - Ai
+    post:
+      callbacks: {}
+      operationId: OxenApiWeb.Controllers.ModelsController.create_favorite
+      parameters:
+      - description: ''
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+          description: Model favorited
+      summary: Favorite a model
+      tags:
+      - Ai
+  /api/ai/queue:
+    get:
+      callbacks: {}
+      description: Lean polling view of the workbench render queue. Returns active generations (status queued or processing) by default; pass an explicit `status=` filter to include terminal rows. For paginated history with cost aggregates, use `/api/ai/generations`.
+      operationId: OxenApiWeb.Controllers.QueueController.index
+      parameters:
+      - description: ''
+        in: query
+        name: namespace
+        required: false
+        schema:
+          type: string
+      - description: ''
+        in: query
+        name: model
+        required: false
+        schema:
+          type: string
+      - description: ''
+        in: query
+        name: media_type
+        required: false
+        schema:
+          enum:
+          - image
+          - video
+          type: string
+      - description: ''
+        in: query
+        name: status
+        required: false
+        schema:
+          enum:
+          - queued
+          - processing
+          - succeeded
+          - failed
+          - cancelled
+          type: string
+      - description: ''
+        in: query
+        name: repo
+        required: false
+        schema:
+          type: string
+      - description: ''
+        in: query
+        name: folder
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueListResponse'
+          description: Generation list
+      summary: List in-flight queue items
+      tags:
+      - Ai
+    post:
+      callbacks: {}
+      description: Enqueues an async image or video generation job.
+      operationId: OxenApiWeb.Controllers.QueueController.create
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueueCreateRequest'
+        description: Queue request
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueCreateResponse'
+          description: Generation enqueued
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Invalid request
+      summary: Enqueue generation
+      tags:
+      - Ai
+  /api/ai/queue/{generation_id}:
+    delete:
+      callbacks: {}
+      description: Cancels a generation. The row is retained with status set to cancelled.
+      operationId: OxenApiWeb.Controllers.QueueController.delete
+      parameters:
+      - description: ''
+        in: path
+        name: generation_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueDeleteResponse'
+          description: Generation cancelled
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Generation not found
+      summary: Cancel generation
+      tags:
+      - Ai
+    get:
+      callbacks: {}
+      description: Retrieves metadata for a single queued generation.
+      operationId: OxenApiWeb.Controllers.QueueController.show
+      parameters:
+      - description: ''
+        in: path
+        name: generation_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueGenerationResponse'
+          description: Generation details
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Generation not found
+      summary: Get generation status
+      tags:
+      - Ai
+  /api/ai/videos/generate:
+    post:
+      callbacks: {}
+      description: Creates a video from a text prompt.
+      operationId: OxenApiWeb.Controllers.ModelController.generate_video
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VideoGenerateRequest'
+        description: Video generation request
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoGenerateResponse'
+          description: Generated videos
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Invalid request
+      summary: Generate video
+      tags:
+      - Ai
+components:
+  schemas:
+    VideoGenerateResponse:
+      properties:
+        created:
+          type: integer
+        model:
+          type: string
+        videos:
+          items:
+            properties:
+              url:
+                type: string
+            type: object
+          type: array
+      title: VideoGenerateResponse
+      type: object
+    AudioGenerateRequest:
+      properties:
+        audio_urls:
+          description: Reference audio URLs for voice cloning
+          items:
+            type: string
+          nullable: true
+          type: array
+        image_url:
+          description: Reference image URL
+          nullable: true
+          type: string
+        model:
+          type: string
+        output_format:
+          description: wav, mp3, pcm, or ogg_opus
+          nullable: true
+          type: string
+        pitch:
+          nullable: true
+          type: integer
+        prompt:
+          description: Text prompt or text to synthesize
+          type: string
+        response_format:
+          description: url (default) or b64_json
+          nullable: true
+          type: string
+        sample_rate:
+          description: Output sample rate in Hz
+          nullable: true
+          type: integer
+        save_to_workbench:
+          description: Persist the generated audio to the workbench (default true)
+          nullable: true
+          type: boolean
+        speed:
+          nullable: true
+          type: number
+        voice:
+          description: Preset voice name or cloned voice ID
+          nullable: true
+          type: string
+        volume:
+          nullable: true
+          type: number
+      required:
+      - model
+      - prompt
+      title: AudioGenerateRequest
+      type: object
+    QueueCreateResponse:
+      properties:
+        generations:
+          items:
+            properties:
+              generation_id:
+                format: uuid
+                type: string
+              status:
+                enum:
+                - queued
+                type: string
+            required:
+            - generation_id
+            - status
+            type: object
+          type: array
+      required:
+      - generations
+      title: QueueCreateResponse
+      type: object
+    ImageGenerateResponse:
+      properties:
+        created:
+          type: integer
+        images:
+          items:
+            properties:
+              revised_prompt:
+                nullable: true
+                type: string
+              url:
+                type: string
+            type: object
+          type: array
+        model:
+          type: string
+      title: ImageGenerateResponse
+      type: object
+    QueueCreateRequest:
+      description: Enqueue an async image or video generation job.
+      properties:
+        aspect_ratio:
+          nullable: true
+          type: string
+        duration:
+          nullable: true
+          type: integer
+        model:
+          description: Model ID to use
+          type: string
+        num_generations:
+          default: 1
+          maximum: 12
+          minimum: 1
+          type: integer
+        prompt:
+          description: Text prompt for generation
+          type: string
+        seed:
+          nullable: true
+          type: integer
+        target_directory:
+          nullable: true
+          type: string
+        target_namespace:
+          description: Namespace to store results. Defaults to current user.
+          nullable: true
+          type: string
+        target_repo:
+          nullable: true
+          type: string
+      required:
+      - model
+      - prompt
+      title: QueueCreateRequest
+      type: object
+    ListModelsResponse:
+      description: OpenAI-compatible response for listing models.
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Model'
+          type: array
+        object:
+          enum:
+          - list
+          type: string
+      required:
+      - object
+      - data
+      title: ListModelsResponse
+      type: object
+    AudioGenerateResponse:
+      properties:
+        audios:
+          items:
+            properties:
+              url:
+                type: string
+            type: object
+          type: array
+        created:
+          type: integer
+        model:
+          type: string
+      title: AudioGenerateResponse
+      type: object
+    GenerationsShowResponse:
+      description: Standard success envelope wrapping a single generation under `generation`. The inner object is the same per-row shape returned by the list endpoint (request params merged in at the top level), so the frontend can reuse one type for both.
+      properties:
+        generation:
+          properties:
+            completed_at:
+              description: Unix timestamp
+              nullable: true
+              type: integer
+            cost:
+              description: Charged amount for this row (decimal as string).
+              nullable: true
+              type: string
+            enqueued_at:
+              description: Unix timestamp
+              type: integer
+            error_message:
+              nullable: true
+              type: string
+            generation_id:
+              format: uuid
+              type: string
+            media_type:
+              enum:
+              - image
+              - video
+              type: string
+            model_name:
+              type: string
+            result_url:
+              nullable: true
+              type: string
+            started_at:
+              description: Unix timestamp
+              nullable: true
+              type: integer
+            status:
+              enum:
+              - queued
+              - processing
+              - succeeded
+              - failed
+              - cancelled
+              type: string
+            target_directory:
+              nullable: true
+              type: string
+            target_namespace:
+              nullable: true
+              type: string
+            target_repo:
+              nullable: true
+              type: string
+            user_id:
+              format: uuid
+              nullable: true
+              type: string
+            user_image:
+              nullable: true
+              type: string
+            username:
+              nullable: true
+              type: string
+          required:
+          - generation_id
+          - model_name
+          - media_type
+          - status
+          - enqueued_at
+          type: object
+        status:
+          example: success
+          type: string
+        status_message:
+          example: resource_found
+          type: string
+      required:
+      - status
+      - generation
+      - status_message
+      title: GenerationsShowResponse
+      type: object
+    QueueDeleteResponse:
+      properties:
+        generation_id:
+          format: uuid
+          type: string
+        status:
+          enum:
+          - success
+          type: string
+      required:
+      - status
+      - generation_id
+      title: QueueDeleteResponse
+      type: object
+    ChatCompletionResponse:
+      properties:
+        choices:
+          items:
+            properties:
+              finish_reason:
+                type: string
+              index:
+                type: integer
+              message:
+                properties:
+                  content:
+                    nullable: true
+                    type: string
+                  role:
+                    type: string
+                  tool_calls:
+                    items:
+                      type: object
+                    nullable: true
+                    type: array
+                type: object
+            type: object
+          type: array
+        created:
+          type: integer
+        id:
+          type: string
+        model:
+          type: string
+        object:
+          enum:
+          - chat.completion
+          type: string
+        usage:
+          nullable: true
+          properties:
+            completion_tokens:
+              type: integer
+            prompt_tokens:
+              type: integer
+            total_tokens:
+              type: integer
+          type: object
+      title: ChatCompletionResponse
+      type: object
+    ImageEditRequest:
+      properties:
+        image:
+          description: URL of the source image
+          type: string
+        mask:
+          description: URL of the mask image
+          nullable: true
+          type: string
+        model:
+          type: string
+        n:
+          default: 1
+          type: integer
+        prompt:
+          description: Text instruction for the edit
+          type: string
+        size:
+          nullable: true
+          type: string
+      required:
+      - model
+      - prompt
+      - image
+      title: ImageEditRequest
+      type: object
+    VideoGenerateRequest:
+      properties:
+        aspect_ratio:
+          nullable: true
+          type: string
+        duration:
+          description: Duration in seconds
+          nullable: true
+          type: integer
+        model:
+          type: string
+        prompt:
+          description: Text prompt describing the desired video
+          type: string
+        seed:
+          nullable: true
+          type: integer
+      required:
+      - model
+      - prompt
+      title: VideoGenerateRequest
+      type: object
+    QueueGenerationResponse:
+      description: Compact status payload for a single queued generation, used by the workbench to poll progress. For the full payload (cost, user, etc.), see `/api/ai/generations/:id`.
+      properties:
+        completed_at:
+          description: Unix timestamp
+          nullable: true
+          type: integer
+        enqueued_at:
+          description: Unix timestamp
+          type: integer
+        error_message:
+          nullable: true
+          type: string
+        generation_id:
+          format: uuid
+          type: string
+        media_type:
+          enum:
+          - image
+          - video
+          type: string
+        model_name:
+          type: string
+        result_url:
+          nullable: true
+          type: string
+        started_at:
+          description: Unix timestamp
+          nullable: true
+          type: integer
+        status:
+          enum:
+          - queued
+          - processing
+          - succeeded
+          - failed
+          - cancelled
+          type: string
+        target_directory:
+          nullable: true
+          type: string
+        target_namespace:
+          nullable: true
+          type: string
+        target_repo:
+          nullable: true
+          type: string
+      required:
+      - generation_id
+      - model_name
+      - media_type
+      - status
+      - enqueued_at
+      title: QueueGenerationResponse
+      type: object
+    Model:
+      description: Represents a model available for inference or fine-tuning. Compatible with the OpenAI model object.
+      properties:
+        capabilities:
+          properties:
+            input:
+              items:
+                type: string
+              type: array
+            output:
+              items:
+                type: string
+              type: array
+          type: object
+        created:
+          description: Unix timestamp when the model was registered
+          type: integer
+        deployments:
+          description: Active deployments. Empty for base models.
+          items:
+            properties:
+              status:
+                enum:
+                - active
+                - inactive
+                - deploying
+                - deactivating
+                - error
+                - unknown
+                type: string
+            type: object
+          type: array
+        description:
+          nullable: true
+          type: string
+        developer:
+          nullable: true
+          properties:
+            logo:
+              nullable: true
+              type: string
+            name:
+              type: string
+          type: object
+        display_name:
+          type: string
+        endpoint:
+          description: API endpoint to call this model
+          enum:
+          - /chat/completions
+          - /images/generate
+          - /videos/generate
+          type: string
+        fine_tuning:
+          description: Fine-tuning info, or null if model is not fine-tuneable
+          nullable: true
+          properties:
+            actions:
+              description: Supported fine-tune action types
+              items:
+                type: string
+              type: array
+            cost_per_second:
+              nullable: true
+              type: number
+          type: object
+        id:
+          description: Model identifier used in API calls
+          type: string
+        image_url:
+          nullable: true
+          type: string
+        model_type:
+          enum:
+          - base
+          - custom
+          type: string
+        object:
+          enum:
+          - model
+          type: string
+        owned_by:
+          description: '"oxen" for base models, owner namespace for custom models'
+          type: string
+        pricing:
+          properties:
+            cost_per_image:
+              nullable: true
+              type: number
+            cost_per_image_grid:
+              additionalProperties:
+                additionalProperties:
+                  type: number
+                type: object
+              description: 'Cost per image keyed by quality then resolution tier (e.g. {"high": {"4K": 1.47}})'
+              nullable: true
+              type: object
+            cost_per_second:
+              nullable: true
+              type: number
+            cost_per_second_by_resolution:
+              additionalProperties:
+                type: number
+              description: 'Cost per output second keyed by resolution (e.g. {"480p": 0.096})'
+              nullable: true
+              type: object
+            cost_per_second_high_res:
+              nullable: true
+              type: number
+            cost_per_second_with_audio:
+              nullable: true
+              type: number
+            input_cost_per_token:
+              nullable: true
+              type: number
+            method:
+              enum:
+              - token
+              - time
+              - per_image
+              - per_video_output_second
+              type: string
+            output_cost_per_token:
+              nullable: true
+              type: number
+          type: object
+        released_at:
+          nullable: true
+          type: string
+        request_schema:
+          description: JSON Schema describing model-specific parameters
+          nullable: true
+          type: object
+        showcase:
+          description: Optional marketing content rendered on the public model showcase page
+          nullable: true
+          properties:
+            gallery:
+              items:
+                properties:
+                  alt:
+                    type: string
+                  category:
+                    nullable: true
+                    type: string
+                  details:
+                    nullable: true
+                    type: string
+                  prompt:
+                    nullable: true
+                    type: string
+                  src:
+                    description: Absolute URL
+                    type: string
+                  title:
+                    nullable: true
+                    type: string
+                required:
+                - src
+                - alt
+                type: object
+              type: array
+            hero_image:
+              description: Absolute URL
+              nullable: true
+              type: string
+            tagline:
+              nullable: true
+              type: string
+          type: object
+        source_model:
+          description: Base model this was fine-tuned from
+          nullable: true
+          type: string
+        summary:
+          nullable: true
+          type: string
+      required:
+      - id
+      - object
+      - created
+      - owned_by
+      title: Model
+      type: object
+    GenerationsListResponse:
+      description: Paginated browse view of past generations for a namespace. Includes the per-filter cost aggregate. Each row carries any additional request params (prompt, duration, etc.) merged in at the top level.
+      properties:
+        count:
+          description: Number of entries in this response (<= page_size)
+          type: integer
+        generations:
+          items:
+            properties:
+              completed_at:
+                description: Unix timestamp
+                nullable: true
+                type: integer
+              cost:
+                description: Charged amount for this row (decimal as string).
+                nullable: true
+                type: string
+              enqueued_at:
+                description: Unix timestamp
+                type: integer
+              error_message:
+                nullable: true
+                type: string
+              generation_id:
+                format: uuid
+                type: string
+              media_type:
+                enum:
+                - image
+                - video
+                type: string
+              model_name:
+                type: string
+              result_url:
+                nullable: true
+                type: string
+              started_at:
+                description: Unix timestamp
+                nullable: true
+                type: integer
+              status:
+                enum:
+                - queued
+                - processing
+                - succeeded
+                - failed
+                - cancelled
+                type: string
+              target_directory:
+                nullable: true
+                type: string
+              target_namespace:
+                nullable: true
+                type: string
+              target_repo:
+                nullable: true
+                type: string
+              user_id:
+                format: uuid
+                nullable: true
+                type: string
+              user_image:
+                nullable: true
+                type: string
+              username:
+                nullable: true
+                type: string
+            required:
+            - generation_id
+            - model_name
+            - media_type
+            - status
+            - enqueued_at
+            type: object
+          type: array
+        page_number:
+          description: Current page number (1-indexed)
+          type: integer
+        page_size:
+          type: integer
+        total_cost:
+          description: Sum of charged amounts across the filter set (decimal as string). Null when nothing in the set has been charged.
+          nullable: true
+          type: string
+        total_entries:
+          type: integer
+        total_pages:
+          type: integer
+      required:
+      - count
+      - generations
+      - page_number
+      - page_size
+      - total_pages
+      - total_entries
+      - total_cost
+      title: GenerationsListResponse
+      type: object
+    QueueListResponse:
+      description: Lean polling view of the workbench render queue. Active (`queued`/`processing`) rows by default; pass an explicit `status=` filter to include terminal rows. For paginated browse with cost aggregates, see `/api/ai/generations`.
+      properties:
+        count:
+          type: integer
+        generations:
+          items:
+            properties:
+              completed_at:
+                description: Unix timestamp
+                nullable: true
+                type: integer
+              enqueued_at:
+                description: Unix timestamp
+                type: integer
+              error_message:
+                nullable: true
+                type: string
+              generation_id:
+                format: uuid
+                type: string
+              media_type:
+                enum:
+                - image
+                - video
+                type: string
+              model_name:
+                type: string
+              result_url:
+                nullable: true
+                type: string
+              started_at:
+                description: Unix timestamp
+                nullable: true
+                type: integer
+              status:
+                enum:
+                - queued
+                - processing
+                - succeeded
+                - failed
+                - cancelled
+                type: string
+              target_directory:
+                nullable: true
+                type: string
+              target_namespace:
+                nullable: true
+                type: string
+              target_repo:
+                nullable: true
+                type: string
+            required:
+            - generation_id
+            - model_name
+            - media_type
+            - status
+            - enqueued_at
+            type: object
+          type: array
+      required:
+      - count
+      - generations
+      title: QueueListResponse
+      type: object
+    ImageGenerateRequest:
+      properties:
+        model:
+          description: Model ID to use for image generation
+          type: string
+        n:
+          default: 1
+          description: Number of images to generate
+          type: integer
+        prompt:
+          description: Text prompt describing the desired image
+          type: string
+        seed:
+          nullable: true
+          type: integer
+        size:
+          description: Image size
+          nullable: true
+          type: string
+      required:
+      - model
+      - prompt
+      title: ImageGenerateRequest
+      type: object
+    ChatCompletionRequest:
+      description: Request to generate a chat completion. Compatible with the OpenAI chat completions API.
+      properties:
+        frequency_penalty:
+          nullable: true
+          type: number
+        max_tokens:
+          nullable: true
+          type: integer
+        messages:
+          items:
+            properties:
+              content:
+                oneOf:
+                - type: string
+                - items:
+                    type: object
+                  type: array
+              name:
+                nullable: true
+                type: string
+              role:
+                enum:
+                - system
+                - user
+                - assistant
+                - tool
+                type: string
+              tool_call_id:
+                nullable: true
+                type: string
+              tool_calls:
+                items:
+                  type: object
+                nullable: true
+                type: array
+            required:
+            - role
+            - content
+            type: object
+          type: array
+        model:
+          description: Model ID to use
+          example: gpt-4o
+          type: string
+        presence_penalty:
+          nullable: true
+          type: number
+        response_format:
+          nullable: true
+          type: object
+        stream:
+          default: false
+          type: boolean
+        temperature:
+          nullable: true
+          type: number
+        tool_choice:
+          nullable: true
+          oneOf:
+          - type: string
+          - type: object
+        tools:
+          items:
+            type: object
+          nullable: true
+          type: array
+        top_p:
+          nullable: true
+          type: number
+      required:
+      - model
+      - messages
+      title: ChatCompletionRequest
+      type: object
+  securitySchemes:
+    authorization:
+      scheme: bearer
+      type: http
