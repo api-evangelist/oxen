@@ -1,0 +1,24 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/oxen-hub-api-openapi-original.json, openapi/oxen-server-openapi-original.json
+docs: https://docs.oxen.ai/getting-started/inference
+summary:
+  types:
+  - http
+  model: >-
+    Oxen.ai authenticates every API request with a personal API key sent as an
+    HTTP Bearer token: `Authorization: Bearer $OXEN_API_KEY`. Keys are created in
+    account settings (https://www.oxen.ai/settings) and used identically by the
+    Hub AI/fine-tuning API, the data-version-control server API, the Python SDK
+    (oxenai), and the oxen CLI (`oxen config --auth hub.oxen.ai $TOKEN`). No OAuth
+    2.0 authorization-code / scope surface is published.
+schemes:
+- name: authorization
+  type: http
+  scheme: bearer
+  description: >-
+    Bearer API key. Header `Authorization: Bearer <OXEN_API_KEY>`. Same key across
+    inference, fine-tuning, and version-control endpoints.
+  sources:
+  - openapi/oxen-hub-api-openapi-original.json
+  - openapi/oxen-server-openapi-original.json

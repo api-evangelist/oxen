@@ -1,0 +1,26 @@
+generated: '2026-07-20'
+method: searched
+source: https://pypi.org/project/oxenai/, https://crates.io/crates/liboxen, https://github.com/Oxen-AI/Oxen
+packages:
+- language: python
+  registry: pypi
+  name: oxenai
+  url: https://pypi.org/project/oxenai/
+  install: pip install oxenai
+  version: 0.52.0
+  official: true
+  description: Official Oxen.ai Python interface (Rust-backed) for data version control, RemoteRepo/Repo access, and data pipelines.
+- language: rust
+  registry: crates.io
+  name: liboxen
+  url: https://crates.io/crates/liboxen
+  install: cargo add liboxen
+  official: true
+  description: Official Oxen core library — the Rust implementation of the Oxen data version control system.
+- language: cli
+  registry: homebrew
+  name: oxen
+  url: https://formulae.brew.sh/formula/oxen
+  install: brew install oxen
+  official: true
+  description: Official Oxen command-line client (also distributed via GitHub releases).

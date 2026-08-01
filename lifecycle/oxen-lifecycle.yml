@@ -1,0 +1,21 @@
+generated: '2026-07-20'
+method: searched
+source: https://oxenai.statuspage.io, https://github.com/Oxen-AI/Oxen/releases, openapi specs
+versioning:
+  scheme: semver
+  hub_api_version: 0.243.1
+  server_api_version: 0.52.0
+  note: >-
+    Oxen ships a single fast-moving semver version line for the open-source
+    server/CLI/SDK (currently 0.52.x); the Hub AI API reports its own version
+    (0.243.x). No dated API-version parameter is required by clients.
+  releases: https://github.com/Oxen-AI/Oxen/releases
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No formal deprecation policy or RFC 8594 Sunset/Deprecation header support is published.
+status_page: https://oxenai.statuspage.io
+sla:
+  url: null
+  uptime_target: null
+deprecated_operations: []

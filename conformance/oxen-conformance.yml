@@ -1,0 +1,25 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/oxen-hub-api-openapi-original.json, openapi/oxen-server-openapi-original.json, https://docs.oxen.ai
+standards:
+- id: openapi-3
+  conforms: true
+  evidence: Provider publishes OpenAPI 3.0.0 (Hub AI API) and 3.1.0 (server API) specs at hub.oxen.ai/api/_spec/.
+- id: openai-chat-completions
+  conforms: true
+  evidence: '`POST /api/ai/chat/completions` and `GET /api/ai/models` are documented as OpenAI-compatible.'
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 security scheme; auth is HTTP Bearer API key.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors are application/json with a status/status_message envelope; no application/problem+json media type declared.
+- id: rfc8594-sunset
+  conforms: false
+  evidence: No Sunset/Deprecation header or deprecation policy published.
+- id: pagination
+  conforms: true
+  evidence: List endpoints use page-number pagination (page_num/page_size).
+compliance_program:
+  published: false
+  note: No SOC 2 / ISO 27001 / HIPAA / PCI / FedRAMP trust center or certification page found (2026-07-20).

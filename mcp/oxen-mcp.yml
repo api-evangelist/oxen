@@ -1,0 +1,133 @@
+generated: '2026-07-20'
+method: derived
+status: candidate
+source: openapi/oxen-hub-api-openapi-original.json
+note: No official hosted Oxen MCP server was found (npm @modelcontextprotocol, GitHub Oxen-AI org, and
+  MCP registries checked, 2026-07-20). Candidate tool list derived from the Oxen Hub AI & Fine-Tuning
+  API operations — the highest-value agent surface (inference + fine-tune lifecycle).
+server:
+  name: oxen
+  transport: http
+  base_url: https://hub.oxen.ai
+  auth: Bearer OXEN_API_KEY
+tools:
+- name: generate_audio
+  description: Generate audio
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelController.generate_audio
+- name: create_chat_completion
+  description: Create chat completion
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelController.get_model_response
+- name: list_past_generations
+  description: List past generations
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.GenerationsController.index
+- name: get_generation_details
+  description: Get generation details
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.GenerationsController.show
+- name: edit_image
+  description: Edit image
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelController.edit_image
+- name: generate_image
+  description: Generate image
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelController.generate_image
+- name: list_models
+  description: List models
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelsController.index
+- name: list_favorite_models
+  description: List favorite models
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelsController.list_favorites
+- name: list_featured_models
+  description: List featured models
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelsController.list_featured
+- name: search_models
+  description: Search models
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelsController.search
+- name: delete_custom_model
+  description: Delete custom model
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelsController.delete_custom_model
+- name: retrieve_model
+  description: Retrieve model
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelsController.show
+- name: update_model
+  description: Update model
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelsController.update
+- name: activate_model_deployment
+  description: Activate model deployment
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelsController.wake
+- name: deactivate_model_deployment
+  description: Deactivate model deployment
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelsController.deactivate
+- name: unfavorite_a_model
+  description: Unfavorite a model
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelsController.delete_favorite
+- name: favorite_a_model
+  description: Favorite a model
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelsController.create_favorite
+- name: list_in_flight_queue_items
+  description: List in-flight queue items
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.QueueController.index
+- name: enqueue_generation
+  description: Enqueue generation
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.QueueController.create
+- name: cancel_generation
+  description: Cancel generation
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.QueueController.delete
+- name: get_generation_status
+  description: Get generation status
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.QueueController.show
+- name: generate_video
+  description: Generate video
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelController.generate_video
+- name: list_fine_tunes_for_an_organization
+  description: List fine-tunes for an organization
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.list_for_org
+- name: create_an_evaluation
+  description: Create an evaluation
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.EvaluationController.create_evaluation
+- name: get_evaluation_status
+  description: Get evaluation status
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.EvaluationController.get_evaluation
+- name: list_fine_tunes_in_a_repository
+  description: List fine-tunes in a repository
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.index
+- name: create_a_fine_tune_job
+  description: Create a fine-tune job
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.create
+- name: delete_a_fine_tune_job
+  description: Delete a fine-tune job
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.delete
+- name: get_a_fine_tune_job
+  description: Get a fine-tune job
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.show
+- name: update_a_fine_tune_job
+  description: Update a fine-tune job
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.update
+- name: run_a_fine_tune_job
+  description: Run a fine-tune job
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.run
+- name: stop_a_running_fine_tune_job
+  description: Stop a running fine-tune job
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.stop
+- name: list_checkpoints_for_a_fine_tune_job
+  description: List checkpoints for a fine-tune job
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.checkpoints
+- name: deploy_a_checkpoint_from_a_fine_tune_job
+  description: Deploy a checkpoint from a fine-tune job
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.create_checkpoint_deployment
+- name: get_logs_for_a_fine_tune_job
+  description: Get logs for a fine-tune job
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.logs
+- name: tokenize_data_for_a_fine_tune_job
+  description: Tokenize data for a fine-tune job
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.tokenize
+- name: get_training_status_for_a_fine_tune_job
+  description: Get training status for a fine-tune job
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.get_train_status
+- name: update_training_status_for_a_fine_tune_job
+  description: Update training status for a fine-tune job
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.update_train_status
+- name: list_all_fine_tunes_accessible_to_the_current_user
+  description: List all fine-tunes accessible to the current user
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.list_accessible
+- name: list_fine_tunes_for_a_user
+  description: List fine-tunes for a user
+  source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.list_for_user

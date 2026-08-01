@@ -1,0 +1,47 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.oxen.ai, openapi/oxen-hub-api-openapi-original.json, openapi/oxen-server-openapi-original.json
+authentication:
+  style: bearer-api-key
+  header: 'Authorization: Bearer <OXEN_API_KEY>'
+  ref: authentication/oxen-authentication.yml
+base_urls:
+  hub_ai_api: https://hub.oxen.ai/api/ai
+  server_api: https://hub.oxen.ai/api
+openai_compatibility:
+  compatible: true
+  note: >-
+    The inference surface mirrors the OpenAI API — `POST /api/ai/chat/completions`
+    and `GET /api/ai/models` are OpenAI-compatible, so existing OpenAI SDKs work by
+    pointing base_url at https://hub.oxen.ai/api/ai and using an Oxen API key.
+pagination:
+  style: page-number
+  params:
+  - page_num
+  - page_number
+  - page_size
+  note: List endpoints (generations, models, fine-tunes) page with page-number + page-size query params.
+async_jobs:
+  note: >-
+    Long-running image/video generations are enqueued as async jobs; poll the queue
+    (`GET /api/ai/queue/{generation_id}`) or generation status for completion.
+  fields:
+  - status  # queued | processing | completed | cancelled | error
+resource_addressing:
+  note: >-
+    Version-control resources are addressed by namespace/repo_name plus a resource
+    path that encodes branch/commit and file, e.g.
+    `/api/repos/{namespace}/{repo_name}/data_frames/{resource}`.
+idempotency:
+  supported: false
+  note: No documented Idempotency-Key header; write operations are not declared idempotent in the specs or docs.
+error_envelope:
+  content_type: application/json
+  fields:
+  - status
+  - status_message
+  ref: errors/oxen-problem-types.yml
+rate_limiting:
+  note: Requests are rate limited; exceeding limits returns a "Rate limit exceeded" error. No documented rate-limit response headers.
+versioning:
+  ref: lifecycle/oxen-lifecycle.yml

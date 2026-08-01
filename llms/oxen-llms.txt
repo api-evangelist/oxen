@@ -1,0 +1,214 @@
+# Oxen.ai
+
+## Docs
+
+- [⚖️ Dataset Diffs](https://docs.oxen.ai/concepts/diffs.md): Quickly find changes in your datasets with Oxen.ai
+- [🏷️ File Metadata](https://docs.oxen.ai/concepts/file_metadata.md): Oxen.ai gives you the flexibility to attach metadata to files to make them more discoverable and useful.
+- [📊 Datasets](https://docs.oxen.ai/examples/data/datasets.md)
+- [🔥 Performance](https://docs.oxen.ai/examples/data/performance.md)
+- [💾 Version Control](https://docs.oxen.ai/examples/data/versioning.md): Oxen.ai is built on top of a blazing fast data version control system that allows you to version, branch, and share datasets, model weights, and experiments with your team.
+- [📦 Workspaces](https://docs.oxen.ai/examples/data/workspaces.md): Workspaces allow you to stage changes to a repository without having to download it locally.
+- [🤖 Chat Completions](https://docs.oxen.ai/examples/fine-tuning/chat_completions.md): How to fine-tune an LLM on a conversation of messages.
+- [👨‍🎨 Image Editing](https://docs.oxen.ai/examples/fine-tuning/image_editing.md): How to fine-tune an image editing model in Oxen.ai
+- [🖼️ Image Generation](https://docs.oxen.ai/examples/fine-tuning/image_generation.md): How to fine-tune an image generation model in Oxen.ai
+- [👁️ Vision Language Models](https://docs.oxen.ai/examples/fine-tuning/image_understanding.md): How to fine-tune a Vision Language Model in Oxen.ai
+- [💬 Text Generation](https://docs.oxen.ai/examples/fine-tuning/text_generation.md): How to fine-tune an LLM for text generation.
+- [🎥 Video Generation](https://docs.oxen.ai/examples/fine-tuning/video_generation.md): How to fine-tune a video generation model in Oxen.ai
+- [💬 Language Models](https://docs.oxen.ai/examples/inference/chat_completions.md): Integrate an LLM into your application through the `/ai/chat/completions` API.
+- [🎨 Image Editing](https://docs.oxen.ai/examples/inference/image_editing.md): How to use the image editing API on Oxen.ai.
+- [🖼️ Image Generation](https://docs.oxen.ai/examples/inference/image_generation.md): How to use the image generation API on Oxen.ai.
+- [🎥 Video Generation](https://docs.oxen.ai/examples/inference/video_generation.md): How to use the video generation API on Oxen.ai.
+- [👁️ Vision Language Models](https://docs.oxen.ai/examples/inference/vision_language_models.md): Leverage image understanding with the `/ai/chat/completions` endpoint.
+- [Activate model deployment](https://docs.oxen.ai/fine-tuning-api/activate-model-deployment.md): Activates an inactive model deployment.
+- [Cancel generation](https://docs.oxen.ai/fine-tuning-api/cancel-generation.md): Cancels a generation. The row is retained with status set to cancelled.
+- [Create chat completion](https://docs.oxen.ai/fine-tuning-api/create-chat-completion.md): Generates a model response for the given conversation. Compatible with the OpenAI chat completions API.
+- [Deactivate model deployment](https://docs.oxen.ai/fine-tuning-api/deactivate-model-deployment.md)
+- [Delete custom model](https://docs.oxen.ai/fine-tuning-api/delete-custom-model.md)
+- [Edit image](https://docs.oxen.ai/fine-tuning-api/edit-image.md): Edits an image given a prompt and source image.
+- [Enqueue generation](https://docs.oxen.ai/fine-tuning-api/enqueue-generation.md): Enqueues an async image or video generation job.
+- [Create an evaluation](https://docs.oxen.ai/fine-tuning-api/evaluations/create-an-evaluation.md): Run model inference over a dataset in the repository. The resource path (branch and file) is encoded in the URL, e.g. `POST /api/repos/{ns}/{repo}/evaluations/main/datasets/training.parquet`.
+- [Get evaluation status](https://docs.oxen.ai/fine-tuning-api/evaluations/get-evaluation-status.md): Fetch a single evaluation by ID. Use this to poll for progress (`evaluation.progress.processed` / `evaluation.progress.total`) and completion (`evaluation.status`).
+- [Favorite a model](https://docs.oxen.ai/fine-tuning-api/favorite-a-model.md)
+- [Create a fine-tune job](https://docs.oxen.ai/fine-tuning-api/fine_tunes/create-a-fine-tune-job.md): Start a new fine-tune for a given repository.
+- [Delete a fine-tune job](https://docs.oxen.ai/fine-tuning-api/fine_tunes/delete-a-fine-tune-job.md): Delete a fine-tune job and any associated model metadata.
+- [Deploy a checkpoint from a fine-tune job](https://docs.oxen.ai/fine-tuning-api/fine_tunes/deploy-a-checkpoint-from-a-fine-tune-job.md): Deploy a specific training checkpoint to make it available for inference. Pass `retry=true` to tear down any existing deployment for this checkpoint before creating a new one.
+- [Get a fine-tune job](https://docs.oxen.ai/fine-tuning-api/fine_tunes/get-a-fine-tune-job.md): Fetch a single fine-tune job by ID within a repository.
+- [Get logs for a fine-tune job](https://docs.oxen.ai/fine-tuning-api/fine_tunes/get-logs-for-a-fine-tune-job.md): Fetch aggregated logs for a specific fine-tune run.
+- [Get training status for a fine-tune job](https://docs.oxen.ai/fine-tuning-api/fine_tunes/get-training-status-for-a-fine-tune-job.md): Retrieve the current training status of a fine-tune job.
+- [List all fine-tunes accessible to the current user](https://docs.oxen.ai/fine-tuning-api/fine_tunes/list-all-fine-tunes-accessible-to-the-current-user.md): Return all fine-tune jobs the authenticated user has access to, including their own repositories and repositories in organizations they belong to.
+- [List checkpoints for a fine-tune job](https://docs.oxen.ai/fine-tuning-api/fine_tunes/list-checkpoints-for-a-fine-tune-job.md): Retrieve all saved checkpoints for a fine-tune training run. Returns an empty list if the model branch has not been created yet (e.g. before training has produced checkpoints).
+- [List fine-tunes for a user](https://docs.oxen.ai/fine-tuning-api/fine_tunes/list-fine-tunes-for-a-user.md): Return all fine-tune jobs in repositories belonging to the given user. Only the user themselves can access this endpoint.
+- [List fine-tunes for an organization](https://docs.oxen.ai/fine-tuning-api/fine_tunes/list-fine-tunes-for-an-organization.md): Return all fine-tune jobs in repositories belonging to the given organization. Requires the authenticated user to be a member of the organization.
+- [List fine-tunes in a repository](https://docs.oxen.ai/fine-tuning-api/fine_tunes/list-fine-tunes-in-a-repository.md): Return the fine-tune jobs associated with a given repository.
+- [Run a fine-tune job](https://docs.oxen.ai/fine-tuning-api/fine_tunes/run-a-fine-tune-job.md): Kick off a run for an existing fine-tune. The job must be in a runnable state (created or tokenizing).
+- [Stop a running fine-tune job](https://docs.oxen.ai/fine-tuning-api/fine_tunes/stop-a-running-fine-tune-job.md): Stop a fine-tune if it is currently running or queued.
+- [Tokenize data for a fine-tune job](https://docs.oxen.ai/fine-tuning-api/fine_tunes/tokenize-data-for-a-fine-tune-job.md): Trigger tokenization for a fine-tune that is in created state.
+- [Update a fine-tune job](https://docs.oxen.ai/fine-tuning-api/fine_tunes/update-a-fine-tune-job.md): Partially update a fine-tune job's attributes.
+- [Update training status for a fine-tune job](https://docs.oxen.ai/fine-tuning-api/fine_tunes/update-training-status-for-a-fine-tune-job.md): Update the training status of a fine-tune job.
+- [Generate audio](https://docs.oxen.ai/fine-tuning-api/generate-audio.md): Creates audio (e.g. speech) from a text prompt.
+- [Generate image](https://docs.oxen.ai/fine-tuning-api/generate-image.md): Creates an image from a text prompt.
+- [Generate video](https://docs.oxen.ai/fine-tuning-api/generate-video.md): Creates a video from a text prompt.
+- [Get generation details](https://docs.oxen.ai/fine-tuning-api/get-generation-details.md): Full metadata for a single generation, including cost and the user who triggered it.
+- [Get generation status](https://docs.oxen.ai/fine-tuning-api/get-generation-status.md): Retrieves metadata for a single queued generation.
+- [List favorite models](https://docs.oxen.ai/fine-tuning-api/list-favorite-models.md)
+- [List featured models](https://docs.oxen.ai/fine-tuning-api/list-featured-models.md)
+- [List in-flight queue items](https://docs.oxen.ai/fine-tuning-api/list-in-flight-queue-items.md): Lean polling view of the workbench render queue. Returns active generations (status queued or processing) by default; pass an explicit `status=` filter to include terminal rows. For paginated history with cost aggregates, use `/api/ai/generations`.
+- [List models](https://docs.oxen.ai/fine-tuning-api/list-models.md): Lists all available models. OpenAI-compatible.
+- [List past generations](https://docs.oxen.ai/fine-tuning-api/list-past-generations.md): Paginated browse view of completed and in-flight generations for a namespace. Use `/api/ai/queue` for the lean polling view of in-flight rows.
+- [Fine-Tuning Overview](https://docs.oxen.ai/fine-tuning-api/overview.md): Learn how to fine-tune models on Oxen.ai to customize them for your specific use cases
+- [Parameter Guide](https://docs.oxen.ai/fine-tuning-api/parameters.md): Understanding fine-tuning parameters and how to tune them
+- [Image Editing](https://docs.oxen.ai/fine-tuning-api/quickstart/image-editing.md): Fine-tune an image editing model for custom transformations
+- [Image Generation](https://docs.oxen.ai/fine-tuning-api/quickstart/image-generation.md): Fine-tune an image generation model for custom styles
+- [Text Generation](https://docs.oxen.ai/fine-tuning-api/quickstart/text.md): Fine-tune a text generation model in minutes
+- [Video Generation](https://docs.oxen.ai/fine-tuning-api/quickstart/video.md): Fine-tune video generation models for custom content
+- [Fine-Tune: Image Editing](https://docs.oxen.ai/fine-tuning-api/reference/image_editing.md): Fine-tune a model to edit images
+- [Fine-Tune: Image Generation](https://docs.oxen.ai/fine-tuning-api/reference/image_generation.md): Fine-tune a model to generate an image from text
+- [Fine-Tune: Image To Text](https://docs.oxen.ai/fine-tuning-api/reference/image_to_text.md): Image to text fine-tuning schema
+- [Fine-Tune: Image To Video](https://docs.oxen.ai/fine-tuning-api/reference/image_to_video.md): Image to video fine-tuning schema
+- [Fine-Tune: Multi Image Editing](https://docs.oxen.ai/fine-tuning-api/reference/multi_image_editing.md): Fine-tune a model to take multiple images as input and output an image as output
+- [Fine-Tune: Text Chat Messages](https://docs.oxen.ai/fine-tuning-api/reference/text_chat_messages.md): Default fine-tune schema
+- [Fine-Tune: Text Generation](https://docs.oxen.ai/fine-tuning-api/reference/text_generation.md): Fine tune a model to generate text given an input
+- [Fine-Tune: Text To Video](https://docs.oxen.ai/fine-tuning-api/reference/text_to_video.md): Fine-tune a model to generate video from text
+- [Retrieve model](https://docs.oxen.ai/fine-tuning-api/retrieve-model.md): Retrieves a model by ID or name. OpenAI-compatible.
+- [Search models](https://docs.oxen.ai/fine-tuning-api/search-models.md)
+- [Fine-Tuning text generation model](https://docs.oxen.ai/fine-tuning-api/tutorials/01_fine_tuning.md): Example of how to fine-tune text generation models on Oxen.ai using the HTTP API and `curl`.
+- [Fine-Tuning an Image Editing Model with API](https://docs.oxen.ai/fine-tuning-api/tutorials/02_fine_tuning_image.md): This page shows how to fine-tune an **image editing** model on Oxen.ai using **only the HTTP API and `curl`**.
+- [Fine-Tuning an Image Generation Model with API](https://docs.oxen.ai/fine-tuning-api/tutorials/03_fine_tuning_image_generation.md): Complete end-to-end guide to fine-tune an image generation model on Oxen.ai using the HTTP API and `curl`.
+- [Unfavorite a model](https://docs.oxen.ai/fine-tuning-api/unfavorite-a-model.md)
+- [Update model](https://docs.oxen.ai/fine-tuning-api/update-model.md)
+- [🌿 Branches & Merging](https://docs.oxen.ai/getting-started/command-line/branches.md): Create branches, switch between them, and merge work together.
+- [🔧 Debugging & Performance](https://docs.oxen.ai/getting-started/command-line/debugging.md): Diagnose repository state and tune Oxen for your hardware and network.
+- [🧹 Maintenance](https://docs.oxen.ai/getting-started/command-line/maintenance.md): Reclaim disk space by removing unreferenced data from your repository.
+- [⚙️ Setup & Authentication](https://docs.oxen.ai/getting-started/command-line/setup.md): Configure your local Oxen identity and authenticate with a remote.
+- [🚀 Start a Repository](https://docs.oxen.ai/getting-started/command-line/start_repository.md): Create a new repository, clone an existing one, or download specific files.
+- [🔄 Sync with a Remote](https://docs.oxen.ai/getting-started/command-line/sync_remote.md): Push, pull, and fetch changes between your local repository and a remote.
+- [📝 Track Changes](https://docs.oxen.ai/getting-started/command-line/track_changes.md): Stage, commit, inspect, and undo changes in your local repository.
+- [🗂️ Workspaces](https://docs.oxen.ai/getting-started/command-line/workspaces.md): Stage and commit changes directly against a remote without a full local clone.
+- [Repositories on Oxen.ai](https://docs.oxen.ai/getting-started/data.md): Oxen.ai allows you to version and store your data in repositories. Think of it like git for large data.
+- [Fine-Tuning Models on Oxen.ai](https://docs.oxen.ai/getting-started/fine-tuning.md): Oxen.ai allows you to fine-tune text, image, and video models with a few clicks.
+- [Using Models on Oxen.ai](https://docs.oxen.ai/getting-started/inference.md): Oxen.ai exposes API endpoints and a playground for a variety of models and modalities, including text, image, and video generation.
+- [⚒️ Installation](https://docs.oxen.ai/getting-started/install.md): How to install the Oxen client, server, or python package.
+- [🐂 Oxen.ai](https://docs.oxen.ai/getting-started/intro.md): The platform for building AI on your own data.
+- [📡 Oxen Server](https://docs.oxen.ai/getting-started/oxen-server.md): `oxen-server` is the storage backend for Oxen. It is where the merkle tree, commit history, and other metadata is stored.
+- [Create a new branch](https://docs.oxen.ai/http-api/branches/create-a-new-branch.md): Create a new branch from another branch name or commit ID. Returns existing branch if name already exists.
+- [Delete a branch](https://docs.oxen.ai/http-api/branches/delete-a-branch.md): Force delete a branch by name.
+- [Get all versions of a file on a branch](https://docs.oxen.ai/http-api/branches/get-all-versions-of-a-file-on-a-branch.md): List paginated historical versions of a file across commits on a branch, including schema hash for tabular files.
+- [Get an existing branch](https://docs.oxen.ai/http-api/branches/get-an-existing-branch.md): Get a branch by name, returning its details and current commit.
+- [List all branches](https://docs.oxen.ai/http-api/branches/list-all-branches.md): List all branches in the repository with their current commit information.
+- [Merge a commit into a branch](https://docs.oxen.ai/http-api/branches/merge-a-commit-into-a-branch.md): Merge a client commit into a branch during push. Returns merge commit on success, or original server commit if conflicts occur.
+- [Update a branch to a new commit](https://docs.oxen.ai/http-api/branches/update-a-branch-to-a-new-commit.md): Update a branch to point to a different commit ID.
+- [Download commit entries DB](https://docs.oxen.ai/http-api/commits/download-commit-entries-db.md): Download the commit entries database for a specific commit as a tarball.
+- [Download commits DB](https://docs.oxen.ai/http-api/commits/download-commits-db.md): Download the commits database as a compressed tarball for cloning.
+- [Download dir hashes DB](https://docs.oxen.ai/http-api/commits/download-dir-hashes-db.md): Download directory hashes database for a commit range as a tarball.
+- [Get a commit's parents](https://docs.oxen.ai/http-api/commits/get-a-commits-parents.md): Get the parent commits of a specific commit or the tip of a branch.
+- [Get commit](https://docs.oxen.ai/http-api/commits/get-commit.md): Get details of a specific commit by its ID.
+- [Get root commit](https://docs.oxen.ai/http-api/commits/get-root-commit.md): Get the root (initial) commit of the repository, or None if empty.
+- [List all commits](https://docs.oxen.ai/http-api/commits/list-all-commits.md): List all commits in a repository
+- [List commit history](https://docs.oxen.ai/http-api/commits/list-commit-history.md): List paginated commit history for a revision or file path. Supports revision ranges (base..head) and path-specific history.
+- [List commits](https://docs.oxen.ai/http-api/commits/list-commits.md): List all commits in the repository's history.
+- [List missing commits](https://docs.oxen.ai/http-api/commits/list-missing-commits.md): From a list of commit hashes, list the ones not present on the server
+- [List missing files from commits](https://docs.oxen.ai/http-api/commits/list-missing-files-from-commits.md): List files that are referenced in a commit but not present on the server. Accept a commit range.
+- [Mark commits as synced](https://docs.oxen.ai/http-api/commits/mark-commits-as-synced.md): DEPRECATED - This operation is a no-op that echoes the hashes from the request, and will be removed in a future release.
+- [Notify upload complete](https://docs.oxen.ai/http-api/commits/notify-upload-complete.md): Notify the server that the commit has finished uploading.
+- [Upload commit](https://docs.oxen.ai/http-api/commits/upload-commit.md): Upload a commit to a branch on the server. This creates an empty commit. To create a commit with children, use the upload_tree endpoint.
+- [Upload commit tree](https://docs.oxen.ai/http-api/commits/upload-commit-tree.md): Upload a commit's merkle tree data as a compressed tarball.
+- [Upload commits DB](https://docs.oxen.ai/http-api/commits/upload-commits-db.md): Upload the commits database tarball to the server during push.
+- [Upload data chunk](https://docs.oxen.ai/http-api/commits/upload-data-chunk.md): Upload a chunk of file data for use in large file uploads.
+- [Get Derived Data Frame](https://docs.oxen.ai/http-api/compare/get-derived-data-frame.md): Get the derived diff data frame rows with pagination and optional filtering.
+- [Get diff tree](https://docs.oxen.ai/http-api/compare/get-diff-tree.md): Get a tree structure of directories that have changed between two revisions.
+- [Get file diff](https://docs.oxen.ai/http-api/compare/get-file-diff.md): Get the detailed diff for a specific file between two revisions.
+- [List changed files](https://docs.oxen.ai/http-api/compare/list-changed-files.md): List the files and sub-directories within a directory that have changed within a provided commit range.
+- [List commits between two revisions](https://docs.oxen.ai/http-api/compare/list-commits-between-two-revisions.md): List commits between a 'base' and 'head' commit.
+- [List file and directory entries changed between base and head](https://docs.oxen.ai/http-api/compare/list-file-and-directory-entries-changed-between-base-and-head.md): List paginated entries (files and directories) that changed between two revisions with change counts.
+- [Create a tabular data frame diff](https://docs.oxen.ai/http-api/data-frames/create-a-tabular-data-frame-diff.md): Create and cache a tabular diff comparing two data frames with configurable keys and target columns.
+- [Create data frame from directory](https://docs.oxen.ai/http-api/data-frames/create-data-frame-from-directory.md): Create a data frame by scanning directory contents and commit it to a branch.
+- [Delete DF Diff](https://docs.oxen.ai/http-api/data-frames/delete-df-diff.md): Delete a cached tabular diff comparison by its ID.
+- [Get a cached tabular data frame diff](https://docs.oxen.ai/http-api/data-frames/get-a-cached-tabular-data-frame-diff.md): Retrieve a previously cached tabular diff by its comparison ID.
+- [Get data frame slice](https://docs.oxen.ai/http-api/data-frames/get-data-frame-slice.md): Get a paginated slice of a tabular data frame with optional filtering and transformations.
+- [Start data frame indexing](https://docs.oxen.ai/http-api/data-frames/start-data-frame-indexing.md): Start indexing a tabular file for queryable access. Creates a workspace if the file is not already indexed.
+- [Update tabular data frame diff](https://docs.oxen.ai/http-api/data-frames/update-tabular-data-frame-diff.md): Update an existing cached tabular diff comparison with new configuration.
+- [List directory contents](https://docs.oxen.ai/http-api/directories/list-directory-contents.md): List paginated contents of a directory at a specific revision, with optional workspace support.
+- [File Upload Example](https://docs.oxen.ai/http-api/example.md): Complete guide to uploading files to Oxen repositories via HTTP API
+- [Export resource as a zip](https://docs.oxen.ai/http-api/export/export-resource-as-a-zip.md): Download a directory as a zip archive. Subject to size limits.
+- [Delete file](https://docs.oxen.ai/http-api/files/delete-file.md): Remove a file from the repository. Stage the file as removed to a workspace and commit the removal. Can remove files or directories.
+- [Download File](https://docs.oxen.ai/http-api/files/download-file.md): Download a file from the repository. Supports image resizing and video thumbnail generation via query parameters.
+- [Move/Rename file](https://docs.oxen.ai/http-api/files/moverename-file.md): Move or rename a file within the repository and commit the change.
+- [Upload files](https://docs.oxen.ai/http-api/files/upload-files.md): Upload files via multipart form and commit them. Use `files[]` for directory uploads, or `file` for a single full-path upload. For backward compatibility, `file` also uploads into the target directory when `{resource}` already resolves to a directory.
+- [Check Oxen server status](https://docs.oxen.ai/http-api/health/check-oxen-server-status.md): Check if the Oxen server is running and responsive.
+- [Import file from URL](https://docs.oxen.ai/http-api/import/import-file-from-url.md): Import a file from a remote URL and commit it to the repository.
+- [Upload zip archive](https://docs.oxen.ai/http-api/import/upload-zip-archive.md): Upload and decompress a zip archive into the repository and commit the contents.
+- [Repository API](https://docs.oxen.ai/http-api/index.md)
+- [Check if branches are mergeable](https://docs.oxen.ai/http-api/merge/check-if-branches-are-mergeable.md): Check if two branches can be merged and list any conflicts.
+- [Merge branches](https://docs.oxen.ai/http-api/merge/merge-branches.md): Merge the head branch into the base branch, creating a merge commit.
+- [Get file metadata](https://docs.oxen.ai/http-api/metadata/get-file-metadata.md): Get metadata for a file or directory entry, with optional workspace support.
+- [Update file metadata](https://docs.oxen.ai/http-api/metadata/update-file-metadata.md): Update metadata for a file version in the version store.
+- [Get namespace](https://docs.oxen.ai/http-api/namespaces/get-namespace.md): Get details of a specific namespace by name.
+- [List namespaces](https://docs.oxen.ai/http-api/namespaces/list-namespaces.md): List all namespaces on the server.
+- [Create repository](https://docs.oxen.ai/http-api/repositories/create-repository.md): Create a new repository, optionally with initial files via JSON or multipart form.
+- [Delete repository](https://docs.oxen.ai/http-api/repositories/delete-repository.md): Delete a repository. Deletion runs in the background.
+- [Get repository details](https://docs.oxen.ai/http-api/repositories/get-repository-details.md): Get repository details including size and data types from the main branch.
+- [Get repository size](https://docs.oxen.ai/http-api/repositories/get-repository-size.md): Get the cached size of the repository in bytes.
+- [Get repository stats](https://docs.oxen.ai/http-api/repositories/get-repository-stats.md): Get the total number of files, the total size of the files, and the number of different file types.
+- [List repositories](https://docs.oxen.ai/http-api/repositories/list-repositories.md): List all repositories in a namespace.
+- [Transfer repository namespace](https://docs.oxen.ai/http-api/repositories/transfer-repository-namespace.md): Transfer a repository to a different namespace.
+- [Update repository size](https://docs.oxen.ai/http-api/repositories/update-repository-size.md): Recalculate and update the cached repository size.
+- [Batch download files (Tarball)](https://docs.oxen.ai/http-api/version-files/batch-download-files-tarball.md): Download multiple files as a gzipped tarball by providing their hashes.
+- [Batch upload files (Multipart)](https://docs.oxen.ai/http-api/version-files/batch-upload-files-multipart.md): Upload multiple files via multipart form, identified by their content hashes.
+- [Download version file](https://docs.oxen.ai/http-api/version-files/download-version-file.md): Download a file by its resource path, with optional image resizing.
+- [Get version file metadata](https://docs.oxen.ai/http-api/version-files/get-version-file-metadata.md): Get metadata for a specific file version by its hash.
+- [Add files to workspace](https://docs.oxen.ai/http-api/workspace-files/add-files-to-workspace.md): Upload and stage files to a workspace. Accept a multipart with either gzipped or uncompressed file parts. Use the filename from the file part and compute the file hash from the content.
+- [Get file from workspace](https://docs.oxen.ai/http-api/workspace-files/get-file-from-workspace.md): Get a file from a workspace.
+- [Stage files for removal](https://docs.oxen.ai/http-api/workspace-files/stage-files-for-removal.md): Stage files for removal from the repository. Accepts both files and directories.
+- [Stage files to workspace](https://docs.oxen.ai/http-api/workspace-files/stage-files-to-workspace.md): Stage file nodes to a workspace. Do not upload file contents to the repository.
+- [Unstage a file from the workspace](https://docs.oxen.ai/http-api/workspace-files/unstage-a-file-from-the-workspace.md): Unstage a file from workspace staging
+- [Unstage files](https://docs.oxen.ai/http-api/workspace-files/unstage-files.md): Unstage files from a workspace. Accepts both files and directories.
+- [Check workspace mergeability](https://docs.oxen.ai/http-api/workspaces/check-workspace-mergeability.md): Checks if a workspace can be committed and merged onto a branch
+- [Clear workspaces for repo](https://docs.oxen.ai/http-api/workspaces/clear-workspaces-for-repo.md): Deletes all workspaces for the repo
+- [Delete workspace](https://docs.oxen.ai/http-api/workspaces/delete-workspace.md): Delete a workspace by ID
+- [Get or create workspace](https://docs.oxen.ai/http-api/workspaces/get-or-create-workspace.md): Create a workspace. If the workspace exists, return it
+- [Get workspace](https://docs.oxen.ai/http-api/workspaces/get-workspace.md): Get an existing workspace by ID
+- [List workspaces](https://docs.oxen.ai/http-api/workspaces/list-workspaces.md): List workspaces in the repository
+- [Merge workspace into branch](https://docs.oxen.ai/http-api/workspaces/merge-workspace-into-branch.md): Commit and merge workspace into the specified branch
+- [Inference API Overview](https://docs.oxen.ai/inference-api/overview.md): Run inference on hundreds of AI models through a unified API for text, image, and video generation
+- [Async Queue](https://docs.oxen.ai/inference-api/quickstart/async-queue.md): Enqueue image and video generations that run in the background
+- [Chat Completions](https://docs.oxen.ai/inference-api/quickstart/chat.md): Generate text with language models in minutes
+- [Image Generation](https://docs.oxen.ai/inference-api/quickstart/image-generation.md): Generate images from text prompts in minutes
+- [Video Generation](https://docs.oxen.ai/inference-api/quickstart/video-generation.md): Generate videos from text prompts in minutes
+- [Async Queue](https://docs.oxen.ai/inference-api/reference/async_queue.md): Enqueue image and video generation jobs that process in the background
+- [Chat Completions](https://docs.oxen.ai/inference-api/reference/chat_completions.md): Generate text responses from language models with support for streaming, vision, audio, documents, and tool calling
+- [Image Editing](https://docs.oxen.ai/inference-api/reference/image_editing.md): Edit images using text prompts
+- [Image Generation](https://docs.oxen.ai/inference-api/reference/image_generation.md): Generate images from text prompts
+- [Model API References](https://docs.oxen.ai/inference-api/reference/model-references.md): Browse the full list of models available in the Oxen.AI inference API.
+- [Models](https://docs.oxen.ai/inference-api/reference/models/overview.md): List, search, and manage AI models available for inference and fine-tuning
+- [Kling O3 Pro: Reference to Video](https://docs.oxen.ai/inference-api/reference/models/walkthroughs/kling_o3_pro_reference_to_video.md): Generate videos from text prompts with optional reference images, multi-shot support, and native audio
+- [Kling O3 Edit: Video to Video](https://docs.oxen.ai/inference-api/reference/models/walkthroughs/kling_o3_pro_video_to_video_edit.md): Edit existing videos using text prompts with optional reference images and character elements
+- [Model Walkthroughs](https://docs.oxen.ai/inference-api/reference/models/walkthroughs/overview.md): Deeper guides for models with workflows or parameters that benefit from a full worked example.
+- [Seedance 2.0: Reference to Video](https://docs.oxen.ai/inference-api/reference/models/walkthroughs/seedance_2_reference_to_video.md): Generate videos from text prompts guided by reference images, videos, and audio
+- [Topaz Starlight Precise 2.5](https://docs.oxen.ai/inference-api/reference/models/walkthroughs/topaz_starlight_precise_2_5.md): Upscale and restore video to 1080p or 4K with detail-preserving temporal consistency
+- [Video Generation](https://docs.oxen.ai/inference-api/reference/video_generation.md): Generate videos from text prompts, images, or other videos
+- [Clone](https://docs.oxen.ai/python-api/clone.md)
+- [Data frame](https://docs.oxen.ai/python-api/data_frame.md)
+- [Datasets](https://docs.oxen.ai/python-api/datasets.md)
+- [Df utils](https://docs.oxen.ai/python-api/df_utils.md)
+- [Diff](https://docs.oxen.ai/python-api/diff/diff.md)
+- [Line diff](https://docs.oxen.ai/python-api/diff/line_diff.md)
+- [Tabular diff](https://docs.oxen.ai/python-api/diff/tabular_diff.md)
+- [Text diff](https://docs.oxen.ai/python-api/diff/text_diff.md)
+- [Introduction](https://docs.oxen.ai/python-api/index.md): Learn how to get started with the oxenai Python package.
+- [Init](https://docs.oxen.ai/python-api/init.md)
+- [Oxen fs](https://docs.oxen.ai/python-api/oxen_fs.md)
+- [Remote repo](https://docs.oxen.ai/python-api/remote_repo.md)
+- [Repo](https://docs.oxen.ai/python-api/repo.md)
+- [Repositories](https://docs.oxen.ai/python-api/repositories.md): Learn how to use the Repository classes.
+- [Workspace](https://docs.oxen.ai/python-api/workspace.md)
+
+## OpenAPI Specs
+
+- [oxen_server_openapi](https://hub.oxen.ai/api/_spec/oxen_server_openapi.json)
+- [oxen_hub_api](https://hub.oxen.ai/api/_spec/oxen_hub_api.json)
+
+## Optional
+
+- [Documentation](https://docs.oxen.ai)
+- [Blog](https://blog.oxen.ai)
+- [GitHub](https://github.com/Oxen-AI/Oxen)

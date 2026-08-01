@@ -1,0 +1,66 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/oxen-hub-api-openapi-original.json, openapi/oxen-server-openapi-original.json
+format: http-status
+note: Oxen returns errors as JSON with an HTTP status code and a message/status envelope (e.g. {"status":"error","status_message":"..."});
+  no RFC 9457 application/problem+json media type is declared in the specs.
+envelope:
+  fields:
+  - status
+  - status_message
+  - error
+  content_type: application/json
+problems:
+- status: 400
+  title: Bad Request
+  descriptions:
+  - Bad Request
+  - Bad Request (e.g., failed to parse body)
+  - Bad Request (e.g., malformed body)
+  - Bad Request / Invalid URL
+  occurrences: 33
+  example_operations:
+  - openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelController.generate_audio
+  - openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelController.get_model_response
+  - openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelController.edit_image
+- status: 401
+  title: Unauthorized
+  descriptions:
+  - Not authenticated
+  - Not authenticated or not a member
+  - Not authenticated or not authorized
+  occurrences: 3
+  example_operations:
+  - openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.list_for_org
+  - openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.list_accessible
+  - openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.list_for_user
+- status: 404
+  title: Not Found
+  descriptions:
+  - Branch not found
+  - Branch or Commit not found
+  - Branch or file not found
+  - Branch or path not found
+  occurrences: 86
+  example_operations:
+  - openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.GenerationsController.show
+  - openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelsController.delete_custom_model
+  - openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.ModelsController.show
+- status: 409
+  title: Conflict
+  descriptions:
+  - Dataset already indexed
+  - Merge conflict
+  - Repository already exists
+  occurrences: 3
+  example_operations:
+  - openapi/oxen-server-openapi-original.json#merge
+  - openapi/oxen-server-openapi-original.json#index
+  - openapi/oxen-server-openapi-original.json#create
+- status: 422
+  title: Unprocessable Entity
+  descriptions:
+  - Unprocessable Entity, e.g., workspace is behind main branch
+  occurrences: 1
+  example_operations:
+  - openapi/oxen-server-openapi-original.json#commit

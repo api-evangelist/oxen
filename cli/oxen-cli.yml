@@ -1,0 +1,32 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.oxen.ai/getting-started/cli, https://github.com/Oxen-AI/Oxen
+name: oxen
+description: >-
+  Official Oxen command-line client — a git-like interface for the Oxen data
+  version control system: clone, add, commit, push/pull, branch, and diff
+  terabyte-scale datasets, plus remote workspace and configuration commands.
+binary: oxen
+package_ref: packages/oxen-packages.yml
+install:
+- method: homebrew
+  command: brew install oxen
+- method: github-releases
+  command: Download the prebuilt binary from https://github.com/Oxen-AI/Oxen/releases
+auth:
+  command: oxen config --auth hub.oxen.ai <OXEN_API_KEY>
+  note: Stores the API key used for authenticated pushes/pulls to hub.oxen.ai.
+command_groups:
+- group: repository
+  commands: [init, clone, add, rm, status, commit, log, restore]
+- group: sync
+  commands: [push, pull, fetch, clone]
+- group: branching
+  commands: [branch, checkout, merge]
+- group: data
+  commands: [df, diff]
+- group: remote
+  commands: [remote, workspace]
+- group: config
+  commands: [config]
+note: Command surface summarized from the Oxen CLI docs and open-source repo; run `oxen --help` for the authoritative list.

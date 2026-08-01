@@ -1,0 +1,30 @@
+generated: '2026-07-20'
+method: searched
+source: https://github.com/Oxen-AI/Oxen/releases, https://www.oxen.ai/changelog
+scheme: semver
+current_version: 0.52.0
+changelog_url: https://www.oxen.ai/changelog
+releases_url: https://github.com/Oxen-AI/Oxen/releases
+note: >-
+  Oxen publishes dated GitHub releases for the open-source Rust core/CLI/SDK and a
+  product changelog at oxen.ai/changelog. Recent release window captured below;
+  the live releases feed is the source of truth.
+entries:
+- version: 0.52.0
+  date: '2026-07-17'
+  title: Release 0.52.0
+- version: 0.51.5
+  date: '2026-07-15'
+  title: Release 0.51.5
+- version: 0.51.4
+  date: '2026-07-15'
+  title: Release 0.51.4
+- version: 0.51.3
+  date: '2026-07-10'
+  title: Release 0.51.3
+- version: 0.51.2
+  date: '2026-07-08'
+  title: Release 0.51.2
+- version: 0.51.1
+  date: '2026-07-02'
+  title: Release 0.51.1

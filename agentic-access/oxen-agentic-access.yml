@@ -1,0 +1,1544 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/oxen-hub-api-openapi-original.json, openapi/oxen-server-openapi-original.json
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 117
+  by_action_class:
+    acting: 59
+    connected: 58
+  by_consequence:
+    safety-critical: 22
+    read: 58
+    write: 36
+    physical: 1
+  human_in_the_loop_required: 22
+operations:
+- path: /api/ai/audio/generate
+  method: post
+  operationId: OxenApiWeb.Controllers.ModelController.generate_audio
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/ai/chat/completions
+  method: post
+  operationId: OxenApiWeb.Controllers.ModelController.get_model_response
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/ai/generations
+  method: get
+  operationId: OxenApiWeb.Controllers.GenerationsController.index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/ai/generations/{generation_id}
+  method: get
+  operationId: OxenApiWeb.Controllers.GenerationsController.show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/ai/images/edit
+  method: post
+  operationId: OxenApiWeb.Controllers.ModelController.edit_image
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/ai/images/generate
+  method: post
+  operationId: OxenApiWeb.Controllers.ModelController.generate_image
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/ai/models
+  method: get
+  operationId: OxenApiWeb.Controllers.ModelsController.index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/ai/models/favorites
+  method: get
+  operationId: OxenApiWeb.Controllers.ModelsController.list_favorites
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/ai/models/featured
+  method: get
+  operationId: OxenApiWeb.Controllers.ModelsController.list_featured
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/ai/models/search
+  method: get
+  operationId: OxenApiWeb.Controllers.ModelsController.search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/ai/models/{id}
+  method: delete
+  operationId: OxenApiWeb.Controllers.ModelsController.delete_custom_model
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/ai/models/{id}
+  method: get
+  operationId: OxenApiWeb.Controllers.ModelsController.show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/ai/models/{id}
+  method: put
+  operationId: OxenApiWeb.Controllers.ModelsController.update
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/ai/models/{id}/activate
+  method: post
+  operationId: OxenApiWeb.Controllers.ModelsController.wake
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/ai/models/{id}/deactivate
+  method: post
+  operationId: OxenApiWeb.Controllers.ModelsController.deactivate
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/ai/models/{id}/favorite
+  method: delete
+  operationId: OxenApiWeb.Controllers.ModelsController.delete_favorite
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/ai/models/{id}/favorite
+  method: post
+  operationId: OxenApiWeb.Controllers.ModelsController.create_favorite
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/ai/queue
+  method: get
+  operationId: OxenApiWeb.Controllers.QueueController.index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/ai/queue
+  method: post
+  operationId: OxenApiWeb.Controllers.QueueController.create
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/ai/queue/{generation_id}
+  method: delete
+  operationId: OxenApiWeb.Controllers.QueueController.delete
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/ai/queue/{generation_id}
+  method: get
+  operationId: OxenApiWeb.Controllers.QueueController.show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/ai/videos/generate
+  method: post
+  operationId: OxenApiWeb.Controllers.ModelController.generate_video
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/orgs/{name}/fine_tunes
+  method: get
+  operationId: OxenApiWeb.Controllers.FineTuneController.list_for_org
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/evaluations/*resource_path
+  method: post
+  operationId: OxenApiWeb.Controllers.EvaluationController.create_evaluation
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/evaluations/{evaluation_id}
+  method: get
+  operationId: OxenApiWeb.Controllers.EvaluationController.get_evaluation
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/fine_tunes
+  method: get
+  operationId: OxenApiWeb.Controllers.FineTuneController.index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/fine_tunes
+  method: post
+  operationId: OxenApiWeb.Controllers.FineTuneController.create
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/fine_tunes/{id}
+  method: delete
+  operationId: OxenApiWeb.Controllers.FineTuneController.delete
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/fine_tunes/{id}
+  method: get
+  operationId: OxenApiWeb.Controllers.FineTuneController.show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/fine_tunes/{id}
+  method: patch
+  operationId: OxenApiWeb.Controllers.FineTuneController.update
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/actions/run
+  method: post
+  operationId: OxenApiWeb.Controllers.FineTuneController.run
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/actions/stop
+  method: post
+  operationId: OxenApiWeb.Controllers.FineTuneController.stop
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/checkpoints
+  method: get
+  operationId: OxenApiWeb.Controllers.FineTuneController.checkpoints
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/checkpoints/{step}/deploy
+  method: post
+  operationId: OxenApiWeb.Controllers.FineTuneController.create_checkpoint_deployment
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/logs
+  method: get
+  operationId: OxenApiWeb.Controllers.FineTuneController.logs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/tokenize
+  method: post
+  operationId: OxenApiWeb.Controllers.FineTuneController.tokenize
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/train_status
+  method: get
+  operationId: OxenApiWeb.Controllers.FineTuneController.get_train_status
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/train_status/{new_status}
+  method: put
+  operationId: OxenApiWeb.Controllers.FineTuneController.update_train_status
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/user/fine_tunes
+  method: get
+  operationId: OxenApiWeb.Controllers.FineTuneController.list_accessible
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/users/{username}/fine_tunes
+  method: get
+  operationId: OxenApiWeb.Controllers.FineTuneController.list_for_user
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/branches/{branch_name}/merge
+  method: post
+  operationId: maybe_create_merge
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/commits/upload
+  method: post
+  operationId: upload
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/compare/data_frames/{compare_id}/diff
+  method: get
+  operationId: get_derived_df
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/commits_db
+  method: get
+  operationId: download_commits_db
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/export/download/{resource}
+  method: get
+  operationId: download_zip
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/commits/upload_chunk
+  method: post
+  operationId: upload_chunk
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/compare/{base_head}/dir/{dir}/entries
+  method: get
+  operationId: dir_entries
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/stats
+  method: get
+  operationId: stats
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/compare/{base_head}/file/{resource}
+  method: get
+  operationId: file
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/branches/{branch_name}
+  method: delete
+  operationId: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/branches/{branch_name}
+  method: get
+  operationId: show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/branches/{branch_name}
+  method: put
+  operationId: update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/workspaces/clear
+  method: delete
+  operationId: clear
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/versions/batch-download
+  method: post
+  operationId: batch_download
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/data_frames/{resource}
+  method: get
+  operationId: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/compare/data_frames
+  method: post
+  operationId: create_df_diff
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/commits/{commit_id}/complete
+  method: post
+  operationId: complete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/workspaces/{workspace_id}/merge/{branch}
+  method: get
+  operationId: mergeability
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/workspaces/{workspace_id}/merge/{branch}
+  method: post
+  operationId: commit
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/commits/mark_commits_as_synced
+  method: post
+  operationId: mark_commits_as_synced
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/commits/root
+  method: get
+  operationId: root_commit
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}
+  method: get
+  operationId: index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/compare/{base_head}/tree
+  method: get
+  operationId: dir_tree
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/compare/data_frames/{compare_id}
+  method: delete
+  operationId: delete_df_diff
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/compare/data_frames/{compare_id}
+  method: get
+  operationId: get_df_diff
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/compare/data_frames/{compare_id}
+  method: put
+  operationId: update_df_diff
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/commits/{commit_id}
+  method: get
+  operationId: show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/versions/{resource}
+  method: get
+  operationId: download
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/workspaces/{workspace_id}
+  method: delete
+  operationId: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/workspaces/{workspace_id}
+  method: get
+  operationId: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/commits/{commit_or_branch}/commit_entries_db
+  method: get
+  operationId: download_commit_entries_db
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/import/{resource}
+  method: post
+  operationId: import
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/commits
+  method: get
+  operationId: index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/commits
+  method: post
+  operationId: create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/data_frames/from_directory/{resource}
+  method: post
+  operationId: from_directory
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/commits/history/{resource}
+  method: get
+  operationId: history
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/namespaces/{namespace}
+  method: get
+  operationId: show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/versions/{version_id}/metadata
+  method: get
+  operationId: metadata
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/workspaces/{workspace_id}/files/batch/{directory}
+  method: post
+  operationId: add_version_files
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/import/upload/{resource}
+  method: post
+  operationId: upload_zip
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/workspaces/{workspace_id}/files/{path}
+  method: get
+  operationId: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/workspaces/{workspace_id}/files/{path}
+  method: post
+  operationId: add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/commits/missing
+  method: get
+  operationId: list_missing
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/metadata/{resource}
+  method: get
+  operationId: file
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/metadata/{resource}
+  method: put
+  operationId: update_metadata
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/workspaces/{workspace_id}/changes/{path}
+  method: delete
+  operationId: unstage
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/merge/{base_head}
+  method: get
+  operationId: show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/merge/{base_head}
+  method: post
+  operationId: merge
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/commits/missing_files
+  method: get
+  operationId: list_missing_files
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/file/{resource}
+  method: delete
+  operationId: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/file/{resource}
+  method: get
+  operationId: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/file/{resource}
+  method: patch
+  operationId: mv
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/file/{resource}
+  method: put
+  operationId: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/workspaces/{workspace_id}/changes
+  method: delete
+  operationId: unstage_many
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/data_frames/{resource}/index
+  method: post
+  operationId: index
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/versions
+  method: post
+  operationId: batch_upload
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/commits/{commit_id}/upload_tree
+  method: post
+  operationId: upload_tree
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/commits/all
+  method: get
+  operationId: list_all
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/workspaces/get_or_create
+  method: put
+  operationId: get_or_create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/branches/{branch_name}/versions/{path}
+  method: get
+  operationId: list_entry_versions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/version
+  method: get
+  operationId: index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/workspaces/{workspace_id}/files
+  method: delete
+  operationId: rm_files
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/compare/{base_head}/entries
+  method: get
+  operationId: entries
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/namespaces
+  method: get
+  operationId: index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/transfer
+  method: patch
+  operationId: transfer_namespace
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/branches
+  method: get
+  operationId: index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/branches
+  method: post
+  operationId: create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}/size
+  method: get
+  operationId: get_size
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/size
+  method: put
+  operationId: update_size
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}
+  method: delete
+  operationId: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/repos/{namespace}/{repo_name}
+  method: get
+  operationId: show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/commits/{base_head}/dir_hashes_db
+  method: get
+  operationId: download_dir_hashes_db
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/compare/{base_head}/commits
+  method: get
+  operationId: commits
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/commits/{commit_or_branch}/parents
+  method: get
+  operationId: parents
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/workspaces
+  method: get
+  operationId: list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos/{namespace}/{repo_name}/dir/{resource}
+  method: get
+  operationId: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/repos
+  method: post
+  operationId: create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required

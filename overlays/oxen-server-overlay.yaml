@@ -1,0 +1,19 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Oxen (server)
+  version: 1.0.0
+extends: openapi/oxen-server-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: oxen
+    x-apievangelist-enriched: '2026-07-20'
+    x-apievangelist-artifacts:
+    - authentication
+    - conventions
+    - errors
+    - data-model
+    - lifecycle
+    - agentic-access
+    - skills
+    - mcp

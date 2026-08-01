@@ -1,0 +1,30 @@
+generated: '2026-07-20'
+method: searched
+host: https://www.oxen.ai
+note: >-
+  Probed the standard /.well-known/ discovery surface on www.oxen.ai and hub.oxen.ai
+  on 2026-07-20. None are published (all 404); recorded for auditability. Absence is
+  valid data. Note Oxen does publish machine-readable OpenAPI specs at
+  https://hub.oxen.ai/api/_spec/ and an llms.txt at https://docs.oxen.ai/llms.txt.
+documents:
+- path: /.well-known/security.txt
+  host: https://www.oxen.ai
+  status: 404
+- path: /.well-known/openid-configuration
+  host: https://www.oxen.ai
+  status: 404
+- path: /.well-known/oauth-authorization-server
+  host: https://www.oxen.ai
+  status: 404
+- path: /.well-known/api-catalog
+  host: https://www.oxen.ai
+  status: 404
+- path: /.well-known/ai-plugin.json
+  host: https://www.oxen.ai
+  status: 404
+- path: /.well-known/security.txt
+  host: https://hub.oxen.ai
+  status: 404
+- path: /.well-known/openid-configuration
+  host: https://hub.oxen.ai
+  status: 404

@@ -1,0 +1,23 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/oxen-hub-api-openapi-original.json
+note: >-
+  Agent Skills generated from the Oxen Hub AI & Fine-Tuning API. Every operation
+  referenced is a real operationId present in the OpenAPI spec. No provider-published
+  AGENTS.md or skill files were found.
+skills:
+- file: oxen-run-inference.md
+  name: Run inference against Oxen models
+  api: openapi/oxen-hub-api-openapi-original.json
+  operations:
+  - OxenApiWeb.Controllers.ModelsController.index
+  - OxenApiWeb.Controllers.ModelController.get_model_response
+  - OxenApiWeb.Controllers.ModelController.generate_image
+- file: oxen-fine-tune-and-deploy.md
+  name: Fine-tune and deploy a custom model
+  api: openapi/oxen-hub-api-openapi-original.json
+  operations:
+  - OxenApiWeb.Controllers.FineTuneController.create
+  - OxenApiWeb.Controllers.FineTuneController.run
+  - OxenApiWeb.Controllers.FineTuneController.get_train_status
+  - OxenApiWeb.Controllers.FineTuneController.create_checkpoint_deployment
