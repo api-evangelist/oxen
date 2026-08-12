@@ -248,6 +248,8 @@ x-enrichment:
   artifacts_added: 20
   pass: local-v1
 common:
+- type: Overlay
+  url: overlays/oxen-hub-api-overlay.yaml
 - type: DomainSecurity
   url: security/oxen-domain-security.yml
 - type: Website
