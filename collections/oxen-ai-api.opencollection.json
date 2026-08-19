@@ -1,0 +1,463 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "oxen Ai API",
+    "version": "0.243.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ai",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate audio",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/ai/audio/generate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates audio (e.g. speech) from a text prompt."
+        },
+        {
+          "info": {
+            "name": "Create chat completion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/ai/chat/completions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates a model response for the given conversation. Compatible with the OpenAI chat completions API."
+        },
+        {
+          "info": {
+            "name": "List past generations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/ai/generations",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "model",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "media_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "folder",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Paginated browse view of completed and in-flight generations for a namespace. Use `/api/ai/queue` for the lean polling view of in-flight rows."
+        },
+        {
+          "info": {
+            "name": "Get generation details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/ai/generations/:generation_id",
+            "params": [
+              {
+                "name": "generation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Full metadata for a single generation, including cost and the user who triggered it."
+        },
+        {
+          "info": {
+            "name": "Edit image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/ai/images/edit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Edits an image given a prompt and source image."
+        },
+        {
+          "info": {
+            "name": "Generate image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/ai/images/generate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an image from a text prompt."
+        },
+        {
+          "info": {
+            "name": "List models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/ai/models",
+            "params": [
+              {
+                "name": "provider_name",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "developer_name",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "action",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists all available models. OpenAI-compatible."
+        },
+        {
+          "info": {
+            "name": "List favorite models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/ai/models/favorites"
+          },
+          "docs": "List favorite models"
+        },
+        {
+          "info": {
+            "name": "List featured models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/ai/models/featured"
+          },
+          "docs": "List featured models"
+        },
+        {
+          "info": {
+            "name": "Search models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/ai/models/search",
+            "params": [
+              {
+                "name": "search",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search models"
+        },
+        {
+          "info": {
+            "name": "Retrieve model",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/ai/models/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Model ID (UUID) or name"
+              },
+              {
+                "name": "deployment_status",
+                "value": "",
+                "type": "query",
+                "description": "Pass \"live\" to refresh deployment status from provider before responding"
+              }
+            ]
+          },
+          "docs": "Retrieves a model by ID or name. OpenAI-compatible."
+        },
+        {
+          "info": {
+            "name": "Update model",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://hub.oxen.ai/api/ai/models/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update model"
+        },
+        {
+          "info": {
+            "name": "Delete custom model",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://hub.oxen.ai/api/ai/models/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete custom model"
+        },
+        {
+          "info": {
+            "name": "Activate model deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/ai/models/:id/activate",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Activates an inactive model deployment."
+        },
+        {
+          "info": {
+            "name": "Deactivate model deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/ai/models/:id/deactivate",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deactivate model deployment"
+        },
+        {
+          "info": {
+            "name": "Favorite a model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/ai/models/:id/favorite",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Favorite a model"
+        },
+        {
+          "info": {
+            "name": "Unfavorite a model",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://hub.oxen.ai/api/ai/models/:id/favorite",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Unfavorite a model"
+        },
+        {
+          "info": {
+            "name": "List in-flight queue items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/ai/queue",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "model",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "media_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "folder",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lean polling view of the workbench render queue. Returns active generations (status queued or processing) by default; pass an explicit `status=` filter to include terminal rows. For paginated history with cost aggregates, use `/api/ai/generations`."
+        },
+        {
+          "info": {
+            "name": "Enqueue generation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/ai/queue",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enqueues an async image or video generation job."
+        },
+        {
+          "info": {
+            "name": "Get generation status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/ai/queue/:generation_id",
+            "params": [
+              {
+                "name": "generation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves metadata for a single queued generation."
+        },
+        {
+          "info": {
+            "name": "Cancel generation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://hub.oxen.ai/api/ai/queue/:generation_id",
+            "params": [
+              {
+                "name": "generation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancels a generation. The row is retained with status set to cancelled."
+        },
+        {
+          "info": {
+            "name": "Generate video",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/ai/videos/generate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a video from a text prompt."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

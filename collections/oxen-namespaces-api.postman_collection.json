@@ -1,0 +1,272 @@
+{
+  "item": [
+    {
+      "id": "c853b3ba-5023-435d-887d-fc862dfedffc",
+      "name": "Namespaces",
+      "description": {
+        "content": "Namespace management endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a88f7868-0fb8-412e-9918-fc504047830a",
+          "name": "Get namespace",
+          "request": {
+            "name": "Get namespace",
+            "description": {
+              "content": "Get details of a specific namespace by name.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "namespaces",
+                ":namespace"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) Name of the namespace"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "16babe9f-c2db-4fda-b6b5-566d4d989a02",
+              "name": "Namespace details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "namespaces",
+                    ":namespace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Name of the namespace"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"namespace\": {\n    \"name\": \"string\",\n    \"storage_usage_gb\": 2345.7085480517417\n  },\n  \"status\": \"string\",\n  \"status_message\": \"string\",\n  \"oxen_version\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "312fca35-c1a5-408c-9b84-cdfaed318197",
+              "name": "Missing namespace parameter",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "namespaces",
+                    ":namespace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Name of the namespace"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e5f6efbc-018e-49a1-9d05-b97de496ba4c",
+              "name": "Namespace not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "namespaces",
+                    ":namespace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Name of the namespace"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3f47ac62-c3e4-44c1-89a6-681d0ff86981",
+          "name": "List namespaces",
+          "request": {
+            "name": "List namespaces",
+            "description": {
+              "content": "List all namespaces on the server.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "namespaces"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "03cd6002-d272-41c2-9fec-84687e9e2ca5",
+              "name": "List of namespaces",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "namespaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"namespaces\": [\n    {\n      \"namespace\": \"string\"\n    },\n    {\n      \"namespace\": \"string\"\n    }\n  ],\n  \"status\": \"string\",\n  \"status_message\": \"string\",\n  \"oxen_version\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://hub.oxen.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "416c1fad-29ac-4bad-bead-0ea72fb07ec1",
+    "name": "oxen Ai Namespaces API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Namespace management endpoints",
+      "type": "text/plain"
+    }
+  }
+}

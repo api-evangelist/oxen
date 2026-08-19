@@ -1,0 +1,538 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "oxen Ai fine_tunes API",
+    "version": "0.243.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "fine_tunes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List fine-tunes for an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/orgs/:name/fine_tunes",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Organization name"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-indexed)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search across fine-tune name, display name, base model, and repository (case-insensitive substring match). For example: 'qwen', 'ox/Delorean', 'customer-support'."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status. One of: created, tokenizing, enqueued, running, completed, stopped, errored, deployed"
+              },
+              {
+                "name": "created_by",
+                "value": "",
+                "type": "query",
+                "description": "Filter by creator username (exact match)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order by creation date: 'newest' (default) or 'oldest'"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Return all fine-tune jobs in repositories belonging to the given organization. Requires the authenticated user to be a member of the organization."
+        },
+        {
+          "info": {
+            "name": "List fine-tunes in a repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/fine_tunes",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-indexed)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search across fine-tune name, display name, base model, and repository (case-insensitive substring match). For example: 'qwen', 'ox/Delorean', 'customer-support'."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status. One of: created, tokenizing, enqueued, running, completed, stopped, errored, deployed"
+              },
+              {
+                "name": "created_by",
+                "value": "",
+                "type": "query",
+                "description": "Filter by creator username (exact match)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order by creation date: 'newest' (default) or 'oldest'"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Return the fine-tune jobs associated with a given repository."
+        },
+        {
+          "info": {
+            "name": "Create a fine-tune job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/fine_tunes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Start a new fine-tune for a given repository."
+        },
+        {
+          "info": {
+            "name": "Get a fine-tune job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/fine_tunes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "ft_123",
+                "type": "path",
+                "description": "Fine-tune ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch a single fine-tune job by ID within a repository."
+        },
+        {
+          "info": {
+            "name": "Update a fine-tune job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/fine_tunes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "ft_123",
+                "type": "path",
+                "description": "Fine-tune ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Partially update a fine-tune job's attributes."
+        },
+        {
+          "info": {
+            "name": "Delete a fine-tune job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/fine_tunes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "ft_123",
+                "type": "path",
+                "description": "Fine-tune ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a fine-tune job and any associated model metadata."
+        },
+        {
+          "info": {
+            "name": "Run a fine-tune job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/fine_tunes/:id/actions/run",
+            "params": [
+              {
+                "name": "id",
+                "value": "ft_123",
+                "type": "path",
+                "description": "Fine-tune ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Kick off a run for an existing fine-tune. The job must be in a runnable state (created or tokenizing)."
+        },
+        {
+          "info": {
+            "name": "Stop a running fine-tune job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/fine_tunes/:id/actions/stop",
+            "params": [
+              {
+                "name": "id",
+                "value": "ft_123",
+                "type": "path",
+                "description": "Fine-tune ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Stop a fine-tune if it is currently running or queued."
+        },
+        {
+          "info": {
+            "name": "List checkpoints for a fine-tune job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/fine_tunes/:id/checkpoints",
+            "params": [
+              {
+                "name": "id",
+                "value": "ft_123",
+                "type": "path",
+                "description": "Fine-tune ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve all saved checkpoints for a fine-tune training run. Returns an empty list if the model branch has not been created yet (e.g. before training has produced checkpoints)."
+        },
+        {
+          "info": {
+            "name": "Deploy a checkpoint from a fine-tune job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/fine_tunes/:id/checkpoints/:step/deploy",
+            "params": [
+              {
+                "name": "id",
+                "value": "ft_123",
+                "type": "path",
+                "description": "Fine-tune ID"
+              },
+              {
+                "name": "step",
+                "value": "100",
+                "type": "path",
+                "description": "Checkpoint step number"
+              },
+              {
+                "name": "retry",
+                "value": "",
+                "type": "query",
+                "description": "If true, cleanup the existing deployment and model for this checkpoint before creating a new one."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deploy a specific training checkpoint to make it available for inference. Pass `retry=true` to tear down any existing deployment for this checkpoint before creating a new one."
+        },
+        {
+          "info": {
+            "name": "Get logs for a fine-tune job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/fine_tunes/:id/logs",
+            "params": [
+              {
+                "name": "id",
+                "value": "ft_123",
+                "type": "path",
+                "description": "Fine-tune ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch aggregated logs for a specific fine-tune run."
+        },
+        {
+          "info": {
+            "name": "Tokenize data for a fine-tune job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/fine_tunes/:id/tokenize",
+            "params": [
+              {
+                "name": "id",
+                "value": "ft_123",
+                "type": "path",
+                "description": "Fine-tune ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Trigger tokenization for a fine-tune that is in created state."
+        },
+        {
+          "info": {
+            "name": "Get training status for a fine-tune job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/fine_tunes/:id/train_status",
+            "params": [
+              {
+                "name": "id",
+                "value": "ft_123",
+                "type": "path",
+                "description": "Fine-tune ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve the current training status of a fine-tune job."
+        },
+        {
+          "info": {
+            "name": "Update training status for a fine-tune job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/fine_tunes/:id/train_status/:new_status",
+            "params": [
+              {
+                "name": "id",
+                "value": "ft_123",
+                "type": "path",
+                "description": "Fine-tune ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update the training status of a fine-tune job."
+        },
+        {
+          "info": {
+            "name": "List all fine-tunes accessible to the current user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/user/fine_tunes",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-indexed)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search across fine-tune name, display name, base model, and repository (case-insensitive substring match). For example: 'qwen', 'ox/Delorean', 'customer-support'."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status. One of: created, tokenizing, enqueued, running, completed, stopped, errored, deployed"
+              },
+              {
+                "name": "created_by",
+                "value": "",
+                "type": "query",
+                "description": "Filter by creator username (exact match)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order by creation date: 'newest' (default) or 'oldest'"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Return all fine-tune jobs the authenticated user has access to, including their own repositories and repositories in organizations they belong to."
+        },
+        {
+          "info": {
+            "name": "List fine-tunes for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/users/:username/fine_tunes",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path",
+                "description": "Username"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-indexed)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search across fine-tune name, display name, base model, and repository (case-insensitive substring match). For example: 'qwen', 'ox/Delorean', 'customer-support'."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status. One of: created, tokenizing, enqueued, running, completed, stopped, errored, deployed"
+              },
+              {
+                "name": "created_by",
+                "value": "",
+                "type": "query",
+                "description": "Filter by creator username (exact match)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order by creation date: 'newest' (default) or 'oldest'"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Return all fine-tune jobs in repositories belonging to the given user. Only the user themselves can access this endpoint."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

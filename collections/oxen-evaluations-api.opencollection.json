@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "oxen Ai evaluations API",
+    "version": "0.243.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "evaluations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an evaluation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/evaluations/*resource_path",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Run model inference over a dataset in the repository. The resource path (branch and file) is encoded in the URL, e.g. `POST /api/repos/{ns}/{repo}/evaluations/main/datasets/training.parquet`."
+        },
+        {
+          "info": {
+            "name": "Get evaluation status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/evaluations/:evaluation_id",
+            "params": [
+              {
+                "name": "evaluation_id",
+                "value": "d0c8585d-1234-5678-abcd-ef0123456789",
+                "type": "path",
+                "description": "Evaluation ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch a single evaluation by ID. Use this to poll for progress (`evaluation.progress.processed` / `evaluation.progress.total`) and completion (`evaluation.status`)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

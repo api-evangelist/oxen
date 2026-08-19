@@ -1,0 +1,2003 @@
+{
+  "item": [
+    {
+      "id": "ecb80b56-a99c-4c2e-ba65-98d96db6dee3",
+      "name": "Data Frames",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "00b23d9e-5206-4bc2-976d-f5d96396c7bd",
+          "name": "Get data frame slice",
+          "request": {
+            "name": "Get data frame slice",
+            "description": {
+              "content": "Get a paginated slice of a tabular data frame with optional filtering and transformations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "repos",
+                ":namespace",
+                ":repo_name",
+                "data_frames",
+                ":resource"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) Namespace of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repo_name",
+                  "description": "(Required) Name of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "resource",
+                  "description": "(Required) Path to the tabular file (including branch/commit info)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string,null>",
+                  "key": "columns",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string,null>",
+                  "key": "delimiter",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string,null>",
+                  "key": "find_embedding_where",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string,null>",
+                  "key": "filter",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string,null>",
+                  "key": "output",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string,null>",
+                  "key": "output_column",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer,null>",
+                  "key": "page_size",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer,null>",
+                  "key": "page",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer,null>",
+                  "key": "row",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<boolean,null>",
+                  "key": "randomize",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<boolean,null>",
+                  "key": "reverse",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string,null>",
+                  "key": "slice",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string,null>",
+                  "key": "sort_by",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string,null>",
+                  "key": "sort_by_similarity_to",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string,null>",
+                  "key": "sql",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string,null>",
+                  "key": "take",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e81b02a7-f943-4f10-be9a-2dec695b8c55",
+              "name": "Data frame slice found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "data_frames",
+                    ":resource"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource",
+                      "description": "(Required) Path to the tabular file (including branch/commit info)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "columns",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "delimiter",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "find_embedding_where",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "filter",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "output",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "output_column",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer,null>",
+                      "key": "page_size",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer,null>",
+                      "key": "page",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer,null>",
+                      "key": "row",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<boolean,null>",
+                      "key": "randomize",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<boolean,null>",
+                      "key": "reverse",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "slice",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "sort_by",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "sort_by_similarity_to",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "sql",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "take",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data_frame\": {\n    \"source\": {\n      \"schema\": {\n        \"hash\": \"string\",\n        \"fields\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": \"\"\n      },\n      \"size\": {\n        \"height\": 2429,\n        \"width\": 5942\n      }\n    },\n    \"view\": {\n      \"data\": \"\",\n      \"opts\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"pagination\": {\n        \"page_size\": 539,\n        \"page_number\": 5151,\n        \"total_pages\": 6903,\n        \"total_entries\": 6153\n      },\n      \"schema\": {\n        \"hash\": \"string\",\n        \"fields\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": \"\"\n      },\n      \"size\": {\n        \"height\": 2741,\n        \"width\": 8393\n      }\n    }\n  },\n  \"status\": \"string\",\n  \"status_message\": \"string\",\n  \"oxen_version\": \"string\",\n  \"commit\": null,\n  \"derived_resource\": null,\n  \"resource\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0a88ad4-f67e-47b9-9028-7e87331b728f",
+              "name": "File or resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "data_frames",
+                    ":resource"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource",
+                      "description": "(Required) Path to the tabular file (including branch/commit info)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "columns",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "delimiter",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "find_embedding_where",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "filter",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "output",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "output_column",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer,null>",
+                      "key": "page_size",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer,null>",
+                      "key": "page",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer,null>",
+                      "key": "row",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<boolean,null>",
+                      "key": "randomize",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<boolean,null>",
+                      "key": "reverse",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "slice",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "sort_by",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "sort_by_similarity_to",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "sql",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "take",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "89463489-600f-40bf-b150-576ac2f9c768",
+          "name": "Create a tabular data frame diff",
+          "request": {
+            "name": "Create a tabular data frame diff",
+            "description": {
+              "content": "Create and cache a tabular diff comparing two data frames with configurable keys and target columns.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "repos",
+                ":namespace",
+                ":repo_name",
+                "compare",
+                "data_frames"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) Namespace of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repo_name",
+                  "description": "(Required) Name of the repository"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"compare_id\": \"<string>\",\n  \"left\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"right\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"keys\": [\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    },\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    }\n  ],\n  \"compare\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ],\n  \"display\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6e10a83a-d8fa-451b-9320-f4e574f7089a",
+              "name": "Data frame diff created and cached successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "compare",
+                    "data_frames"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"compare_id\": \"<string>\",\n  \"left\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"right\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"keys\": [\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    },\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    }\n  ],\n  \"compare\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ],\n  \"display\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dfs\": {\n    \"dupes\": {\n      \"left\": 939,\n      \"right\": 9214\n    },\n    \"source_schemas\": {\n      \"left\": {\n        \"hash\": \"string\",\n        \"fields\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": \"\"\n      },\n      \"right\": {\n        \"hash\": \"string\",\n        \"fields\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": \"\"\n      }\n    },\n    \"display\": null,\n    \"keys\": [\n      \"\",\n      \"\"\n    ],\n    \"schema_diff\": null,\n    \"summary\": null,\n    \"targets\": [\n      \"\",\n      \"\"\n    ]\n  },\n  \"messages\": [\n    {\n      \"level\": \"Info\",\n      \"title\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"level\": \"Error\",\n      \"title\": \"string\",\n      \"description\": \"string\"\n    }\n  ],\n  \"status\": \"string\",\n  \"status_message\": \"string\",\n  \"oxen_version\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd96f1c6-4bcf-40c6-8d5f-1a360328f21c",
+              "name": "Bad Request (e.g., failed to parse body)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "compare",
+                    "data_frames"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"compare_id\": \"<string>\",\n  \"left\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"right\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"keys\": [\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    },\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    }\n  ],\n  \"compare\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ],\n  \"display\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f104f4ce-56d9-4953-b072-c3ed4ffc824d",
+              "name": "Repository, revision, or file not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "compare",
+                    "data_frames"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"compare_id\": \"<string>\",\n  \"left\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"right\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"keys\": [\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    },\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    }\n  ],\n  \"compare\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ],\n  \"display\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49d06852-eab0-4276-8878-fb61401c92a6",
+          "name": "Delete DF Diff",
+          "request": {
+            "name": "Delete DF Diff",
+            "description": {
+              "content": "Delete a cached tabular diff comparison by its ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "repos",
+                ":namespace",
+                ":repo_name",
+                "compare",
+                "data_frames",
+                ":compare_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) Namespace of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repo_name",
+                  "description": "(Required) Name of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "compare_id",
+                  "description": "(Required) The unique ID of the comparison session to delete"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "50934251-46e0-40d9-bcb7-f9d73f411a14",
+              "name": "Data frame diff deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "compare",
+                    "data_frames",
+                    ":compare_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "compare_id",
+                      "description": "(Required) The unique ID of the comparison session to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"status_message\": \"string\",\n  \"oxen_version\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8eaf6d9e-6c3e-41aa-87fc-9743352c3906",
+              "name": "Repository or comparison ID not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "compare",
+                    "data_frames",
+                    ":compare_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "compare_id",
+                      "description": "(Required) The unique ID of the comparison session to delete"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "709f1f85-cbf2-4b36-a49e-bc7ee98cd6a5",
+          "name": "Get a cached tabular data frame diff",
+          "request": {
+            "name": "Get a cached tabular data frame diff",
+            "description": {
+              "content": "Retrieve a previously cached tabular diff by its comparison ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "repos",
+                ":namespace",
+                ":repo_name",
+                "compare",
+                "data_frames",
+                ":compare_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) Namespace of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repo_name",
+                  "description": "(Required) Name of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "compare_id",
+                  "description": "(Required) The unique ID of the comparison session"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "base_head",
+                  "description": "(Required) The base and head revisions separated by '..'"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"compare_id\": \"<string>\",\n  \"left\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"right\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"keys\": [\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    },\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    }\n  ],\n  \"compare\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ],\n  \"display\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8fa47b68-0411-4a84-90e3-df2b046b570a",
+              "name": "Cached data frame diff found successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "compare",
+                    "data_frames",
+                    ":compare_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "compare_id",
+                      "description": "(Required) The unique ID of the comparison session"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "base_head",
+                      "description": "(Required) The base and head revisions separated by '..'"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"compare_id\": \"<string>\",\n  \"left\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"right\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"keys\": [\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    },\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    }\n  ],\n  \"compare\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ],\n  \"display\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dfs\": {\n    \"dupes\": {\n      \"left\": 2799,\n      \"right\": 6709\n    },\n    \"source_schemas\": {\n      \"left\": {\n        \"hash\": \"string\",\n        \"fields\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": \"\"\n      },\n      \"right\": {\n        \"hash\": \"string\",\n        \"fields\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": \"\"\n      }\n    },\n    \"display\": null,\n    \"keys\": null,\n    \"schema_diff\": null,\n    \"summary\": null,\n    \"targets\": [\n      \"\",\n      \"\"\n    ]\n  },\n  \"messages\": [\n    {\n      \"level\": \"Error\",\n      \"title\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"level\": \"Error\",\n      \"title\": \"string\",\n      \"description\": \"string\"\n    }\n  ],\n  \"status\": \"string\",\n  \"status_message\": \"string\",\n  \"oxen_version\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffbbc6cc-e2b4-439c-9f97-54674c487a11",
+              "name": "Cached diff not found for the given ID and entries",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "compare",
+                    "data_frames",
+                    ":compare_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "compare_id",
+                      "description": "(Required) The unique ID of the comparison session"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "base_head",
+                      "description": "(Required) The base and head revisions separated by '..'"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"compare_id\": \"<string>\",\n  \"left\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"right\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"keys\": [\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    },\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    }\n  ],\n  \"compare\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ],\n  \"display\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "42873914-48f0-45a9-bc8d-b0e3390f2836",
+          "name": "Update tabular data frame diff",
+          "request": {
+            "name": "Update tabular data frame diff",
+            "description": {
+              "content": "Update an existing cached tabular diff comparison with new configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "repos",
+                ":namespace",
+                ":repo_name",
+                "compare",
+                "data_frames",
+                ":compare_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) Namespace of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repo_name",
+                  "description": "(Required) Name of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "compare_id",
+                  "description": "(Required) The unique ID of the comparison session"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"compare_id\": \"<string>\",\n  \"left\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"right\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"keys\": [\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    },\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    }\n  ],\n  \"compare\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ],\n  \"display\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "25599c96-d4b3-4723-9069-eed90ccba969",
+              "name": "Data frame diff updated and cached successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "compare",
+                    "data_frames",
+                    ":compare_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "compare_id",
+                      "description": "(Required) The unique ID of the comparison session"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"compare_id\": \"<string>\",\n  \"left\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"right\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"keys\": [\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    },\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    }\n  ],\n  \"compare\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ],\n  \"display\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dfs\": {\n    \"dupes\": {\n      \"left\": 2799,\n      \"right\": 6709\n    },\n    \"source_schemas\": {\n      \"left\": {\n        \"hash\": \"string\",\n        \"fields\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": \"\"\n      },\n      \"right\": {\n        \"hash\": \"string\",\n        \"fields\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": \"\"\n      }\n    },\n    \"display\": null,\n    \"keys\": null,\n    \"schema_diff\": null,\n    \"summary\": null,\n    \"targets\": [\n      \"\",\n      \"\"\n    ]\n  },\n  \"messages\": [\n    {\n      \"level\": \"Error\",\n      \"title\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"level\": \"Error\",\n      \"title\": \"string\",\n      \"description\": \"string\"\n    }\n  ],\n  \"status\": \"string\",\n  \"status_message\": \"string\",\n  \"oxen_version\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06ee28d3-939c-4838-a21b-7bb312a9bff3",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "compare",
+                    "data_frames",
+                    ":compare_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "compare_id",
+                      "description": "(Required) The unique ID of the comparison session"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"compare_id\": \"<string>\",\n  \"left\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"right\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"keys\": [\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    },\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    }\n  ],\n  \"compare\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ],\n  \"display\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "59b35927-41b4-48c5-b6e4-d3959b756416",
+              "name": "Comparison ID, Repository, revision, or file not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "compare",
+                    "data_frames",
+                    ":compare_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "compare_id",
+                      "description": "(Required) The unique ID of the comparison session"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"compare_id\": \"<string>\",\n  \"left\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"right\": {\n    \"path\": \"<string>\",\n    \"version\": \"<string>\"\n  },\n  \"keys\": [\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    },\n    {\n      \"left\": \"<string>\",\n      \"right\": \"<string>\",\n      \"alias_as\": \"<string,null>\",\n      \"compare_method\": \"<string,null>\"\n    }\n  ],\n  \"compare\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ],\n  \"display\": [\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    },\n    {\n      \"compare_method\": \"<string,null>\",\n      \"left\": \"<string,null>\",\n      \"right\": \"<string,null>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "78df9a4d-0814-4362-ab6d-bffcf8de25cf",
+          "name": "Create data frame from directory",
+          "request": {
+            "name": "Create data frame from directory",
+            "description": {
+              "content": "Create a data frame by scanning directory contents and commit it to a branch.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "repos",
+                ":namespace",
+                ":repo_name",
+                "data_frames",
+                "from_directory",
+                ":resource"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) Namespace of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repo_name",
+                  "description": "(Required) Name of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "resource",
+                  "description": "(Required) Directory path to read from (including branch/commit info)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"commit_message\": \"<string,null>\",\n  \"extra_columns\": \"<array,null>\",\n  \"output_path\": \"<string,null>\",\n  \"recursive\": \"<boolean,null>\",\n  \"user_email\": \"<string,null>\",\n  \"user_name\": \"<string,null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "74e276d3-c700-4ceb-b34b-b24db9e255bf",
+              "name": "Data frame created and committed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "data_frames",
+                    "from_directory",
+                    ":resource"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource",
+                      "description": "(Required) Directory path to read from (including branch/commit info)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"commit_message\": \"Generated image index\",\n  \"extra_columns\": [\n    \"size\",\n    \"extension\"\n  ],\n  \"output_path\": \"data/image_index.csv\",\n  \"recursive\": true,\n  \"user_email\": \"bessie@oxen.ai\",\n  \"user_name\": \"Bessie\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"commit\": {\n    \"id\": \"string\",\n    \"parent_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"message\": \"string\",\n    \"author\": \"string\",\n    \"email\": \"string\",\n    \"timestamp\": \"2005-09-15T22:31:25.759Z\"\n  },\n  \"status\": \"string\",\n  \"status_message\": \"string\",\n  \"oxen_version\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10956118-102c-43d5-bb94-0565b80f7c95",
+              "name": "Invalid request body or resource path",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "data_frames",
+                    "from_directory",
+                    ":resource"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource",
+                      "description": "(Required) Directory path to read from (including branch/commit info)"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"commit_message\": \"Generated image index\",\n  \"extra_columns\": [\n    \"size\",\n    \"extension\"\n  ],\n  \"output_path\": \"data/image_index.csv\",\n  \"recursive\": true,\n  \"user_email\": \"bessie@oxen.ai\",\n  \"user_name\": \"Bessie\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "70eb438c-a7a6-4a5e-82ca-a50310a1d32e",
+              "name": "Repository or resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "data_frames",
+                    "from_directory",
+                    ":resource"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource",
+                      "description": "(Required) Directory path to read from (including branch/commit info)"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"commit_message\": \"Generated image index\",\n  \"extra_columns\": [\n    \"size\",\n    \"extension\"\n  ],\n  \"output_path\": \"data/image_index.csv\",\n  \"recursive\": true,\n  \"user_email\": \"bessie@oxen.ai\",\n  \"user_name\": \"Bessie\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a8a02767-d292-40bf-b864-cdcace11e3e9",
+          "name": "Start data frame indexing",
+          "request": {
+            "name": "Start data frame indexing",
+            "description": {
+              "content": "Start indexing a tabular file for queryable access. Creates a workspace if the file is not already indexed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "repos",
+                ":namespace",
+                ":repo_name",
+                "data_frames",
+                ":resource",
+                "index"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) Namespace of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repo_name",
+                  "description": "(Required) Name of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "resource",
+                  "description": "(Required) Path to the tabular file to index (including branch/commit info)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bb1b074e-b428-495b-bf82-2594e13484c3",
+              "name": "Indexing process started or completed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "data_frames",
+                    ":resource",
+                    "index"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource",
+                      "description": "(Required) Path to the tabular file to index (including branch/commit info)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"status_message\": \"string\",\n  \"oxen_version\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aab55723-be20-4b60-b9a2-c21f875ef4f5",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "data_frames",
+                    ":resource",
+                    "index"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource",
+                      "description": "(Required) Path to the tabular file to index (including branch/commit info)"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4530f0d8-237f-4c13-8ffc-eaaf89e79e56",
+              "name": "Dataset already indexed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "data_frames",
+                    ":resource",
+                    "index"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource",
+                      "description": "(Required) Path to the tabular file to index (including branch/commit info)"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://hub.oxen.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b99775a4-25ce-4cf1-97e5-320f7073c778",
+    "name": "oxen Ai Data Frames API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

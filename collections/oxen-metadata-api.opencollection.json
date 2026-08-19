@@ -1,0 +1,80 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "oxen Ai Metadata API",
+    "version": "0.243.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get file metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/metadata/:resource",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "resource",
+                "value": "main/images/train/dog_1.jpg",
+                "type": "path",
+                "description": "Path to the file/dir (including branch/commit info)"
+              }
+            ]
+          },
+          "docs": "Get metadata for a file or directory entry, with optional workspace support."
+        },
+        {
+          "info": {
+            "name": "Update file metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/metadata/:resource",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "resource",
+                "value": "versions/files/b4/158b417c800c7322d711f1816f5c00e1215b4d7c001c9b6892556d11/data",
+                "type": "path",
+                "description": "Path to the file (including version to update)"
+              }
+            ]
+          },
+          "docs": "Update metadata for a file version in the version store."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

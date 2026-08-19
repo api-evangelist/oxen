@@ -1,0 +1,373 @@
+{
+  "item": [
+    {
+      "id": "167c96d9-deae-4658-ada3-0e91fb409c68",
+      "name": "evaluations",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0dc8f1a1-f70f-4f73-afc1-5ff0b138cc5a",
+          "name": "Create an evaluation",
+          "request": {
+            "name": "Create an evaluation",
+            "description": {
+              "content": "Run model inference over a dataset in the repository. The resource path (branch and file) is encoded in the URL, e.g. `POST /api/repos/{ns}/{repo}/evaluations/main/datasets/training.parquet`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "repos",
+                ":namespace",
+                ":repo_name",
+                "evaluations",
+                "*resource_path"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"<string>\",\n  \"input_type\": \"<string>\",\n  \"output_type\": \"<string>\",\n  \"model_id\": \"<uuid>\",\n  \"target_column\": \"<string>\",\n  \"auto_commit\": false,\n  \"batch_size\": 10,\n  \"commit_message\": \"<string>\",\n  \"is_sample\": false,\n  \"name\": \"<string>\",\n  \"sample_count\": 10,\n  \"target_branch\": \"<string>\",\n  \"target_path\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4aaa9818-899f-4ab7-869f-41a7f341f527",
+              "name": "Evaluation created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "evaluations",
+                    "*resource_path"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"<string>\",\n  \"input_type\": \"<string>\",\n  \"output_type\": \"<string>\",\n  \"model_id\": \"<uuid>\",\n  \"target_column\": \"<string>\",\n  \"auto_commit\": false,\n  \"batch_size\": 10,\n  \"commit_message\": \"<string>\",\n  \"is_sample\": false,\n  \"name\": \"<string>\",\n  \"sample_count\": 10,\n  \"target_branch\": \"<string>\",\n  \"target_path\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"evaluation\": {\n    \"cancelled_at\": \"string\",\n    \"completed_at\": \"string\",\n    \"completion_tokens_used\": 191,\n    \"created_by\": {\n      \"id\": \"string\",\n      \"image\": \"string\",\n      \"name\": \"string\",\n      \"username\": \"string\"\n    },\n    \"credits_used\": 4145.143734213588,\n    \"error_message\": \"string\",\n    \"id\": \"6baa1df5-d4b4-f2fb-3a5a-ee330f7e11c9\",\n    \"input_type\": \"video\",\n    \"inserted_at\": \"string\",\n    \"is_sample\": false,\n    \"model\": {\n      \"key_0\": 3806,\n      \"key_1\": \"string\",\n      \"key_2\": 7496.786180715654\n    },\n    \"name\": \"string\",\n    \"output_type\": \"image\",\n    \"progress\": {\n      \"processed\": 8170,\n      \"total\": 2041\n    },\n    \"prompt\": \"string\",\n    \"prompt_tokens_used\": 7579,\n    \"repository_id\": \"string\",\n    \"resource\": {\n      \"path\": \"string\",\n      \"version\": \"string\"\n    },\n    \"sample_count\": 4699,\n    \"started_at\": \"string\",\n    \"status\": \"committing\",\n    \"target_branch\": \"string\",\n    \"target_column\": \"string\",\n    \"target_path\": \"string\",\n    \"tokens_used\": 856\n  },\n  \"status\": \"string\",\n  \"status_message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ef71471-6132-4c21-8929-a5c699f2fa1e",
+              "name": "Invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "evaluations",
+                    "*resource_path"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"<string>\",\n  \"input_type\": \"<string>\",\n  \"output_type\": \"<string>\",\n  \"model_id\": \"<uuid>\",\n  \"target_column\": \"<string>\",\n  \"auto_commit\": false,\n  \"batch_size\": 10,\n  \"commit_message\": \"<string>\",\n  \"is_sample\": false,\n  \"name\": \"<string>\",\n  \"sample_count\": 10,\n  \"target_branch\": \"<string>\",\n  \"target_path\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2c83a023-8b9e-4a7c-b58e-882b3d54289f",
+          "name": "Get evaluation status",
+          "request": {
+            "name": "Get evaluation status",
+            "description": {
+              "content": "Fetch a single evaluation by ID. Use this to poll for progress (`evaluation.progress.processed` / `evaluation.progress.total`) and completion (`evaluation.status`).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "repos",
+                ":namespace",
+                ":repo_name",
+                "evaluations",
+                ":evaluation_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "evaluation_id",
+                  "description": "(Required) Evaluation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "816cc126-3812-4708-b7ae-4fab1e6dbbc1",
+              "name": "Evaluation details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "evaluations",
+                    ":evaluation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "evaluation_id",
+                      "description": "(Required) Evaluation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"evaluation\": {\n    \"cancelled_at\": \"string\",\n    \"completed_at\": \"string\",\n    \"completion_tokens_used\": 191,\n    \"created_by\": {\n      \"id\": \"string\",\n      \"image\": \"string\",\n      \"name\": \"string\",\n      \"username\": \"string\"\n    },\n    \"credits_used\": 4145.143734213588,\n    \"error_message\": \"string\",\n    \"id\": \"6baa1df5-d4b4-f2fb-3a5a-ee330f7e11c9\",\n    \"input_type\": \"video\",\n    \"inserted_at\": \"string\",\n    \"is_sample\": false,\n    \"model\": {\n      \"key_0\": 3806,\n      \"key_1\": \"string\",\n      \"key_2\": 7496.786180715654\n    },\n    \"name\": \"string\",\n    \"output_type\": \"image\",\n    \"progress\": {\n      \"processed\": 8170,\n      \"total\": 2041\n    },\n    \"prompt\": \"string\",\n    \"prompt_tokens_used\": 7579,\n    \"repository_id\": \"string\",\n    \"resource\": {\n      \"path\": \"string\",\n      \"version\": \"string\"\n    },\n    \"sample_count\": 4699,\n    \"started_at\": \"string\",\n    \"status\": \"committing\",\n    \"target_branch\": \"string\",\n    \"target_column\": \"string\",\n    \"target_path\": \"string\",\n    \"tokens_used\": 856\n  },\n  \"status\": \"string\",\n  \"status_message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8954112f-0a18-4ffa-a4a5-2fb6ed7c8f05",
+              "name": "Evaluation not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "evaluations",
+                    ":evaluation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "evaluation_id",
+                      "description": "(Required) Evaluation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://hub.oxen.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d7d90388-251d-4c91-a646-8fe64530f0f3",
+    "name": "oxen Ai evaluations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

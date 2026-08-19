@@ -1,0 +1,331 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "oxen Ai Data Frames API",
+    "version": "0.243.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Data Frames",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get data frame slice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/data_frames/:resource",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "resource",
+                "value": "main/data/labels.csv",
+                "type": "path",
+                "description": "Path to the tabular file (including branch/commit info)"
+              },
+              {
+                "name": "columns",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "find_embedding_where",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "output_column",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "row",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "randomize",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "reverse",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "slice",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "sort_by_similarity_to",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "sql",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "take",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a paginated slice of a tabular data frame with optional filtering and transformations."
+        },
+        {
+          "info": {
+            "name": "Create a tabular data frame diff",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/compare/data_frames",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "compare-datasets",
+                "type": "path",
+                "description": "Name of the repository"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create and cache a tabular diff comparing two data frames with configurable keys and target columns."
+        },
+        {
+          "info": {
+            "name": "Get a cached tabular data frame diff",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/compare/data_frames/:compare_id",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "compare-datasets",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "compare_id",
+                "value": "uuid-1234",
+                "type": "path",
+                "description": "The unique ID of the comparison session"
+              },
+              {
+                "name": "base_head",
+                "value": "main..feature/add-labels",
+                "type": "path",
+                "description": "The base and head revisions separated by '..'"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve a previously cached tabular diff by its comparison ID."
+        },
+        {
+          "info": {
+            "name": "Update tabular data frame diff",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/compare/data_frames/:compare_id",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "compare-datasets",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "compare_id",
+                "value": "uuid-1234",
+                "type": "path",
+                "description": "The unique ID of the comparison session"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing cached tabular diff comparison with new configuration."
+        },
+        {
+          "info": {
+            "name": "Delete DF Diff",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/compare/data_frames/:compare_id",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "compare-datasets",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "compare_id",
+                "value": "uuid-1234",
+                "type": "path",
+                "description": "The unique ID of the comparison session to delete"
+              }
+            ]
+          },
+          "docs": "Delete a cached tabular diff comparison by its ID."
+        },
+        {
+          "info": {
+            "name": "Create data frame from directory",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/data_frames/from_directory/:resource",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "CattleData",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "resource",
+                "value": "main/data/images",
+                "type": "path",
+                "description": "Directory path to read from (including branch/commit info)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a data frame by scanning directory contents and commit it to a branch."
+        },
+        {
+          "info": {
+            "name": "Start data frame indexing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/data_frames/:resource/index",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "CattleData",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "resource",
+                "value": "main/data/weights.csv",
+                "type": "path",
+                "description": "Path to the tabular file to index (including branch/commit info)"
+              }
+            ]
+          },
+          "docs": "Start indexing a tabular file for queryable access. Creates a workspace if the file is not already indexed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

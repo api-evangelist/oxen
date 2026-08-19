@@ -1,0 +1,268 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "oxen Ai Workspace Files API",
+    "version": "0.243.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workspace Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Stage files to workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/workspaces/:workspace_id/files/batch/:directory",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "The namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "The name of the repository"
+              },
+              {
+                "name": "workspace_id",
+                "value": "580c0587-c157-417b-9118-8686d63d2745",
+                "type": "path",
+                "description": "The UUID of the workspace"
+              },
+              {
+                "name": "directory",
+                "value": "data/train",
+                "type": "path",
+                "description": "The directory to stage the files into"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Stage file nodes to a workspace. Do not upload file contents to the repository."
+        },
+        {
+          "info": {
+            "name": "Get file from workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/workspaces/:workspace_id/files/:path",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "The namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "The name of the repository"
+              },
+              {
+                "name": "workspace_id",
+                "value": "580c0587-c157-417b-9118-8686d63d2745",
+                "type": "path",
+                "description": "The UUID of the workspace"
+              },
+              {
+                "name": "path",
+                "value": "images/train/dog_1.jpg",
+                "type": "path",
+                "description": "The path to the file in the workspace"
+              },
+              {
+                "name": "width",
+                "value": "320",
+                "type": "query",
+                "description": "Width for image resize or video thumbnail"
+              },
+              {
+                "name": "height",
+                "value": "240",
+                "type": "query",
+                "description": "Height for image resize or video thumbnail"
+              },
+              {
+                "name": "timestamp",
+                "value": "1",
+                "type": "query",
+                "description": "Timestamp in seconds to extract video thumbnail from"
+              },
+              {
+                "name": "thumbnail",
+                "value": "true",
+                "type": "query",
+                "description": "Set to true to generate a video thumbnail instead of returning the full video"
+              }
+            ]
+          },
+          "docs": "Get a file from a workspace."
+        },
+        {
+          "info": {
+            "name": "Add files to workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/workspaces/:workspace_id/files/:path",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "The namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "The name of the repository"
+              },
+              {
+                "name": "workspace_id",
+                "value": "580c0587-c157-417b-9118-8686d63d2745",
+                "type": "path",
+                "description": "The UUID of the workspace"
+              },
+              {
+                "name": "path",
+                "value": "data/train",
+                "type": "path",
+                "description": "The target path to upload the file to"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Upload and stage files to a workspace. Accept a multipart with either gzipped or uncompressed file parts. Use the filename from the file part and compute the file hash from the content."
+        },
+        {
+          "info": {
+            "name": "Unstage a file from the workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/workspaces/:workspace_id/changes/:path",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "The namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "The name of the repository"
+              },
+              {
+                "name": "workspace_id",
+                "value": "580c0587-c157-417b-9118-8686d63d2745",
+                "type": "path",
+                "description": "The UUID of the workspace"
+              },
+              {
+                "name": "path",
+                "value": "images/train/dog_1.jpg",
+                "type": "path",
+                "description": "The path to the file to delete (unstage)"
+              }
+            ]
+          },
+          "docs": "Unstage a file from workspace staging"
+        },
+        {
+          "info": {
+            "name": "Unstage files",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/workspaces/:workspace_id/changes",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "The namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "The name of the repository"
+              },
+              {
+                "name": "workspace_id",
+                "value": "580c0587-c157-417b-9118-8686d63d2745",
+                "type": "path",
+                "description": "The UUID of the workspace"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unstage files from a workspace. Accepts both files and directories."
+        },
+        {
+          "info": {
+            "name": "Stage files for removal",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/workspaces/:workspace_id/files",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "The namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "The name of the repository"
+              },
+              {
+                "name": "workspace_id",
+                "value": "580c0587-c157-417b-9118-8686d63d2745",
+                "type": "path",
+                "description": "The UUID of the workspace"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Stage files for removal from the repository. Accepts both files and directories."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

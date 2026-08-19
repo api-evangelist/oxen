@@ -1,0 +1,144 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "oxen Ai Version Files API",
+    "version": "0.243.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Version Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Batch download files (Tarball)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/versions/batch-download",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "The namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "The name of the repository"
+              }
+            ]
+          },
+          "docs": "Download multiple files as a gzipped tarball by providing their hashes."
+        },
+        {
+          "info": {
+            "name": "Download version file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/versions/:resource",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "The namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "The name of the repository"
+              },
+              {
+                "name": "resource",
+                "value": "main/images/dog_1.jpg",
+                "type": "path",
+                "description": "The resource identifier (e.g., 'main/path/to/file.ext' or a commit ID/branch name followed by the file path)"
+              },
+              {
+                "name": "width",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "height",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Download a file by its resource path, with optional image resizing."
+        },
+        {
+          "info": {
+            "name": "Get version file metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/versions/:version_id/metadata",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "The namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "The name of the repository"
+              },
+              {
+                "name": "version_id",
+                "value": "1eb45ac94f3eab120f3a",
+                "type": "path",
+                "description": "The hash ID of the file version"
+              }
+            ]
+          },
+          "docs": "Get metadata for a specific file version by its hash."
+        },
+        {
+          "info": {
+            "name": "Batch upload files (Multipart)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/versions",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "The namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "The name of the repository"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Upload multiple files via multipart form, identified by their content hashes."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

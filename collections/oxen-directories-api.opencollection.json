@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "oxen Ai Directories API",
+    "version": "0.243.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Directories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List directory contents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/dir/:resource",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "resource",
+                "value": "main/data/train",
+                "type": "path",
+                "description": "Path to the directory (including branch/commit ID)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "api_version",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "depth",
+                "value": "",
+                "type": "path",
+                "description": "Depth of nested directory traversal. 0 = current directory only (default), 1 = include immediate children, -1 = unlimited."
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "path",
+                "description": "Sort entries by \"name\" (default) or \"date\" (latest commit timestamp)."
+              },
+              {
+                "name": "reverse",
+                "value": "",
+                "type": "path",
+                "description": "Reverse the sort order. Default is false (ascending)."
+              }
+            ]
+          },
+          "docs": "List paginated contents of a directory at a specific revision, with optional workspace support."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,242 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "oxen Ai Workspaces API",
+    "version": "0.243.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workspaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Clear workspaces for repo",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/workspaces/clear",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace for the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "Name of the repository"
+              }
+            ]
+          },
+          "docs": "Deletes all workspaces for the repo"
+        },
+        {
+          "info": {
+            "name": "Check workspace mergeability",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/workspaces/:workspace_id/merge/:branch",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "workspace_id",
+                "value": "b3f27f05-0955-4076-805f-39575853b27b",
+                "type": "path",
+                "description": "ID of the workspace"
+              },
+              {
+                "name": "branch",
+                "value": "main",
+                "type": "path",
+                "description": "Target branch name to merge into"
+              }
+            ]
+          },
+          "docs": "Checks if a workspace can be committed and merged onto a branch"
+        },
+        {
+          "info": {
+            "name": "Merge workspace into branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/workspaces/:workspace_id/merge/:branch",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "workspace_id",
+                "value": "b3f27f05-0955-4076-805f-39575853b27b",
+                "type": "path",
+                "description": "ID of the workspace"
+              },
+              {
+                "name": "branch",
+                "value": "main",
+                "type": "path",
+                "description": "Target branch name to commit to"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Commit and merge workspace into the specified branch"
+        },
+        {
+          "info": {
+            "name": "Get workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/workspaces/:workspace_id",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "workspace_id",
+                "value": "b3f27f05-0955-4076-805f-39575853b27b",
+                "type": "path",
+                "description": "ID of the workspace"
+              }
+            ]
+          },
+          "docs": "Get an existing workspace by ID"
+        },
+        {
+          "info": {
+            "name": "Delete workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/workspaces/:workspace_id",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "workspace_id",
+                "value": "b3f27f05-0955-4076-805f-39575853b27b",
+                "type": "path",
+                "description": "ID of the workspace"
+              }
+            ]
+          },
+          "docs": "Delete a workspace by ID"
+        },
+        {
+          "info": {
+            "name": "Get or create workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/workspaces/get_or_create",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "Name of the repository"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a workspace. If the workspace exists, return it"
+        },
+        {
+          "info": {
+            "name": "List workspaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/workspaces",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List workspaces in the repository"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

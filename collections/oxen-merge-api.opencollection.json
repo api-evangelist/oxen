@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "oxen Ai Merge API",
+    "version": "0.243.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Merge",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check if branches are mergeable",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/merge/:base_head",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "satellite-images",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "base_head",
+                "value": "main..feature/add-labels",
+                "type": "path",
+                "description": "The base and head revisions separated by '..'"
+              }
+            ]
+          },
+          "docs": "Check if two branches can be merged and list any conflicts."
+        },
+        {
+          "info": {
+            "name": "Merge branches",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/merge/:base_head",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "satellite-images",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "base_head",
+                "value": "main..feature/add-labels",
+                "type": "path",
+                "description": "The base and head revisions separated by '..'"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Merge the head branch into the base branch, creating a merge commit."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

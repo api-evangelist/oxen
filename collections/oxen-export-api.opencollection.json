@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "oxen Ai Export API",
+    "version": "0.243.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Export",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Export resource as a zip",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/export/download/:resource",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "Wiki-Text",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "resource",
+                "value": "main/data",
+                "type": "path",
+                "description": "Path to directory and branch/commit (e.g. main/data)"
+              }
+            ]
+          },
+          "docs": "Download a directory as a zip archive. Subject to size limits."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -131,3 +131,9 @@ tools:
 - name: list_fine_tunes_for_a_user
   description: List fine-tunes for a user
   source_operation: openapi/oxen-hub-api-openapi-original.json#OxenApiWeb.Controllers.FineTuneController.list_for_user
+deployment:
+  mode: none
+  verified: derived
+  tools: 40
+  checked: '2026-08-12'
+  source: catalog MCP census

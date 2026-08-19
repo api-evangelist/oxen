@@ -1,0 +1,338 @@
+{
+  "item": [
+    {
+      "id": "6fdb8770-c6d4-4d1e-8632-5efacba2ed07",
+      "name": "Directories",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a39bdc27-f3c2-4d39-b057-20a58de0536e",
+          "name": "List directory contents",
+          "request": {
+            "name": "List directory contents",
+            "description": {
+              "content": "List paginated contents of a directory at a specific revision, with optional workspace support.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "repos",
+                ":namespace",
+                ":repo_name",
+                "dir",
+                ":resource"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) Namespace of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repo_name",
+                  "description": "(Required) Name of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "resource",
+                  "description": "(Required) Path to the directory (including branch/commit ID)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer,null>",
+                  "key": "page",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer,null>",
+                  "key": "page_size",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string,null>",
+                  "key": "api_version",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer,null>",
+                  "key": "depth",
+                  "description": "(Required) Depth of nested directory traversal. 0 = current directory only (default), 1 = include immediate children, -1 = unlimited."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string,null>",
+                  "key": "sort_by",
+                  "description": "(Required) Sort entries by \"name\" (default) or \"date\" (latest commit timestamp)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<boolean,null>",
+                  "key": "reverse",
+                  "description": "(Required) Reverse the sort order. Default is false (ascending)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a6f2acde-e027-4c1b-af1d-d72d48ed986b",
+              "name": "Paginated list of directory entries",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "dir",
+                    ":resource"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource",
+                      "description": "(Required) Path to the directory (including branch/commit ID)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer,null>",
+                      "key": "page",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer,null>",
+                      "key": "page_size",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "api_version",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer,null>",
+                      "key": "depth",
+                      "description": "(Required) Depth of nested directory traversal. 0 = current directory only (default), 1 = include immediate children, -1 = unlimited."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "sort_by",
+                      "description": "(Required) Sort entries by \"name\" (default) or \"date\" (latest commit timestamp)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<boolean,null>",
+                      "key": "reverse",
+                      "description": "(Required) Reverse the sort order. Default is false (ascending)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"filename\": \"string\",\n      \"hash\": \"string\",\n      \"is_dir\": false,\n      \"size\": 9590,\n      \"data_type\": \"tabular\",\n      \"mime_type\": \"string\",\n      \"extension\": \"string\",\n      \"children\": [\n        \"\",\n        \"\"\n      ],\n      \"is_queryable\": false,\n      \"latest_commit\": null,\n      \"metadata\": null,\n      \"resource\": null\n    },\n    {\n      \"filename\": \"string\",\n      \"hash\": \"string\",\n      \"is_dir\": false,\n      \"size\": 2199,\n      \"data_type\": \"tabular\",\n      \"mime_type\": \"string\",\n      \"extension\": \"string\",\n      \"children\": null,\n      \"is_queryable\": true,\n      \"latest_commit\": null,\n      \"metadata\": null,\n      \"resource\": null\n    }\n  ],\n  \"page_number\": 368,\n  \"page_size\": 7376,\n  \"status\": \"string\",\n  \"status_message\": \"string\",\n  \"total_entries\": 3104,\n  \"total_pages\": 43,\n  \"oxen_version\": \"string\",\n  \"dir\": null,\n  \"metadata\": null,\n  \"resource\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e2f15f0-ea60-41ae-9376-6992d95b2891",
+              "name": "Directory or repository not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "repos",
+                    ":namespace",
+                    ":repo_name",
+                    "dir",
+                    ":resource"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Namespace of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repo_name",
+                      "description": "(Required) Name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource",
+                      "description": "(Required) Path to the directory (including branch/commit ID)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer,null>",
+                      "key": "page",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer,null>",
+                      "key": "page_size",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "api_version",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer,null>",
+                      "key": "depth",
+                      "description": "(Required) Depth of nested directory traversal. 0 = current directory only (default), 1 = include immediate children, -1 = unlimited."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string,null>",
+                      "key": "sort_by",
+                      "description": "(Required) Sort entries by \"name\" (default) or \"date\" (latest commit timestamp)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<boolean,null>",
+                      "key": "reverse",
+                      "description": "(Required) Reverse the sort order. Default is false (ascending)."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://hub.oxen.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "572b81c8-3903-48ab-83a2-ceef880239a7",
+    "name": "oxen Ai Directories API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

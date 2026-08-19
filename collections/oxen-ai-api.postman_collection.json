@@ -1,0 +1,2680 @@
+{
+  "item": [
+    {
+      "id": "8565fbbf-ab3e-4f91-8bf4-f88003cf3aa8",
+      "name": "Ai",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b31ca72b-51d4-400b-8af6-471debd2797c",
+          "name": "Generate audio",
+          "request": {
+            "name": "Generate audio",
+            "description": {
+              "content": "Creates audio (e.g. speech) from a text prompt.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "audio",
+                "generate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"audio_urls\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"image_url\": \"<string>\",\n  \"output_format\": \"<string>\",\n  \"pitch\": \"<integer>\",\n  \"response_format\": \"<string>\",\n  \"sample_rate\": \"<integer>\",\n  \"save_to_workbench\": \"<boolean>\",\n  \"speed\": \"<number>\",\n  \"voice\": \"<string>\",\n  \"volume\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7c7e182a-2f0d-4a8b-9944-3b0bebaac3c1",
+              "name": "Generated audio",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "audio",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"audio_urls\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"image_url\": \"<string>\",\n  \"output_format\": \"<string>\",\n  \"pitch\": \"<integer>\",\n  \"response_format\": \"<string>\",\n  \"sample_rate\": \"<integer>\",\n  \"save_to_workbench\": \"<boolean>\",\n  \"speed\": \"<number>\",\n  \"voice\": \"<string>\",\n  \"volume\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"audios\": [\n    {\n      \"url\": \"string\"\n    },\n    {\n      \"url\": \"string\"\n    }\n  ],\n  \"created\": 9264,\n  \"model\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b58b1a41-d01a-492f-8a15-7330296929c2",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "audio",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"audio_urls\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"image_url\": \"<string>\",\n  \"output_format\": \"<string>\",\n  \"pitch\": \"<integer>\",\n  \"response_format\": \"<string>\",\n  \"sample_rate\": \"<integer>\",\n  \"save_to_workbench\": \"<boolean>\",\n  \"speed\": \"<number>\",\n  \"voice\": \"<string>\",\n  \"volume\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a45f886e-c36f-4802-8715-cfd5702a9b5a",
+          "name": "Create chat completion",
+          "request": {
+            "name": "Create chat completion",
+            "description": {
+              "content": "Generates a model response for the given conversation. Compatible with the OpenAI chat completions API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "chat",
+                "completions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\",\n      \"name\": \"<string>\",\n      \"tool_call_id\": \"<string>\",\n      \"tool_calls\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    },\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\",\n      \"name\": \"<string>\",\n      \"tool_call_id\": \"<string>\",\n      \"tool_calls\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    }\n  ],\n  \"frequency_penalty\": \"<number>\",\n  \"max_tokens\": \"<integer>\",\n  \"presence_penalty\": \"<number>\",\n  \"response_format\": \"<object>\",\n  \"stream\": false,\n  \"temperature\": \"<number>\",\n  \"tool_choice\": \"<string>\",\n  \"tools\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"top_p\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9c8f5fe8-5bfc-4f91-a8a1-d586e96e9a23",
+              "name": "Chat completion",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"gpt-4o\",\n  \"messages\": [\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\",\n      \"name\": \"<string>\",\n      \"tool_call_id\": \"<string>\",\n      \"tool_calls\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    },\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\",\n      \"name\": \"<string>\",\n      \"tool_call_id\": \"<string>\",\n      \"tool_calls\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    }\n  ],\n  \"frequency_penalty\": \"<number>\",\n  \"max_tokens\": \"<integer>\",\n  \"presence_penalty\": \"<number>\",\n  \"response_format\": \"<object>\",\n  \"stream\": false,\n  \"temperature\": \"<number>\",\n  \"tool_choice\": \"<string>\",\n  \"tools\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"top_p\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"choices\": [\n    {\n      \"finish_reason\": \"string\",\n      \"index\": 4304,\n      \"message\": {\n        \"content\": \"string\",\n        \"role\": \"string\"\n      }\n    },\n    {\n      \"finish_reason\": \"string\",\n      \"index\": 4428,\n      \"message\": {\n        \"content\": \"string\",\n        \"role\": \"string\"\n      }\n    }\n  ],\n  \"created\": 6414,\n  \"id\": \"string\",\n  \"model\": \"string\",\n  \"object\": \"chat.completion\",\n  \"usage\": {\n    \"completion_tokens\": 9153,\n    \"prompt_tokens\": 3082,\n    \"total_tokens\": 9942\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d57cddd-4273-468c-bbbd-6edfd8957fa9",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"gpt-4o\",\n  \"messages\": [\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\",\n      \"name\": \"<string>\",\n      \"tool_call_id\": \"<string>\",\n      \"tool_calls\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    },\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\",\n      \"name\": \"<string>\",\n      \"tool_call_id\": \"<string>\",\n      \"tool_calls\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    }\n  ],\n  \"frequency_penalty\": \"<number>\",\n  \"max_tokens\": \"<integer>\",\n  \"presence_penalty\": \"<number>\",\n  \"response_format\": \"<object>\",\n  \"stream\": false,\n  \"temperature\": \"<number>\",\n  \"tool_choice\": \"<string>\",\n  \"tools\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"top_p\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b7dd4bfc-7803-4be3-b489-83ac26013d15",
+          "name": "List past generations",
+          "request": {
+            "name": "List past generations",
+            "description": {
+              "content": "Paginated browse view of completed and in-flight generations for a namespace. Use `/api/ai/queue` for the lean polling view of in-flight rows.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "generations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "namespace",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "model",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "media_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "repo",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "folder",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "50"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "91116398-68c0-4cdd-a1fd-33037e9621fe",
+              "name": "Generation list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "generations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "model",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "media_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "folder",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 8626,\n  \"generations\": [\n    {\n      \"generation_id\": \"4d24adc2-6811-1e36-7894-0a07a5e13aa2\",\n      \"model_name\": \"string\",\n      \"media_type\": \"image\",\n      \"status\": \"succeeded\",\n      \"enqueued_at\": 1009,\n      \"completed_at\": 5738,\n      \"cost\": \"string\",\n      \"error_message\": \"string\",\n      \"result_url\": \"string\",\n      \"started_at\": 7991,\n      \"target_directory\": \"string\",\n      \"target_namespace\": \"string\",\n      \"target_repo\": \"string\",\n      \"user_id\": \"f3de6e69-ca3e-a29f-f2bd-7f5a25a84137\",\n      \"user_image\": \"string\",\n      \"username\": \"string\"\n    },\n    {\n      \"generation_id\": \"12594742-661b-66ec-58f9-bbddc2728c0c\",\n      \"model_name\": \"string\",\n      \"media_type\": \"image\",\n      \"status\": \"queued\",\n      \"enqueued_at\": 875,\n      \"completed_at\": 3249,\n      \"cost\": \"string\",\n      \"error_message\": \"string\",\n      \"result_url\": \"string\",\n      \"started_at\": 1091,\n      \"target_directory\": \"string\",\n      \"target_namespace\": \"string\",\n      \"target_repo\": \"string\",\n      \"user_id\": \"526c4ac8-bd4b-997e-1bbd-3a57e9c3a952\",\n      \"user_image\": \"string\",\n      \"username\": \"string\"\n    }\n  ],\n  \"page_number\": 687,\n  \"page_size\": 8514,\n  \"total_pages\": 7699,\n  \"total_entries\": 4665,\n  \"total_cost\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "36384667-81fa-4eec-aafc-07790b0ae27c",
+          "name": "Get generation details",
+          "request": {
+            "name": "Get generation details",
+            "description": {
+              "content": "Full metadata for a single generation, including cost and the user who triggered it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "generations",
+                ":generation_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "generation_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "53aadb0f-9d81-4043-bbfc-4bb0495f30bc",
+              "name": "Generation details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "generations",
+                    ":generation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "generation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"generation\": {\n    \"generation_id\": \"dd476dc7-c076-9ac2-f7ba-01a7d7e24a85\",\n    \"model_name\": \"string\",\n    \"media_type\": \"image\",\n    \"status\": \"processing\",\n    \"enqueued_at\": 4347,\n    \"completed_at\": 4043,\n    \"cost\": \"string\",\n    \"error_message\": \"string\",\n    \"result_url\": \"string\",\n    \"started_at\": 8918,\n    \"target_directory\": \"string\",\n    \"target_namespace\": \"string\",\n    \"target_repo\": \"string\",\n    \"user_id\": \"8de4296f-929c-78d9-25ce-66fc9ea972b8\",\n    \"user_image\": \"string\",\n    \"username\": \"string\"\n  },\n  \"status_message\": \"resource_found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb4c921d-c95e-488f-9b21-2e5f60bca9a3",
+              "name": "Generation not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "generations",
+                    ":generation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "generation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c18282b5-c413-487b-acc3-6b0b294fe518",
+          "name": "Edit image",
+          "request": {
+            "name": "Edit image",
+            "description": {
+              "content": "Edits an image given a prompt and source image.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "images",
+                "edit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"image\": \"<string>\",\n  \"mask\": \"<string>\",\n  \"n\": 1,\n  \"size\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6101bfcf-0935-45d0-afcd-0aaf1ecd1d95",
+              "name": "Edited images",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "images",
+                    "edit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"image\": \"<string>\",\n  \"mask\": \"<string>\",\n  \"n\": 1,\n  \"size\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created\": 2008,\n  \"images\": [\n    {\n      \"revised_prompt\": \"string\",\n      \"url\": \"string\"\n    },\n    {\n      \"revised_prompt\": \"string\",\n      \"url\": \"string\"\n    }\n  ],\n  \"model\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18ace378-5294-4291-86cd-378bb724e5ae",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "images",
+                    "edit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"image\": \"<string>\",\n  \"mask\": \"<string>\",\n  \"n\": 1,\n  \"size\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c2252a41-a03a-4281-9090-9c37d9266f3e",
+          "name": "Generate image",
+          "request": {
+            "name": "Generate image",
+            "description": {
+              "content": "Creates an image from a text prompt.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "images",
+                "generate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"n\": 1,\n  \"seed\": \"<integer>\",\n  \"size\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5e65d756-6318-4395-bb3e-6befcf54e2b1",
+              "name": "Generated images",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "images",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"n\": 1,\n  \"seed\": \"<integer>\",\n  \"size\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created\": 995,\n  \"images\": [\n    {\n      \"revised_prompt\": \"string\",\n      \"url\": \"string\"\n    },\n    {\n      \"revised_prompt\": \"string\",\n      \"url\": \"string\"\n    }\n  ],\n  \"model\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "edb9d489-e389-4de1-b2c5-063fa3ee9219",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "images",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"n\": 1,\n  \"seed\": \"<integer>\",\n  \"size\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7dea5d57-455a-4590-9660-1aed85cd8175",
+          "name": "List models",
+          "request": {
+            "name": "List models",
+            "description": {
+              "content": "Lists all available models. OpenAI-compatible.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "models"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "provider_name",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "developer_name",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "action",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7f9cde5e-7bda-4e8a-8198-3e0c7facef51",
+              "name": "Model list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "provider_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "developer_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "action",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"object\": \"model\",\n      \"created\": 9825,\n      \"owned_by\": \"string\",\n      \"capabilities\": {\n        \"input\": [\n          \"string\",\n          \"string\"\n        ],\n        \"output\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deployments\": [\n        {\n          \"status\": \"inactive\"\n        },\n        {\n          \"status\": \"error\"\n        }\n      ],\n      \"description\": \"string\",\n      \"developer\": {\n        \"logo\": \"string\",\n        \"name\": \"string\"\n      },\n      \"display_name\": \"string\",\n      \"endpoint\": \"/videos/generate\",\n      \"fine_tuning\": {\n        \"actions\": [\n          \"string\",\n          \"string\"\n        ],\n        \"cost_per_second\": 5441.623769917023\n      },\n      \"image_url\": \"string\",\n      \"model_type\": \"custom\",\n      \"pricing\": {\n        \"cost_per_image\": 1094.4767896207863,\n        \"cost_per_image_grid\": {\n          \"key_0\": {\n            \"key_0\": 9003.963783458568,\n            \"key_1\": 2643.9523025654344\n          },\n          \"key_1\": {\n            \"key_0\": 8295.256134934887\n          }\n        },\n        \"cost_per_second\": 2560.068254501153,\n        \"cost_per_second_by_resolution\": {\n          \"key_0\": 4713.75376325628\n        },\n        \"cost_per_second_high_res\": 6962.740497349156,\n        \"cost_per_second_with_audio\": 2277.010832692424,\n        \"input_cost_per_token\": 2364.698788219368,\n        \"method\": \"time\",\n        \"output_cost_per_token\": 2376.713533751669\n      },\n      \"released_at\": \"string\",\n      \"request_schema\": {},\n      \"showcase\": {\n        \"gallery\": [\n          {\n            \"src\": \"string\",\n            \"alt\": \"string\",\n            \"category\": \"string\",\n            \"details\": \"string\",\n            \"prompt\": \"string\",\n            \"title\": \"string\"\n          },\n          {\n            \"src\": \"string\",\n            \"alt\": \"string\",\n            \"category\": \"string\",\n            \"details\": \"string\",\n            \"prompt\": \"string\",\n            \"title\": \"string\"\n          }\n        ],\n        \"hero_image\": \"string\",\n        \"tagline\": \"string\"\n      },\n      \"source_model\": \"string\",\n      \"summary\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"object\": \"model\",\n      \"created\": 4686,\n      \"owned_by\": \"string\",\n      \"capabilities\": {\n        \"input\": [\n          \"string\",\n          \"string\"\n        ],\n        \"output\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deployments\": [\n        {\n          \"status\": \"error\"\n        },\n        {\n          \"status\": \"deactivating\"\n        }\n      ],\n      \"description\": \"string\",\n      \"developer\": {\n        \"logo\": \"string\",\n        \"name\": \"string\"\n      },\n      \"display_name\": \"string\",\n      \"endpoint\": \"/videos/generate\",\n      \"fine_tuning\": {\n        \"actions\": [\n          \"string\",\n          \"string\"\n        ],\n        \"cost_per_second\": 6096.4671085987875\n      },\n      \"image_url\": \"string\",\n      \"model_type\": \"base\",\n      \"pricing\": {\n        \"cost_per_image\": 9202.599598654064,\n        \"cost_per_image_grid\": {\n          \"key_0\": {\n            \"key_0\": 2103.9447318471725,\n            \"key_1\": 2730.6671510984106\n          }\n        },\n        \"cost_per_second\": 5019.410418394304,\n        \"cost_per_second_by_resolution\": {\n          \"key_0\": 4768.097897138601\n        },\n        \"cost_per_second_high_res\": 3265.808674580908,\n        \"cost_per_second_with_audio\": 1169.1722531633152,\n        \"input_cost_per_token\": 1278.6331864066647,\n        \"method\": \"time\",\n        \"output_cost_per_token\": 523.3929341521804\n      },\n      \"released_at\": \"string\",\n      \"request_schema\": {},\n      \"showcase\": {\n        \"gallery\": [\n          {\n            \"src\": \"string\",\n            \"alt\": \"string\",\n            \"category\": \"string\",\n            \"details\": \"string\",\n            \"prompt\": \"string\",\n            \"title\": \"string\"\n          },\n          {\n            \"src\": \"string\",\n            \"alt\": \"string\",\n            \"category\": \"string\",\n            \"details\": \"string\",\n            \"prompt\": \"string\",\n            \"title\": \"string\"\n          }\n        ],\n        \"hero_image\": \"string\",\n        \"tagline\": \"string\"\n      },\n      \"source_model\": \"string\",\n      \"summary\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ca247973-fea1-4723-bfdf-655a8fa4159d",
+          "name": "List favorite models",
+          "request": {
+            "name": "List favorite models",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "models",
+                "favorites"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e4aa7bc4-ff0a-4ae8-9be3-9ec564d6ae43",
+              "name": "Favorite models",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "models",
+                    "favorites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"object\": \"model\",\n      \"created\": 2501,\n      \"owned_by\": \"string\",\n      \"capabilities\": {\n        \"input\": [\n          \"string\",\n          \"string\"\n        ],\n        \"output\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deployments\": [\n        {\n          \"status\": \"deploying\"\n        },\n        {\n          \"status\": \"inactive\"\n        }\n      ],\n      \"description\": \"string\",\n      \"developer\": {\n        \"logo\": \"string\",\n        \"name\": \"string\"\n      },\n      \"display_name\": \"string\",\n      \"endpoint\": \"/images/generate\",\n      \"fine_tuning\": {\n        \"actions\": [\n          \"string\",\n          \"string\"\n        ],\n        \"cost_per_second\": 646.9533397599736\n      },\n      \"image_url\": \"string\",\n      \"model_type\": \"custom\",\n      \"pricing\": {\n        \"cost_per_image\": 7613.952309260278,\n        \"cost_per_image_grid\": {\n          \"key_0\": {\n            \"key_0\": 2272.5463843916873\n          },\n          \"key_1\": {\n            \"key_0\": 912.9540339076891\n          },\n          \"key_2\": {\n            \"key_0\": 4222.696336485743,\n            \"key_1\": 2123.3979841959463\n          }\n        },\n        \"cost_per_second\": 4886.546317314163,\n        \"cost_per_second_by_resolution\": {\n          \"key_0\": 5185.452515896294,\n          \"key_1\": 855.3201014674139\n        },\n        \"cost_per_second_high_res\": 658.2195847062844,\n        \"cost_per_second_with_audio\": 136.84807937632493,\n        \"input_cost_per_token\": 8800.507382007192,\n        \"method\": \"token\",\n        \"output_cost_per_token\": 4521.428930735568\n      },\n      \"released_at\": \"string\",\n      \"request_schema\": {},\n      \"showcase\": {\n        \"gallery\": [\n          {\n            \"src\": \"string\",\n            \"alt\": \"string\",\n            \"category\": \"string\",\n            \"details\": \"string\",\n            \"prompt\": \"string\",\n            \"title\": \"string\"\n          },\n          {\n            \"src\": \"string\",\n            \"alt\": \"string\",\n            \"category\": \"string\",\n            \"details\": \"string\",\n            \"prompt\": \"string\",\n            \"title\": \"string\"\n          }\n        ],\n        \"hero_image\": \"string\",\n        \"tagline\": \"string\"\n      },\n      \"source_model\": \"string\",\n      \"summary\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"object\": \"model\",\n      \"created\": 3293,\n      \"owned_by\": \"string\",\n      \"capabilities\": {\n        \"input\": [\n          \"string\",\n          \"string\"\n        ],\n        \"output\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deployments\": [\n        {\n          \"status\": \"deactivating\"\n        },\n        {\n          \"status\": \"deploying\"\n        }\n      ],\n      \"description\": \"string\",\n      \"developer\": {\n        \"logo\": \"string\",\n        \"name\": \"string\"\n      },\n      \"display_name\": \"string\",\n      \"endpoint\": \"/chat/completions\",\n      \"fine_tuning\": {\n        \"actions\": [\n          \"string\",\n          \"string\"\n        ],\n        \"cost_per_second\": 1189.3996883266943\n      },\n      \"image_url\": \"string\",\n      \"model_type\": \"custom\",\n      \"pricing\": {\n        \"cost_per_image\": 4199.2813394986715,\n        \"cost_per_image_grid\": {\n          \"key_0\": {\n            \"key_0\": 2079.442307550988,\n            \"key_1\": 3094.505654596783,\n            \"key_2\": 6160.561461496247\n          },\n          \"key_1\": {\n            \"key_0\": 3255.4844726560195,\n            \"key_1\": 2468.327714303851\n          },\n          \"key_2\": {\n            \"key_0\": 6192.3044299498815,\n            \"key_1\": 8039.910809475696,\n            \"key_2\": 4176.881936288668\n          },\n          \"key_3\": {\n            \"key_0\": 4676.7332068836895,\n            \"key_1\": 7543.74778762963\n          }\n        },\n        \"cost_per_second\": 9849.362607747855,\n        \"cost_per_second_by_resolution\": {\n          \"key_0\": 2748.3490269920894\n        },\n        \"cost_per_second_high_res\": 5972.021054015345,\n        \"cost_per_second_with_audio\": 4342.058173250549,\n        \"input_cost_per_token\": 1813.5877469452455,\n        \"method\": \"per_video_output_second\",\n        \"output_cost_per_token\": 5870.369553187867\n      },\n      \"released_at\": \"string\",\n      \"request_schema\": {},\n      \"showcase\": {\n        \"gallery\": [\n          {\n            \"src\": \"string\",\n            \"alt\": \"string\",\n            \"category\": \"string\",\n            \"details\": \"string\",\n            \"prompt\": \"string\",\n            \"title\": \"string\"\n          },\n          {\n            \"src\": \"string\",\n            \"alt\": \"string\",\n            \"category\": \"string\",\n            \"details\": \"string\",\n            \"prompt\": \"string\",\n            \"title\": \"string\"\n          }\n        ],\n        \"hero_image\": \"string\",\n        \"tagline\": \"string\"\n      },\n      \"source_model\": \"string\",\n      \"summary\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d5fabf1e-dcc9-47df-9a64-f9873d3374ca",
+          "name": "List featured models",
+          "request": {
+            "name": "List featured models",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "models",
+                "featured"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "511f157c-f71a-43f1-b059-d5482c654bf0",
+              "name": "Featured models",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "models",
+                    "featured"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"object\": \"model\",\n      \"created\": 2501,\n      \"owned_by\": \"string\",\n      \"capabilities\": {\n        \"input\": [\n          \"string\",\n          \"string\"\n        ],\n        \"output\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deployments\": [\n        {\n          \"status\": \"deploying\"\n        },\n        {\n          \"status\": \"inactive\"\n        }\n      ],\n      \"description\": \"string\",\n      \"developer\": {\n        \"logo\": \"string\",\n        \"name\": \"string\"\n      },\n      \"display_name\": \"string\",\n      \"endpoint\": \"/images/generate\",\n      \"fine_tuning\": {\n        \"actions\": [\n          \"string\",\n          \"string\"\n        ],\n        \"cost_per_second\": 646.9533397599736\n      },\n      \"image_url\": \"string\",\n      \"model_type\": \"custom\",\n      \"pricing\": {\n        \"cost_per_image\": 7613.952309260278,\n        \"cost_per_image_grid\": {\n          \"key_0\": {\n            \"key_0\": 2272.5463843916873\n          },\n          \"key_1\": {\n            \"key_0\": 912.9540339076891\n          },\n          \"key_2\": {\n            \"key_0\": 4222.696336485743,\n            \"key_1\": 2123.3979841959463\n          }\n        },\n        \"cost_per_second\": 4886.546317314163,\n        \"cost_per_second_by_resolution\": {\n          \"key_0\": 5185.452515896294,\n          \"key_1\": 855.3201014674139\n        },\n        \"cost_per_second_high_res\": 658.2195847062844,\n        \"cost_per_second_with_audio\": 136.84807937632493,\n        \"input_cost_per_token\": 8800.507382007192,\n        \"method\": \"token\",\n        \"output_cost_per_token\": 4521.428930735568\n      },\n      \"released_at\": \"string\",\n      \"request_schema\": {},\n      \"showcase\": {\n        \"gallery\": [\n          {\n            \"src\": \"string\",\n            \"alt\": \"string\",\n            \"category\": \"string\",\n            \"details\": \"string\",\n            \"prompt\": \"string\",\n            \"title\": \"string\"\n          },\n          {\n            \"src\": \"string\",\n            \"alt\": \"string\",\n            \"category\": \"string\",\n            \"details\": \"string\",\n            \"prompt\": \"string\",\n            \"title\": \"string\"\n          }\n        ],\n        \"hero_image\": \"string\",\n        \"tagline\": \"string\"\n      },\n      \"source_model\": \"string\",\n      \"summary\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"object\": \"model\",\n      \"created\": 3293,\n      \"owned_by\": \"string\",\n      \"capabilities\": {\n        \"input\": [\n          \"string\",\n          \"string\"\n        ],\n        \"output\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deployments\": [\n        {\n          \"status\": \"deactivating\"\n        },\n        {\n          \"status\": \"deploying\"\n        }\n      ],\n      \"description\": \"string\",\n      \"developer\": {\n        \"logo\": \"string\",\n        \"name\": \"string\"\n      },\n      \"display_name\": \"string\",\n      \"endpoint\": \"/chat/completions\",\n      \"fine_tuning\": {\n        \"actions\": [\n          \"string\",\n          \"string\"\n        ],\n        \"cost_per_second\": 1189.3996883266943\n      },\n      \"image_url\": \"string\",\n      \"model_type\": \"custom\",\n      \"pricing\": {\n        \"cost_per_image\": 4199.2813394986715,\n        \"cost_per_image_grid\": {\n          \"key_0\": {\n            \"key_0\": 2079.442307550988,\n            \"key_1\": 3094.505654596783,\n            \"key_2\": 6160.561461496247\n          },\n          \"key_1\": {\n            \"key_0\": 3255.4844726560195,\n            \"key_1\": 2468.327714303851\n          },\n          \"key_2\": {\n            \"key_0\": 6192.3044299498815,\n            \"key_1\": 8039.910809475696,\n            \"key_2\": 4176.881936288668\n          },\n          \"key_3\": {\n            \"key_0\": 4676.7332068836895,\n            \"key_1\": 7543.74778762963\n          }\n        },\n        \"cost_per_second\": 9849.362607747855,\n        \"cost_per_second_by_resolution\": {\n          \"key_0\": 2748.3490269920894\n        },\n        \"cost_per_second_high_res\": 5972.021054015345,\n        \"cost_per_second_with_audio\": 4342.058173250549,\n        \"input_cost_per_token\": 1813.5877469452455,\n        \"method\": \"per_video_output_second\",\n        \"output_cost_per_token\": 5870.369553187867\n      },\n      \"released_at\": \"string\",\n      \"request_schema\": {},\n      \"showcase\": {\n        \"gallery\": [\n          {\n            \"src\": \"string\",\n            \"alt\": \"string\",\n            \"category\": \"string\",\n            \"details\": \"string\",\n            \"prompt\": \"string\",\n            \"title\": \"string\"\n          },\n          {\n            \"src\": \"string\",\n            \"alt\": \"string\",\n            \"category\": \"string\",\n            \"details\": \"string\",\n            \"prompt\": \"string\",\n            \"title\": \"string\"\n          }\n        ],\n        \"hero_image\": \"string\",\n        \"tagline\": \"string\"\n      },\n      \"source_model\": \"string\",\n      \"summary\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "faf09447-bdba-41f9-869c-4edc6d043361",
+          "name": "Search models",
+          "request": {
+            "name": "Search models",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "models",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b83d5df0-70a7-47e6-9381-9733dd1a5c0a",
+              "name": "Search results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "models",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"object\": \"model\",\n      \"created\": 2501,\n      \"owned_by\": \"string\",\n      \"capabilities\": {\n        \"input\": [\n          \"string\",\n          \"string\"\n        ],\n        \"output\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deployments\": [\n        {\n          \"status\": \"deploying\"\n        },\n        {\n          \"status\": \"inactive\"\n        }\n      ],\n      \"description\": \"string\",\n      \"developer\": {\n        \"logo\": \"string\",\n        \"name\": \"string\"\n      },\n      \"display_name\": \"string\",\n      \"endpoint\": \"/images/generate\",\n      \"fine_tuning\": {\n        \"actions\": [\n          \"string\",\n          \"string\"\n        ],\n        \"cost_per_second\": 646.9533397599736\n      },\n      \"image_url\": \"string\",\n      \"model_type\": \"custom\",\n      \"pricing\": {\n        \"cost_per_image\": 7613.952309260278,\n        \"cost_per_image_grid\": {\n          \"key_0\": {\n            \"key_0\": 2272.5463843916873\n          },\n          \"key_1\": {\n            \"key_0\": 912.9540339076891\n          },\n          \"key_2\": {\n            \"key_0\": 4222.696336485743,\n            \"key_1\": 2123.3979841959463\n          }\n        },\n        \"cost_per_second\": 4886.546317314163,\n        \"cost_per_second_by_resolution\": {\n          \"key_0\": 5185.452515896294,\n          \"key_1\": 855.3201014674139\n        },\n        \"cost_per_second_high_res\": 658.2195847062844,\n        \"cost_per_second_with_audio\": 136.84807937632493,\n        \"input_cost_per_token\": 8800.507382007192,\n        \"method\": \"token\",\n        \"output_cost_per_token\": 4521.428930735568\n      },\n      \"released_at\": \"string\",\n      \"request_schema\": {},\n      \"showcase\": {\n        \"gallery\": [\n          {\n            \"src\": \"string\",\n            \"alt\": \"string\",\n            \"category\": \"string\",\n            \"details\": \"string\",\n            \"prompt\": \"string\",\n            \"title\": \"string\"\n          },\n          {\n            \"src\": \"string\",\n            \"alt\": \"string\",\n            \"category\": \"string\",\n            \"details\": \"string\",\n            \"prompt\": \"string\",\n            \"title\": \"string\"\n          }\n        ],\n        \"hero_image\": \"string\",\n        \"tagline\": \"string\"\n      },\n      \"source_model\": \"string\",\n      \"summary\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"object\": \"model\",\n      \"created\": 3293,\n      \"owned_by\": \"string\",\n      \"capabilities\": {\n        \"input\": [\n          \"string\",\n          \"string\"\n        ],\n        \"output\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"deployments\": [\n        {\n          \"status\": \"deactivating\"\n        },\n        {\n          \"status\": \"deploying\"\n        }\n      ],\n      \"description\": \"string\",\n      \"developer\": {\n        \"logo\": \"string\",\n        \"name\": \"string\"\n      },\n      \"display_name\": \"string\",\n      \"endpoint\": \"/chat/completions\",\n      \"fine_tuning\": {\n        \"actions\": [\n          \"string\",\n          \"string\"\n        ],\n        \"cost_per_second\": 1189.3996883266943\n      },\n      \"image_url\": \"string\",\n      \"model_type\": \"custom\",\n      \"pricing\": {\n        \"cost_per_image\": 4199.2813394986715,\n        \"cost_per_image_grid\": {\n          \"key_0\": {\n            \"key_0\": 2079.442307550988,\n            \"key_1\": 3094.505654596783,\n            \"key_2\": 6160.561461496247\n          },\n          \"key_1\": {\n            \"key_0\": 3255.4844726560195,\n            \"key_1\": 2468.327714303851\n          },\n          \"key_2\": {\n            \"key_0\": 6192.3044299498815,\n            \"key_1\": 8039.910809475696,\n            \"key_2\": 4176.881936288668\n          },\n          \"key_3\": {\n            \"key_0\": 4676.7332068836895,\n            \"key_1\": 7543.74778762963\n          }\n        },\n        \"cost_per_second\": 9849.362607747855,\n        \"cost_per_second_by_resolution\": {\n          \"key_0\": 2748.3490269920894\n        },\n        \"cost_per_second_high_res\": 5972.021054015345,\n        \"cost_per_second_with_audio\": 4342.058173250549,\n        \"input_cost_per_token\": 1813.5877469452455,\n        \"method\": \"per_video_output_second\",\n        \"output_cost_per_token\": 5870.369553187867\n      },\n      \"released_at\": \"string\",\n      \"request_schema\": {},\n      \"showcase\": {\n        \"gallery\": [\n          {\n            \"src\": \"string\",\n            \"alt\": \"string\",\n            \"category\": \"string\",\n            \"details\": \"string\",\n            \"prompt\": \"string\",\n            \"title\": \"string\"\n          },\n          {\n            \"src\": \"string\",\n            \"alt\": \"string\",\n            \"category\": \"string\",\n            \"details\": \"string\",\n            \"prompt\": \"string\",\n            \"title\": \"string\"\n          }\n        ],\n        \"hero_image\": \"string\",\n        \"tagline\": \"string\"\n      },\n      \"source_model\": \"string\",\n      \"summary\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "64fcb24a-3916-404e-8a00-855bb596c018",
+          "name": "Delete custom model",
+          "request": {
+            "name": "Delete custom model",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "models",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "82f5bc36-df79-4db0-be74-2e68bc7be201",
+              "name": "Deleted model",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "models",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"model\",\n  \"created\": 2833,\n  \"owned_by\": \"string\",\n  \"capabilities\": {\n    \"input\": [\n      \"string\",\n      \"string\"\n    ],\n    \"output\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"deployments\": [\n    {\n      \"status\": \"inactive\"\n    },\n    {\n      \"status\": \"error\"\n    }\n  ],\n  \"description\": \"string\",\n  \"developer\": {\n    \"logo\": \"string\",\n    \"name\": \"string\"\n  },\n  \"display_name\": \"string\",\n  \"endpoint\": \"/videos/generate\",\n  \"fine_tuning\": {\n    \"actions\": [\n      \"string\",\n      \"string\"\n    ],\n    \"cost_per_second\": 3055.2467692843697\n  },\n  \"image_url\": \"string\",\n  \"model_type\": \"custom\",\n  \"pricing\": {\n    \"cost_per_image\": 4437.480118359433,\n    \"cost_per_image_grid\": {\n      \"key_0\": {\n        \"key_0\": 3665.8794768910575\n      }\n    },\n    \"cost_per_second\": 4311.147624452514,\n    \"cost_per_second_by_resolution\": {\n      \"key_0\": 736.9157166576812,\n      \"key_1\": 5799.763195616682\n    },\n    \"cost_per_second_high_res\": 9884.317034566142,\n    \"cost_per_second_with_audio\": 4836.47904450982,\n    \"input_cost_per_token\": 2534.9256256174344,\n    \"method\": \"time\",\n    \"output_cost_per_token\": 1474.5298324014188\n  },\n  \"released_at\": \"string\",\n  \"request_schema\": {},\n  \"showcase\": {\n    \"gallery\": [\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\",\n        \"category\": \"string\",\n        \"details\": \"string\",\n        \"prompt\": \"string\",\n        \"title\": \"string\"\n      },\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\",\n        \"category\": \"string\",\n        \"details\": \"string\",\n        \"prompt\": \"string\",\n        \"title\": \"string\"\n      }\n    ],\n    \"hero_image\": \"string\",\n    \"tagline\": \"string\"\n  },\n  \"source_model\": \"string\",\n  \"summary\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "86f6cfd2-dabd-45cf-a4db-45f16a0fb6d2",
+              "name": "Model not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "models",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "00c30074-d853-4591-b5ac-87dede807a3e",
+          "name": "Retrieve model",
+          "request": {
+            "name": "Retrieve model",
+            "description": {
+              "content": "Retrieves a model by ID or name. OpenAI-compatible.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "models",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "deployment_status",
+                  "value": "<string>",
+                  "description": "Pass \"live\" to refresh deployment status from provider before responding"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Model ID (UUID) or name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c055bbc1-317f-4033-b4d9-5173831056e8",
+              "name": "Model details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "models",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "deployment_status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Model ID (UUID) or name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"model\",\n  \"created\": 2833,\n  \"owned_by\": \"string\",\n  \"capabilities\": {\n    \"input\": [\n      \"string\",\n      \"string\"\n    ],\n    \"output\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"deployments\": [\n    {\n      \"status\": \"inactive\"\n    },\n    {\n      \"status\": \"error\"\n    }\n  ],\n  \"description\": \"string\",\n  \"developer\": {\n    \"logo\": \"string\",\n    \"name\": \"string\"\n  },\n  \"display_name\": \"string\",\n  \"endpoint\": \"/videos/generate\",\n  \"fine_tuning\": {\n    \"actions\": [\n      \"string\",\n      \"string\"\n    ],\n    \"cost_per_second\": 3055.2467692843697\n  },\n  \"image_url\": \"string\",\n  \"model_type\": \"custom\",\n  \"pricing\": {\n    \"cost_per_image\": 4437.480118359433,\n    \"cost_per_image_grid\": {\n      \"key_0\": {\n        \"key_0\": 3665.8794768910575\n      }\n    },\n    \"cost_per_second\": 4311.147624452514,\n    \"cost_per_second_by_resolution\": {\n      \"key_0\": 736.9157166576812,\n      \"key_1\": 5799.763195616682\n    },\n    \"cost_per_second_high_res\": 9884.317034566142,\n    \"cost_per_second_with_audio\": 4836.47904450982,\n    \"input_cost_per_token\": 2534.9256256174344,\n    \"method\": \"time\",\n    \"output_cost_per_token\": 1474.5298324014188\n  },\n  \"released_at\": \"string\",\n  \"request_schema\": {},\n  \"showcase\": {\n    \"gallery\": [\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\",\n        \"category\": \"string\",\n        \"details\": \"string\",\n        \"prompt\": \"string\",\n        \"title\": \"string\"\n      },\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\",\n        \"category\": \"string\",\n        \"details\": \"string\",\n        \"prompt\": \"string\",\n        \"title\": \"string\"\n      }\n    ],\n    \"hero_image\": \"string\",\n    \"tagline\": \"string\"\n  },\n  \"source_model\": \"string\",\n  \"summary\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cdabd041-f673-4e35-a1cd-9a16eafe02ec",
+              "name": "Model not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "models",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "deployment_status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Model ID (UUID) or name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9107e863-478b-4e78-940d-6d18687d3ef7",
+          "name": "Update model",
+          "request": {
+            "name": "Update model",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "models",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "78f3bc23-9508-425e-9e67-289bf0a4f735",
+              "name": "Updated model",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "models",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"model\",\n  \"created\": 2833,\n  \"owned_by\": \"string\",\n  \"capabilities\": {\n    \"input\": [\n      \"string\",\n      \"string\"\n    ],\n    \"output\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"deployments\": [\n    {\n      \"status\": \"inactive\"\n    },\n    {\n      \"status\": \"error\"\n    }\n  ],\n  \"description\": \"string\",\n  \"developer\": {\n    \"logo\": \"string\",\n    \"name\": \"string\"\n  },\n  \"display_name\": \"string\",\n  \"endpoint\": \"/videos/generate\",\n  \"fine_tuning\": {\n    \"actions\": [\n      \"string\",\n      \"string\"\n    ],\n    \"cost_per_second\": 3055.2467692843697\n  },\n  \"image_url\": \"string\",\n  \"model_type\": \"custom\",\n  \"pricing\": {\n    \"cost_per_image\": 4437.480118359433,\n    \"cost_per_image_grid\": {\n      \"key_0\": {\n        \"key_0\": 3665.8794768910575\n      }\n    },\n    \"cost_per_second\": 4311.147624452514,\n    \"cost_per_second_by_resolution\": {\n      \"key_0\": 736.9157166576812,\n      \"key_1\": 5799.763195616682\n    },\n    \"cost_per_second_high_res\": 9884.317034566142,\n    \"cost_per_second_with_audio\": 4836.47904450982,\n    \"input_cost_per_token\": 2534.9256256174344,\n    \"method\": \"time\",\n    \"output_cost_per_token\": 1474.5298324014188\n  },\n  \"released_at\": \"string\",\n  \"request_schema\": {},\n  \"showcase\": {\n    \"gallery\": [\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\",\n        \"category\": \"string\",\n        \"details\": \"string\",\n        \"prompt\": \"string\",\n        \"title\": \"string\"\n      },\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\",\n        \"category\": \"string\",\n        \"details\": \"string\",\n        \"prompt\": \"string\",\n        \"title\": \"string\"\n      }\n    ],\n    \"hero_image\": \"string\",\n    \"tagline\": \"string\"\n  },\n  \"source_model\": \"string\",\n  \"summary\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "11a8c3ac-d0fc-402c-a55c-c9eaf0249d15",
+          "name": "Activate model deployment",
+          "request": {
+            "name": "Activate model deployment",
+            "description": {
+              "content": "Activates an inactive model deployment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "models",
+                ":id",
+                "activate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e0dfc763-ccf4-4a6f-888e-a313a2e30a77",
+              "name": "Model activated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "models",
+                    ":id",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"model\",\n  \"created\": 2833,\n  \"owned_by\": \"string\",\n  \"capabilities\": {\n    \"input\": [\n      \"string\",\n      \"string\"\n    ],\n    \"output\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"deployments\": [\n    {\n      \"status\": \"inactive\"\n    },\n    {\n      \"status\": \"error\"\n    }\n  ],\n  \"description\": \"string\",\n  \"developer\": {\n    \"logo\": \"string\",\n    \"name\": \"string\"\n  },\n  \"display_name\": \"string\",\n  \"endpoint\": \"/videos/generate\",\n  \"fine_tuning\": {\n    \"actions\": [\n      \"string\",\n      \"string\"\n    ],\n    \"cost_per_second\": 3055.2467692843697\n  },\n  \"image_url\": \"string\",\n  \"model_type\": \"custom\",\n  \"pricing\": {\n    \"cost_per_image\": 4437.480118359433,\n    \"cost_per_image_grid\": {\n      \"key_0\": {\n        \"key_0\": 3665.8794768910575\n      }\n    },\n    \"cost_per_second\": 4311.147624452514,\n    \"cost_per_second_by_resolution\": {\n      \"key_0\": 736.9157166576812,\n      \"key_1\": 5799.763195616682\n    },\n    \"cost_per_second_high_res\": 9884.317034566142,\n    \"cost_per_second_with_audio\": 4836.47904450982,\n    \"input_cost_per_token\": 2534.9256256174344,\n    \"method\": \"time\",\n    \"output_cost_per_token\": 1474.5298324014188\n  },\n  \"released_at\": \"string\",\n  \"request_schema\": {},\n  \"showcase\": {\n    \"gallery\": [\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\",\n        \"category\": \"string\",\n        \"details\": \"string\",\n        \"prompt\": \"string\",\n        \"title\": \"string\"\n      },\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\",\n        \"category\": \"string\",\n        \"details\": \"string\",\n        \"prompt\": \"string\",\n        \"title\": \"string\"\n      }\n    ],\n    \"hero_image\": \"string\",\n    \"tagline\": \"string\"\n  },\n  \"source_model\": \"string\",\n  \"summary\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9f0698c2-6a40-4bbe-bfa4-0a1c4e191e7f",
+          "name": "Deactivate model deployment",
+          "request": {
+            "name": "Deactivate model deployment",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "models",
+                ":id",
+                "deactivate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "26778f05-9ec0-4cb3-9b4b-67194b0db34c",
+              "name": "Model deactivated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "models",
+                    ":id",
+                    "deactivate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"model\",\n  \"created\": 2833,\n  \"owned_by\": \"string\",\n  \"capabilities\": {\n    \"input\": [\n      \"string\",\n      \"string\"\n    ],\n    \"output\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"deployments\": [\n    {\n      \"status\": \"inactive\"\n    },\n    {\n      \"status\": \"error\"\n    }\n  ],\n  \"description\": \"string\",\n  \"developer\": {\n    \"logo\": \"string\",\n    \"name\": \"string\"\n  },\n  \"display_name\": \"string\",\n  \"endpoint\": \"/videos/generate\",\n  \"fine_tuning\": {\n    \"actions\": [\n      \"string\",\n      \"string\"\n    ],\n    \"cost_per_second\": 3055.2467692843697\n  },\n  \"image_url\": \"string\",\n  \"model_type\": \"custom\",\n  \"pricing\": {\n    \"cost_per_image\": 4437.480118359433,\n    \"cost_per_image_grid\": {\n      \"key_0\": {\n        \"key_0\": 3665.8794768910575\n      }\n    },\n    \"cost_per_second\": 4311.147624452514,\n    \"cost_per_second_by_resolution\": {\n      \"key_0\": 736.9157166576812,\n      \"key_1\": 5799.763195616682\n    },\n    \"cost_per_second_high_res\": 9884.317034566142,\n    \"cost_per_second_with_audio\": 4836.47904450982,\n    \"input_cost_per_token\": 2534.9256256174344,\n    \"method\": \"time\",\n    \"output_cost_per_token\": 1474.5298324014188\n  },\n  \"released_at\": \"string\",\n  \"request_schema\": {},\n  \"showcase\": {\n    \"gallery\": [\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\",\n        \"category\": \"string\",\n        \"details\": \"string\",\n        \"prompt\": \"string\",\n        \"title\": \"string\"\n      },\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\",\n        \"category\": \"string\",\n        \"details\": \"string\",\n        \"prompt\": \"string\",\n        \"title\": \"string\"\n      }\n    ],\n    \"hero_image\": \"string\",\n    \"tagline\": \"string\"\n  },\n  \"source_model\": \"string\",\n  \"summary\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4f91243e-ada8-439d-a884-167db54d2dcc",
+          "name": "Unfavorite a model",
+          "request": {
+            "name": "Unfavorite a model",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "models",
+                ":id",
+                "favorite"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "686d9e0b-ec67-4ac7-8e8d-81ec8a92aa56",
+              "name": "Model unfavorited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "models",
+                    ":id",
+                    "favorite"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"model\",\n  \"created\": 2833,\n  \"owned_by\": \"string\",\n  \"capabilities\": {\n    \"input\": [\n      \"string\",\n      \"string\"\n    ],\n    \"output\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"deployments\": [\n    {\n      \"status\": \"inactive\"\n    },\n    {\n      \"status\": \"error\"\n    }\n  ],\n  \"description\": \"string\",\n  \"developer\": {\n    \"logo\": \"string\",\n    \"name\": \"string\"\n  },\n  \"display_name\": \"string\",\n  \"endpoint\": \"/videos/generate\",\n  \"fine_tuning\": {\n    \"actions\": [\n      \"string\",\n      \"string\"\n    ],\n    \"cost_per_second\": 3055.2467692843697\n  },\n  \"image_url\": \"string\",\n  \"model_type\": \"custom\",\n  \"pricing\": {\n    \"cost_per_image\": 4437.480118359433,\n    \"cost_per_image_grid\": {\n      \"key_0\": {\n        \"key_0\": 3665.8794768910575\n      }\n    },\n    \"cost_per_second\": 4311.147624452514,\n    \"cost_per_second_by_resolution\": {\n      \"key_0\": 736.9157166576812,\n      \"key_1\": 5799.763195616682\n    },\n    \"cost_per_second_high_res\": 9884.317034566142,\n    \"cost_per_second_with_audio\": 4836.47904450982,\n    \"input_cost_per_token\": 2534.9256256174344,\n    \"method\": \"time\",\n    \"output_cost_per_token\": 1474.5298324014188\n  },\n  \"released_at\": \"string\",\n  \"request_schema\": {},\n  \"showcase\": {\n    \"gallery\": [\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\",\n        \"category\": \"string\",\n        \"details\": \"string\",\n        \"prompt\": \"string\",\n        \"title\": \"string\"\n      },\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\",\n        \"category\": \"string\",\n        \"details\": \"string\",\n        \"prompt\": \"string\",\n        \"title\": \"string\"\n      }\n    ],\n    \"hero_image\": \"string\",\n    \"tagline\": \"string\"\n  },\n  \"source_model\": \"string\",\n  \"summary\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f121ba4-b25b-451a-939c-1de233c692d8",
+          "name": "Favorite a model",
+          "request": {
+            "name": "Favorite a model",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "models",
+                ":id",
+                "favorite"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fffff3af-9365-4d88-90eb-b9b45ba6ff53",
+              "name": "Model favorited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "models",
+                    ":id",
+                    "favorite"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"model\",\n  \"created\": 2833,\n  \"owned_by\": \"string\",\n  \"capabilities\": {\n    \"input\": [\n      \"string\",\n      \"string\"\n    ],\n    \"output\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"deployments\": [\n    {\n      \"status\": \"inactive\"\n    },\n    {\n      \"status\": \"error\"\n    }\n  ],\n  \"description\": \"string\",\n  \"developer\": {\n    \"logo\": \"string\",\n    \"name\": \"string\"\n  },\n  \"display_name\": \"string\",\n  \"endpoint\": \"/videos/generate\",\n  \"fine_tuning\": {\n    \"actions\": [\n      \"string\",\n      \"string\"\n    ],\n    \"cost_per_second\": 3055.2467692843697\n  },\n  \"image_url\": \"string\",\n  \"model_type\": \"custom\",\n  \"pricing\": {\n    \"cost_per_image\": 4437.480118359433,\n    \"cost_per_image_grid\": {\n      \"key_0\": {\n        \"key_0\": 3665.8794768910575\n      }\n    },\n    \"cost_per_second\": 4311.147624452514,\n    \"cost_per_second_by_resolution\": {\n      \"key_0\": 736.9157166576812,\n      \"key_1\": 5799.763195616682\n    },\n    \"cost_per_second_high_res\": 9884.317034566142,\n    \"cost_per_second_with_audio\": 4836.47904450982,\n    \"input_cost_per_token\": 2534.9256256174344,\n    \"method\": \"time\",\n    \"output_cost_per_token\": 1474.5298324014188\n  },\n  \"released_at\": \"string\",\n  \"request_schema\": {},\n  \"showcase\": {\n    \"gallery\": [\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\",\n        \"category\": \"string\",\n        \"details\": \"string\",\n        \"prompt\": \"string\",\n        \"title\": \"string\"\n      },\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\",\n        \"category\": \"string\",\n        \"details\": \"string\",\n        \"prompt\": \"string\",\n        \"title\": \"string\"\n      }\n    ],\n    \"hero_image\": \"string\",\n    \"tagline\": \"string\"\n  },\n  \"source_model\": \"string\",\n  \"summary\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8b03a267-4bee-4a2f-b43e-a2fc3b614441",
+          "name": "List in-flight queue items",
+          "request": {
+            "name": "List in-flight queue items",
+            "description": {
+              "content": "Lean polling view of the workbench render queue. Returns active generations (status queued or processing) by default; pass an explicit `status=` filter to include terminal rows. For paginated history with cost aggregates, use `/api/ai/generations`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "queue"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "namespace",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "model",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "media_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "repo",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "folder",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "52fec7c5-0c4a-4214-8d99-61883bc2b5be",
+              "name": "Generation list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "queue"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "model",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "media_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "folder",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 1820,\n  \"generations\": [\n    {\n      \"generation_id\": \"c4fb5b55-b40f-d530-a594-1cf92cd25603\",\n      \"model_name\": \"string\",\n      \"media_type\": \"image\",\n      \"status\": \"queued\",\n      \"enqueued_at\": 2935,\n      \"completed_at\": 2466,\n      \"error_message\": \"string\",\n      \"result_url\": \"string\",\n      \"started_at\": 6734,\n      \"target_directory\": \"string\",\n      \"target_namespace\": \"string\",\n      \"target_repo\": \"string\"\n    },\n    {\n      \"generation_id\": \"78d9f506-920c-ed08-a517-5e5a774b6cf9\",\n      \"model_name\": \"string\",\n      \"media_type\": \"image\",\n      \"status\": \"queued\",\n      \"enqueued_at\": 1028,\n      \"completed_at\": 2267,\n      \"error_message\": \"string\",\n      \"result_url\": \"string\",\n      \"started_at\": 4900,\n      \"target_directory\": \"string\",\n      \"target_namespace\": \"string\",\n      \"target_repo\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "96fa547e-2a38-4897-ac16-81e9942f1699",
+          "name": "Enqueue generation",
+          "request": {
+            "name": "Enqueue generation",
+            "description": {
+              "content": "Enqueues an async image or video generation job.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "queue"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"aspect_ratio\": \"<string>\",\n  \"duration\": \"<integer>\",\n  \"num_generations\": 1,\n  \"seed\": \"<integer>\",\n  \"target_directory\": \"<string>\",\n  \"target_namespace\": \"<string>\",\n  \"target_repo\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a5faed40-6f84-4882-82cc-db31ecbb2521",
+              "name": "Generation enqueued",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "queue"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"aspect_ratio\": \"<string>\",\n  \"duration\": \"<integer>\",\n  \"num_generations\": 1,\n  \"seed\": \"<integer>\",\n  \"target_directory\": \"<string>\",\n  \"target_namespace\": \"<string>\",\n  \"target_repo\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"generations\": [\n    {\n      \"generation_id\": \"7bb56885-e9e0-c2fb-9eb9-ecc797f4993d\",\n      \"status\": \"queued\"\n    },\n    {\n      \"generation_id\": \"8847a259-91f7-7c7f-ac88-a6e6b93fa9c7\",\n      \"status\": \"queued\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9a8cf83-e802-4113-a5f5-dbe92266e1ad",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "queue"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"aspect_ratio\": \"<string>\",\n  \"duration\": \"<integer>\",\n  \"num_generations\": 1,\n  \"seed\": \"<integer>\",\n  \"target_directory\": \"<string>\",\n  \"target_namespace\": \"<string>\",\n  \"target_repo\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d1ed3d83-5b77-40a7-9599-32e89171dfa2",
+          "name": "Cancel generation",
+          "request": {
+            "name": "Cancel generation",
+            "description": {
+              "content": "Cancels a generation. The row is retained with status set to cancelled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "queue",
+                ":generation_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "generation_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "58296c4c-6b0b-48ad-8bb5-e821c6f53d92",
+              "name": "Generation cancelled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "queue",
+                    ":generation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "generation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"generation_id\": \"5293a3fc-d392-ad15-c432-cc38acfd27d3\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "476ce4be-d8f5-4747-a4e4-831950590b3a",
+              "name": "Generation not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "queue",
+                    ":generation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "generation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5821a9bf-68e6-481f-b512-c5395cacecbb",
+          "name": "Get generation status",
+          "request": {
+            "name": "Get generation status",
+            "description": {
+              "content": "Retrieves metadata for a single queued generation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "queue",
+                ":generation_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "generation_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3a5eafbc-fd44-49ab-8132-5184e3cd137c",
+              "name": "Generation details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "queue",
+                    ":generation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "generation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"generation_id\": \"b27862c2-63de-d3d4-2c91-28d1df3dd6ae\",\n  \"model_name\": \"string\",\n  \"media_type\": \"image\",\n  \"status\": \"failed\",\n  \"enqueued_at\": 4424,\n  \"completed_at\": 119,\n  \"error_message\": \"string\",\n  \"result_url\": \"string\",\n  \"started_at\": 2204,\n  \"target_directory\": \"string\",\n  \"target_namespace\": \"string\",\n  \"target_repo\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acea5cc8-7f7b-424b-b0c9-15e6ff72f84e",
+              "name": "Generation not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "queue",
+                    ":generation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "generation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "611e5003-aa75-4e5b-bce8-a3205366ca76",
+          "name": "Generate video",
+          "request": {
+            "name": "Generate video",
+            "description": {
+              "content": "Creates a video from a text prompt.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "videos",
+                "generate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"aspect_ratio\": \"<string>\",\n  \"duration\": \"<integer>\",\n  \"seed\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "27d6466e-66d0-4cdf-86ec-7be12d0dc70d",
+              "name": "Generated videos",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "videos",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"aspect_ratio\": \"<string>\",\n  \"duration\": \"<integer>\",\n  \"seed\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created\": 9692,\n  \"model\": \"string\",\n  \"videos\": [\n    {\n      \"url\": \"string\"\n    },\n    {\n      \"url\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "565d1039-9ea7-4947-bb66-7b48b80fd7e1",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "videos",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"aspect_ratio\": \"<string>\",\n  \"duration\": \"<integer>\",\n  \"seed\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://hub.oxen.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4943301b-f6e0-4295-b76d-384aa6b328ac",
+    "name": "oxen Ai API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

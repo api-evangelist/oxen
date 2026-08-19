@@ -1,0 +1,178 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "oxen Ai Files API",
+    "version": "0.243.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Download File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/file/:resource",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "Voice-Data",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "resource",
+                "value": "main/audio/moo.wav",
+                "type": "path",
+                "description": "Path to the file (including branch/commit info)"
+              },
+              {
+                "name": "width",
+                "value": "320",
+                "type": "query",
+                "description": "Width for image resize or video thumbnail"
+              },
+              {
+                "name": "height",
+                "value": "240",
+                "type": "query",
+                "description": "Height for image resize or video thumbnail"
+              },
+              {
+                "name": "timestamp",
+                "value": "1",
+                "type": "query",
+                "description": "Timestamp in seconds to extract video thumbnail from (default: 1.0)"
+              },
+              {
+                "name": "thumbnail",
+                "value": "true",
+                "type": "query",
+                "description": "Set to true to generate a video thumbnail instead of returning the full video"
+              }
+            ]
+          },
+          "docs": "Download a file from the repository. Supports image resizing and video thumbnail generation via query parameters."
+        },
+        {
+          "info": {
+            "name": "Upload files",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/file/:resource",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "resource",
+                "value": "main/train/images",
+                "type": "path",
+                "description": "Path of the directory to add files in (including branch)"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Upload files via multipart form and commit them. Use `files[]` for directory uploads, or `file` for a single full-path upload. For backward compatibility, `file` also uploads into the target directory when `{resource}` already resolves to a directory."
+        },
+        {
+          "info": {
+            "name": "Move/Rename file",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/file/:resource",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "resource",
+                "value": "main/train/images/old_name.jpg",
+                "type": "path",
+                "description": "Path to the source file (including branch)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Move or rename a file within the repository and commit the change."
+        },
+        {
+          "info": {
+            "name": "Delete file",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/file/:resource",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "ImageNet-1k",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "resource",
+                "value": "main/train/images/n01440764_10026.JPEG",
+                "type": "path",
+                "description": "Path to the file to be deleted (including branch)"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Remove a file from the repository. Stage the file as removed to a workspace and commit the removal. Can remove files or directories."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

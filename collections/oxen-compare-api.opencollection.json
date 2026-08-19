@@ -1,0 +1,276 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "oxen Ai Compare API",
+    "version": "0.243.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Compare",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Derived Data Frame",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/compare/data_frames/:compare_id/diff",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "compare-datasets",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "compare_id",
+                "value": "uuid-1234",
+                "type": "path",
+                "description": "The unique ID of the comparison session"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (starts at 1)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size for pagination"
+              }
+            ]
+          },
+          "docs": "Get the derived diff data frame rows with pagination and optional filtering."
+        },
+        {
+          "info": {
+            "name": "List changed files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/compare/:base_head/dir/:dir/entries",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "satellite-images",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "base_head",
+                "value": "main..feature/add-labels",
+                "type": "path",
+                "description": "The base and head revisions separated by '..'"
+              },
+              {
+                "name": "dir",
+                "value": "data/test",
+                "type": "path",
+                "description": "The directory path to list entries for"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (starts at 1)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size for pagination"
+              }
+            ]
+          },
+          "docs": "List the files and sub-directories within a directory that have changed within a provided commit range."
+        },
+        {
+          "info": {
+            "name": "Get file diff",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/compare/:base_head/file/:resource",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "compare-datasets",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "base_head",
+                "value": "main..feature/add-labels",
+                "type": "path",
+                "description": "The base and head revisions separated by '..'"
+              },
+              {
+                "name": "resource",
+                "value": "data/test/file.txt",
+                "type": "path",
+                "description": "Path to the file (including branch)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (starts at 1)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size for pagination"
+              }
+            ]
+          },
+          "docs": "Get the detailed diff for a specific file between two revisions."
+        },
+        {
+          "info": {
+            "name": "Get diff tree",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/compare/:base_head/tree",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "satellite-images",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "base_head",
+                "value": "main..feature/add-labels",
+                "type": "path",
+                "description": "The base and head revisions separated by '..'"
+              }
+            ]
+          },
+          "docs": "Get a tree structure of directories that have changed between two revisions."
+        },
+        {
+          "info": {
+            "name": "List file and directory entries changed between base and head",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/compare/:base_head/entries",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "satellite-images",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "base_head",
+                "value": "main..feature/add-labels",
+                "type": "path",
+                "description": "The base and head revisions separated by '..'"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (starts at 1)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size for pagination"
+              }
+            ]
+          },
+          "docs": "List paginated entries (files and directories) that changed between two revisions with change counts."
+        },
+        {
+          "info": {
+            "name": "List commits between two revisions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://hub.oxen.ai/api/repos/:namespace/:repo_name/compare/:base_head/commits",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "ox",
+                "type": "path",
+                "description": "Namespace of the repository"
+              },
+              {
+                "name": "repo_name",
+                "value": "satellite-images",
+                "type": "path",
+                "description": "Name of the repository"
+              },
+              {
+                "name": "base_head",
+                "value": "main..feature/add-labels",
+                "type": "path",
+                "description": "The base and head revisions separated by '..'"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (starts at 1)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size for pagination"
+              }
+            ]
+          },
+          "docs": "List commits between a 'base' and 'head' commit."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
