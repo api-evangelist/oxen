@@ -36,6 +36,19 @@ image: https://github.com/Oxen-AI.png
 tags:
 - Company
 - Data Version Control
+- Machine-Learning
+- Artificial Intelligence
+- Fine-Tuning
+- Inference
+- Datasets
+- MLOps
+- Large Language Models
+- Model Deployment
+- Developer Tools
+- Version Control
+tags_raw:
+- Company
+- Data Version Control
 - Machine Learning
 - Artificial Intelligence
 - Fine-Tuning
@@ -58,6 +71,8 @@ apis:
   humanURL: https://docs.oxen.ai/fine-tuning-api/overview
   baseURL: https://hub.oxen.ai
   tags:
+  - Artificial Intelligence
+  tags_raw:
   - Ai
   properties:
   - type: OpenAPI
@@ -98,6 +113,8 @@ apis:
   humanURL: https://docs.oxen.ai/fine-tuning-api/overview
   baseURL: https://hub.oxen.ai
   tags:
+  - DataFrames
+  tags_raw:
   - Data Frames
   properties:
   - type: OpenAPI
@@ -118,6 +135,8 @@ apis:
   humanURL: https://docs.oxen.ai/fine-tuning-api/overview
   baseURL: https://hub.oxen.ai
   tags:
+  - Evaluations
+  tags_raw:
   - evaluations
   properties:
   - type: OpenAPI
@@ -138,6 +157,8 @@ apis:
   humanURL: https://docs.oxen.ai/fine-tuning-api/overview
   baseURL: https://hub.oxen.ai
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -148,6 +169,8 @@ apis:
   humanURL: https://docs.oxen.ai/fine-tuning-api/overview
   baseURL: https://hub.oxen.ai
   tags:
+  - 'Fine-Tunes:'
+  tags_raw:
   - fine_tunes
   properties:
   - type: OpenAPI
