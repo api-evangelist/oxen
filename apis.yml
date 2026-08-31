@@ -125,7 +125,7 @@ apis:
   humanURL: https://docs.oxen.ai/fine-tuning-api/overview
   baseURL: https://hub.oxen.ai
   tags:
-  - DataFrames
+  - Data Frames
   tags_raw:
   - Data Frames
   properties:
@@ -147,7 +147,7 @@ apis:
   humanURL: https://docs.oxen.ai/fine-tuning-api/overview
   baseURL: https://hub.oxen.ai
   tags:
-  - Evaluations
+  - evaluations
   tags_raw:
   - evaluations
   properties:
@@ -180,8 +180,7 @@ apis:
   description: The fine_tunes API from Oxen — 13 operation(s) for fine_tunes.
   humanURL: https://docs.oxen.ai/fine-tuning-api/overview
   baseURL: https://hub.oxen.ai
-  tags:
-  - 'Fine-Tunes:'
+  tags: []
   tags_raw:
   - fine_tunes
   properties:
