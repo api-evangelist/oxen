@@ -55,7 +55,7 @@ tags:
 - Inference
 - Datasets
 - MLOps
-- Large Language Models
+- LLM
 - Model Deployment
 - Developer Tools
 - Version Control
@@ -148,7 +148,7 @@ apis:
   humanURL: https://docs.oxen.ai/fine-tuning-api/overview
   baseURL: https://hub.oxen.ai
   tags:
-  - Evaluations
+  - Evaluation
   tags_raw:
   - evaluations
   properties:
@@ -274,6 +274,8 @@ apis:
   humanURL: https://docs.oxen.ai/fine-tuning-api/overview
   baseURL: https://hub.oxen.ai
   tags:
+  - Workspace
+  tags_raw:
   - Workspaces
   properties:
   - type: OpenAPI
