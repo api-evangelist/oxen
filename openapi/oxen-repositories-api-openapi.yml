@@ -1,12 +1,17 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: oxen Ai Repositories API
-  version: 0.243.1
-  description: Repository management endpoints.
+  description: Oxen is a fast, unstructured data version control, to help version large machine learning datasets written in Rust.
+  license:
+    name: ''
+  title: oxen-server Repositories API
+  version: 0.52.0
 servers:
-- url: https://hub.oxen.ai
-  variables: {}
-security: []
+- description: Production API
+  url: https://hub.oxen.ai
+- description: Local Development
+  url: http://localhost:3000
+security:
+- api_key: []
 tags:
 - description: Repository management endpoints.
   name: Repositories
@@ -266,27 +271,102 @@ paths:
       - Repositories
 components:
   schemas:
-    RepositoryStatsResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          repository:
-            $ref: '#/components/schemas/RepositoryStatsView'
-        required:
-        - repository
-        type: object
+    RepositoryCreationView:
       example:
-        repository:
-          data_size: 1074288000
-          data_types:
-          - data_size: 524288000
-            data_type: image
-            file_count: 500
-          - data_size: 550000000
-            data_type: tabular
-            file_count: 5
-        status: success
-        status_message: resource_found
+        latest_commit:
+          author: ox
+          email: ox@example.com
+          id: a1b2c3d4e5f67890abcdef1234567890
+          message: Initial dataset import.
+          parent_ids:
+          - f1e2d3c4b5a67890fedcba9876543210
+          timestamp: '2025-01-01T10:00:00Z'
+        name: ImageNet-1k
+        namespace: ox
+        storage_kind: s3
+      properties:
+        latest_commit:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Commit'
+        min_version:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        namespace:
+          type: string
+        storage_kind:
+          $ref: '#/components/schemas/StorageKind'
+      required:
+      - namespace
+      - name
+      - storage_kind
+      type: object
+    User:
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+      required:
+      - email
+      - name
+      type: object
+    DataTypeView:
+      example:
+        data_size: 524288000
+        data_type: image
+        file_count: 500
+      properties:
+        data_size:
+          format: int64
+          minimum: 0
+          type: integer
+        data_type:
+          $ref: '#/components/schemas/EntryDataType'
+        file_count:
+          minimum: 0
+          type: integer
+      required:
+      - data_type
+      - data_size
+      - file_count
+      type: object
+    ParsedResourceView:
+      description: External (view) model that is returned to the client with fewer fields.
+      properties:
+        branch:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Branch'
+        commit:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Commit'
+        path:
+          type: string
+        resource:
+          type: string
+        version:
+          type: string
+        workspace:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/WorkspaceView'
+      required:
+      - path
+      - version
+      - resource
+      type: object
+    NamespaceView:
+      properties:
+        namespace:
+          type: string
+      required:
+      - namespace
+      type: object
     RepositoryDataTypesView:
       allOf:
       - $ref: '#/components/schemas/RepositoryView'
@@ -322,112 +402,6 @@ components:
         namespace: bessie
         size: 1073741824
         storage_kind: s3
-    DataTypeView:
-      example:
-        data_size: 524288000
-        data_type: image
-        file_count: 500
-      properties:
-        data_size:
-          format: int64
-          minimum: 0
-          type: integer
-        data_type:
-          $ref: '#/components/schemas/EntryDataType'
-        file_count:
-          minimum: 0
-          type: integer
-      required:
-      - data_type
-      - data_size
-      - file_count
-      type: object
-    WorkspaceView:
-      description: 'Used to send workspace state across the wire. The `Workspace`''s other fields (like
-
-        `LocalRepository`) would bloat the response and leak internal state.'
-      properties:
-        commit:
-          $ref: '#/components/schemas/Commit'
-        id:
-          type: string
-        name:
-          type:
-          - string
-          - 'null'
-      required:
-      - id
-      - commit
-      type: object
-    FileContents:
-      oneOf:
-      - properties:
-          Text:
-            type: string
-        required:
-        - Text
-        type: object
-      - properties:
-          Binary:
-            items:
-              format: int32
-              minimum: 0
-              type: integer
-            type: array
-        required:
-        - Binary
-        type: object
-    RepositoryCreationView:
-      example:
-        latest_commit:
-          author: ox
-          email: ox@example.com
-          id: a1b2c3d4e5f67890abcdef1234567890
-          message: Initial dataset import.
-          parent_ids:
-          - f1e2d3c4b5a67890fedcba9876543210
-          timestamp: '2025-01-01T10:00:00Z'
-        name: ImageNet-1k
-        namespace: ox
-        storage_kind: s3
-      properties:
-        latest_commit:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/Commit'
-        min_version:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-        namespace:
-          type: string
-        storage_kind:
-          $ref: '#/components/schemas/StorageKind'
-      required:
-      - namespace
-      - name
-      - storage_kind
-      type: object
-    NamespaceView:
-      properties:
-        namespace:
-          type: string
-      required:
-      - namespace
-      type: object
-    DataTypeCount:
-      properties:
-        count:
-          minimum: 0
-          type: integer
-        data_type:
-          type: string
-      required:
-      - count
-      - data_type
-      type: object
     RepositoryResponse:
       example:
         repository:
@@ -448,19 +422,6 @@ components:
       - status_message
       - repository
       type: object
-    FileNew:
-      properties:
-        contents:
-          $ref: '#/components/schemas/FileContents'
-        path:
-          type: string
-        user:
-          $ref: '#/components/schemas/User'
-      required:
-      - path
-      - contents
-      - user
-      type: object
     RepositoryListView:
       example:
         name: my-farm-data
@@ -478,55 +439,111 @@ components:
       - namespace
       - name
       type: object
-    RepoNew:
-      description: 'Only used between client and server for creating a new remote repository.
-
-        '
+    Commit:
+      example:
+        author: ox
+        email: ox@example.com
+        id: a1b2c3d4e5f67890abcdef1234567890
+        message: Refactor data loading pipeline.
+        parent_ids:
+        - f1e2d3c4b5a67890fedcba9876543210
+        timestamp: '2025-01-01T10:00:00Z'
       properties:
-        description:
-          type:
-          - string
-          - 'null'
-        files:
+        author:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        message:
+          type: string
+        parent_ids:
           items:
-            $ref: '#/components/schemas/FileNew'
-          type:
-          - array
-          - 'null'
-        host:
+            type: string
+          type: array
+        timestamp:
+          format: date-time
+          type: string
+      required:
+      - id
+      - parent_ids
+      - message
+      - author
+      - email
+      - timestamp
+      type: object
+    EntryDataType:
+      enum:
+      - dir
+      - text
+      - image
+      - video
+      - audio
+      - tabular
+      - binary
+      type: string
+    StorageKind:
+      description: Storage backend kind. Serializes as `"local"` / `"s3"` on the wire and on disk.
+      enum:
+      - local
+      - s3
+      type: string
+    RepositoryStatsResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          repository:
+            $ref: '#/components/schemas/RepositoryStatsView'
+        required:
+        - repository
+        type: object
+      example:
+        repository:
+          data_size: 1074288000
+          data_types:
+          - data_size: 524288000
+            data_type: image
+            file_count: 500
+          - data_size: 550000000
+            data_type: tabular
+            file_count: 5
+        status: success
+        status_message: resource_found
+    DataTypeCount:
+      properties:
+        count:
+          minimum: 0
+          type: integer
+        data_type:
+          type: string
+      required:
+      - count
+      - data_type
+      type: object
+    RepositoryView:
+      example:
+        is_empty: false
+        name: ImageNet-1k
+        namespace: ox
+        storage_kind: s3
+      properties:
+        is_empty:
+          type: boolean
+        min_version:
           type:
           - string
-          - 'null'
-        is_public:
-          type:
-          - boolean
           - 'null'
         name:
-          description: 'The name of the repository. When cloned locally, this is the name of the directory.
-
-            This name uniquely identifies it in the namespace.'
           type: string
         namespace:
-          description: 'The namespace that the repository lives in: dictates application-level repository ownership.
-
-            A namespace can be e.g. a user, a team, or an entire organization. Namespaces must be unique.'
           type: string
-        root_commit:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/Commit'
-        scheme:
-          type:
-          - string
-          - 'null'
         storage_kind:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/StorageKind'
-            description: Which storage backend the server should use for this repo (e.g. "local", "s3").
+          $ref: '#/components/schemas/StorageKind'
       required:
       - namespace
       - name
+      - is_empty
+      - storage_kind
       type: object
     ListRepositoryResponse:
       allOf:
@@ -593,100 +610,6 @@ components:
       - status_message
       - repository
       type: object
-    Branch:
-      properties:
-        commit_id:
-          type: string
-        name:
-          type: string
-      required:
-      - name
-      - commit_id
-      type: object
-    RepositoryView:
-      example:
-        is_empty: false
-        name: ImageNet-1k
-        namespace: ox
-        storage_kind: s3
-      properties:
-        is_empty:
-          type: boolean
-        min_version:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-        namespace:
-          type: string
-        storage_kind:
-          $ref: '#/components/schemas/StorageKind'
-      required:
-      - namespace
-      - name
-      - is_empty
-      - storage_kind
-      type: object
-    EntryDataType:
-      enum:
-      - dir
-      - text
-      - image
-      - video
-      - audio
-      - tabular
-      - binary
-      type: string
-    User:
-      properties:
-        email:
-          type: string
-        name:
-          type: string
-      required:
-      - email
-      - name
-      type: object
-    StorageKind:
-      description: Storage backend kind. Serializes as `"local"` / `"s3"` on the wire and on disk.
-      enum:
-      - local
-      - s3
-      type: string
-    Commit:
-      example:
-        author: ox
-        email: ox@example.com
-        id: a1b2c3d4e5f67890abcdef1234567890
-        message: Refactor data loading pipeline.
-        parent_ids:
-        - f1e2d3c4b5a67890fedcba9876543210
-        timestamp: '2025-01-01T10:00:00Z'
-      properties:
-        author:
-          type: string
-        email:
-          type: string
-        id:
-          type: string
-        message:
-          type: string
-        parent_ids:
-          items:
-            type: string
-          type: array
-        timestamp:
-          format: date-time
-          type: string
-      required:
-      - id
-      - parent_ids
-      - message
-      - author
-      - email
-      - timestamp
-      type: object
     RepositoryDataTypesResponse:
       example:
         repository:
@@ -713,32 +636,6 @@ components:
       - status_message
       - repository
       type: object
-    ParsedResourceView:
-      description: External (view) model that is returned to the client with fewer fields.
-      properties:
-        branch:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/Branch'
-        commit:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/Commit'
-        path:
-          type: string
-        resource:
-          type: string
-        version:
-          type: string
-        workspace:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/WorkspaceView'
-      required:
-      - path
-      - version
-      - resource
-      type: object
     RepositoryStatsView:
       example:
         data_size: 1074288000
@@ -762,7 +659,116 @@ components:
       - data_size
       - data_types
       type: object
+    FileContents:
+      oneOf:
+      - properties:
+          Text:
+            type: string
+        required:
+        - Text
+        type: object
+      - properties:
+          Binary:
+            items:
+              format: int32
+              minimum: 0
+              type: integer
+            type: array
+        required:
+        - Binary
+        type: object
+    WorkspaceView:
+      description: 'Used to send workspace state across the wire. The `Workspace`''s other fields (like
+
+        `LocalRepository`) would bloat the response and leak internal state.'
+      properties:
+        commit:
+          $ref: '#/components/schemas/Commit'
+        id:
+          type: string
+        name:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - commit
+      type: object
+    FileNew:
+      properties:
+        contents:
+          $ref: '#/components/schemas/FileContents'
+        path:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+      - path
+      - contents
+      - user
+      type: object
+    RepoNew:
+      description: 'Only used between client and server for creating a new remote repository.
+
+        '
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        files:
+          items:
+            $ref: '#/components/schemas/FileNew'
+          type:
+          - array
+          - 'null'
+        host:
+          type:
+          - string
+          - 'null'
+        is_public:
+          type:
+          - boolean
+          - 'null'
+        name:
+          description: 'The name of the repository. When cloned locally, this is the name of the directory.
+
+            This name uniquely identifies it in the namespace.'
+          type: string
+        namespace:
+          description: 'The namespace that the repository lives in: dictates application-level repository ownership.
+
+            A namespace can be e.g. a user, a team, or an entire organization. Namespaces must be unique.'
+          type: string
+        root_commit:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Commit'
+        scheme:
+          type:
+          - string
+          - 'null'
+        storage_kind:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/StorageKind'
+            description: Which storage backend the server should use for this repo (e.g. "local", "s3").
+      required:
+      - namespace
+      - name
+      type: object
+    Branch:
+      properties:
+        commit_id:
+          type: string
+        name:
+          type: string
+      required:
+      - name
+      - commit_id
+      type: object
   securitySchemes:
-    authorization:
+    api_key:
+      bearerFormat: JWT
       scheme: bearer
       type: http

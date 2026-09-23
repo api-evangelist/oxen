@@ -1,13 +1,13 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: oxen Ai fine_tunes API
+  title: oxen Fine Tunes API
   version: 0.243.1
 servers:
 - url: https://hub.oxen.ai
   variables: {}
 security: []
 tags:
-- name: fine_tunes
+- name: 'Fine Tunes:'
 paths:
   /api/orgs/{name}/fine_tunes:
     get:
@@ -80,7 +80,7 @@ paths:
       - authorization: []
       summary: List fine-tunes for an organization
       tags:
-      - fine_tunes
+      - 'Fine Tunes:'
   /api/repos/{namespace}/{repo_name}/fine_tunes:
     get:
       callbacks: {}
@@ -140,7 +140,7 @@ paths:
       - authorization: []
       summary: List fine-tunes in a repository
       tags:
-      - fine_tunes
+      - 'Fine Tunes:'
     post:
       callbacks: {}
       description: Start a new fine-tune for a given repository.
@@ -170,7 +170,7 @@ paths:
       - authorization: []
       summary: Create a fine-tune job
       tags:
-      - fine_tunes
+      - 'Fine Tunes:'
   /api/repos/{namespace}/{repo_name}/fine_tunes/{id}:
     delete:
       callbacks: {}
@@ -201,7 +201,7 @@ paths:
       - authorization: []
       summary: Delete a fine-tune job
       tags:
-      - fine_tunes
+      - 'Fine Tunes:'
     get:
       callbacks: {}
       description: Fetch a single fine-tune job by ID within a repository.
@@ -231,7 +231,7 @@ paths:
       - authorization: []
       summary: Get a fine-tune job
       tags:
-      - fine_tunes
+      - 'Fine Tunes:'
     patch:
       callbacks: {}
       description: Partially update a fine-tune job's attributes.
@@ -270,7 +270,7 @@ paths:
       - authorization: []
       summary: Update a fine-tune job
       tags:
-      - fine_tunes
+      - 'Fine Tunes:'
   /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/actions/run:
     post:
       callbacks: {}
@@ -301,7 +301,7 @@ paths:
       - authorization: []
       summary: Run a fine-tune job
       tags:
-      - fine_tunes
+      - 'Fine Tunes:'
   /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/actions/stop:
     post:
       callbacks: {}
@@ -332,7 +332,7 @@ paths:
       - authorization: []
       summary: Stop a running fine-tune job
       tags:
-      - fine_tunes
+      - 'Fine Tunes:'
   /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/checkpoints:
     get:
       callbacks: {}
@@ -363,7 +363,7 @@ paths:
       - authorization: []
       summary: List checkpoints for a fine-tune job
       tags:
-      - fine_tunes
+      - 'Fine Tunes:'
   /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/checkpoints/{step}/deploy:
     post:
       callbacks: {}
@@ -414,7 +414,7 @@ paths:
       - authorization: []
       summary: Deploy a checkpoint from a fine-tune job
       tags:
-      - fine_tunes
+      - 'Fine Tunes:'
   /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/logs:
     get:
       callbacks: {}
@@ -446,7 +446,7 @@ paths:
       - authorization: []
       summary: Get logs for a fine-tune job
       tags:
-      - fine_tunes
+      - 'Fine Tunes:'
   /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/tokenize:
     post:
       callbacks: {}
@@ -478,7 +478,7 @@ paths:
       - authorization: []
       summary: Tokenize data for a fine-tune job
       tags:
-      - fine_tunes
+      - 'Fine Tunes:'
   /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/train_status:
     get:
       callbacks: {}
@@ -510,7 +510,7 @@ paths:
       - authorization: []
       summary: Get training status for a fine-tune job
       tags:
-      - fine_tunes
+      - 'Fine Tunes:'
   /api/repos/{namespace}/{repo_name}/fine_tunes/{id}/train_status/{new_status}:
     put:
       callbacks: {}
@@ -555,7 +555,7 @@ paths:
       - authorization: []
       summary: Update training status for a fine-tune job
       tags:
-      - fine_tunes
+      - 'Fine Tunes:'
   /api/user/fine_tunes:
     get:
       callbacks: {}
@@ -615,7 +615,7 @@ paths:
       - authorization: []
       summary: List all fine-tunes accessible to the current user
       tags:
-      - fine_tunes
+      - 'Fine Tunes:'
   /api/users/{username}/fine_tunes:
     get:
       callbacks: {}
@@ -687,51 +687,9 @@ paths:
       - authorization: []
       summary: List fine-tunes for a user
       tags:
-      - fine_tunes
+      - 'Fine Tunes:'
 components:
   schemas:
-    FineTuneStopResponse:
-      description: Standard wrapper for fine-tune /stop responses.
-      properties:
-        fine_tune:
-          anyOf:
-          - $ref: '#/components/schemas/FineTuneRun'
-          description: Fine-tune job resource as returned by /stop
-        status:
-          description: High-level status string (for example, 'success').
-          type: string
-        status_message:
-          description: Human-readable status message (for example, 'resource_found').
-          type: string
-      title: FineTuneStopResponse
-      type: object
-    FineTuneRunResponse:
-      description: Standard wrapper for fine-tune /run responses.
-      properties:
-        fine_tune:
-          anyOf:
-          - $ref: '#/components/schemas/FineTuneRun'
-          description: Fine-tune job resource as returned by /run
-        status:
-          description: High-level status string (for example, 'success').
-          type: string
-        status_message:
-          description: Human-readable status message (for example, 'resource_found').
-          type: string
-      title: FineTuneRunResponse
-      type: object
-    CreateCheckpointDeploymentRequest:
-      description: Request payload to deploy a specific checkpoint from a fine-tune job.
-      properties:
-        deployment_type:
-          default: normal
-          description: 'Deployment type: ''fast'' for faster inference instances, ''normal'' for standard instances.'
-          enum:
-          - fast
-          - normal
-          type: string
-      title: CreateCheckpointDeploymentRequest
-      type: object
     CheckpointListResponse:
       description: Standard wrapper for the list-checkpoints response.
       properties:
@@ -757,110 +715,20 @@ components:
           type: integer
       title: CheckpointListResponse
       type: object
-    Checkpoint:
-      description: 'A single training checkpoint produced by a fine-tune run. Each checkpoint
-
-        corresponds to a step directory in the model''s Oxen branch and may carry
-
-        metrics, inference samples, and (if previously deployed) deployment status.
-
-        '
+    FineTuneStopResponse:
+      description: Standard wrapper for fine-tune /stop responses.
       properties:
-        created_at:
-          description: Timestamp of the commit that produced this checkpoint.
-          format: date_time
-          nullable: true
-          type: string
-        deployment_status:
-          description: Current Baseten deployment status for this checkpoint, if it has been deployed.
-          nullable: true
-          type: string
-        inference_samples:
-          description: Sample generations produced at this checkpoint, if any.
-          items:
-            additionalProperties: true
-            type: object
-          type: array
-        metrics:
-          additionalProperties: true
-          description: Training metrics recorded at this step (when training logs are available).
-          properties:
-            epoch:
-              format: float
-              nullable: true
-              type: number
-            grad_norm:
-              format: float
-              nullable: true
-              type: number
-            learning_rate:
-              format: float
-              nullable: true
-              type: number
-            loss:
-              format: float
-              nullable: true
-              type: number
-            mean_token_accuracy:
-              format: float
-              nullable: true
-              type: number
-          type: object
-        model_id:
-          description: ID of the deployed Model row backing this checkpoint, if it has been deployed.
-          nullable: true
-          type: string
-        model_name:
-          description: Canonical model name used when this checkpoint is deployed (e.g. '<fine_tune_name>-step-<step>').
-          type: string
-        path:
-          description: Path within the model branch where the checkpoint is stored.
-          type: string
-        size_bytes:
-          description: Total size in bytes of the checkpoint directory.
-          nullable: true
-          type: integer
-        step:
-          description: Training step number this checkpoint was saved at.
-          type: integer
-      title: Checkpoint
-      type: object
-    FineTuneResponse:
-      description: Standard wrapper for fine-tune responses.
-      properties:
-        fine_tune:
-          anyOf:
-          - $ref: '#/components/schemas/FineTune'
-          description: Fine-tune job resource
-        status:
-          description: High-level status string (for example, 'success').
-          type: string
-        status_message:
-          description: Human-readable status message (for example, 'resource_found').
-          type: string
-      title: FineTuneResponse
-      type: object
-    CheckpointDeploymentResponse:
-      description: Standard wrapper for checkpoint deployment responses.
-      properties:
-        deployment_id:
-          description: ID of the created Baseten deployment.
-          type: string
         fine_tune:
           anyOf:
           - $ref: '#/components/schemas/FineTuneRun'
-          description: Fine-tune job the deployed checkpoint belongs to.
-        model:
-          additionalProperties: true
-          description: Model record created for this checkpoint deployment.
-          type: object
+          description: Fine-tune job resource as returned by /stop
         status:
           description: High-level status string (for example, 'success').
           type: string
         status_message:
           description: Human-readable status message (for example, 'resource_found').
           type: string
-      title: CheckpointDeploymentResponse
+      title: FineTuneStopResponse
       type: object
     FineTuneListResponse:
       description: Standard wrapper for fine-tune list responses.
@@ -878,77 +746,6 @@ components:
           description: Human-readable status message (for example, 'resource_found').
           type: string
       title: FineTuneListResponse
-      type: object
-    CreateFineTuneRequest:
-      description: 'Request payload to create a fine-tune job for a repository.
-
-        '
-      properties:
-        base_model:
-          description: Canonical name of the base model to fine-tune
-          type: string
-        is_public:
-          default: false
-          description: Whether the resulting fine-tuned model should be public. Defaults to false.
-          type: boolean
-        oxen_model_path:
-          description: Optional override for where the resulting model weights live in Oxen. Defaults to the fine-tune resource.
-          nullable: true
-          type: string
-        resource:
-          description: Repository path to the training data file or directory
-          type: string
-        script_type:
-          description: Name of the fine-tune script to run
-          type: string
-        training_params:
-          additionalProperties: true
-          description: Training configuration parameters
-          properties:
-            batch_size:
-              description: Per-device batch size used during training.
-              type: integer
-            caption_column:
-              description: Name of the column containing text captions or prompts.
-              type: string
-            gradient_accumulation:
-              description: Number of steps to accumulate gradients before an optimizer step.
-              type: integer
-            image_column:
-              description: Name of the column containing image file paths.
-              type: string
-            learning_rate:
-              description: Base learning rate for the optimizer.
-              format: float
-              type: number
-            lora_alpha:
-              description: LoRA alpha scaling factor for LoRA fine-tuning approaches.
-              type: integer
-            lora_rank:
-              description: LoRA rank used for low-rank adaptation layers.
-              type: integer
-            sample_every:
-              description: Interval (in steps) at which to generate samples.
-              type: integer
-            samples:
-              description: Number of sample generations to produce at each sampling interval.
-              type: integer
-            steps:
-              description: Total number of training steps to run.
-              type: integer
-            timestep_type:
-              description: Strategy for sampling timesteps during training (for example, 'weighted').
-              type: string
-            use_lora:
-              default: true
-              description: Whether to use LoRA fine-tuning (true) or full fine-tuning (false). If omitted, defaults to true.
-              type: boolean
-          type: object
-      required:
-      - resource
-      - base_model
-      - script_type
-      title: CreateFineTuneRequest
       type: object
     FineTune:
       description: 'Fine-tune job resource.
@@ -994,12 +791,14 @@ components:
               type: string
             image:
               description: Avatar image URL
-              nullable: true
-              type: string
+              type:
+              - string
+              - 'null'
             name:
               description: Display name
-              nullable: true
-              type: string
+              type:
+              - string
+              - 'null'
             username:
               description: Username
               type: string
@@ -1010,20 +809,24 @@ components:
         deployed_model:
           additionalProperties: true
           description: Deployment information for the resulting model, if deployed
-          nullable: true
-          type: object
+          type:
+          - object
+          - 'null'
         description:
           description: Optional description of the fine-tune
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         display_name:
           description: Optional display name for the fine-tune
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         error:
           description: Error message if the fine-tune failed
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         fine_tune_script:
           description: Fine-tune script configuration used for this run
           properties:
@@ -1084,8 +887,9 @@ components:
         finished_at:
           description: Time when training finished
           format: date_time
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         gpu_count:
           description: Number of GPUs requested for the job
           type: integer
@@ -1102,20 +906,23 @@ components:
         last_credit_check:
           description: Last time credits were checked for this job
           format: date_time
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         name:
           description: Fine-tune name
           type: string
         output_resource:
           additionalProperties: true
           description: Optional output resource produced by this fine-tune
-          nullable: true
-          type: object
+          type:
+          - object
+          - 'null'
         queue_position:
           description: Queue position if the job is queued
-          nullable: true
-          type: integer
+          type:
+          - integer
+          - 'null'
         rate_per_second:
           description: Billing rate per second for this fine-tune
           type: string
@@ -1139,8 +946,9 @@ components:
         started_at:
           description: Time when training actually started
           format: date_time
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         status:
           description: Current status of the fine-tune
           type: string
@@ -1208,6 +1016,219 @@ components:
           description: Whether LoRA fine-tuning is enabled
           type: boolean
       title: FineTuneRun
+      type: object
+    CheckpointDeploymentResponse:
+      description: Standard wrapper for checkpoint deployment responses.
+      properties:
+        deployment_id:
+          description: ID of the created Baseten deployment.
+          type: string
+        fine_tune:
+          anyOf:
+          - $ref: '#/components/schemas/FineTuneRun'
+          description: Fine-tune job the deployed checkpoint belongs to.
+        model:
+          additionalProperties: true
+          description: Model record created for this checkpoint deployment.
+          type: object
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+      title: CheckpointDeploymentResponse
+      type: object
+    CreateFineTuneRequest:
+      description: 'Request payload to create a fine-tune job for a repository.
+
+        '
+      properties:
+        base_model:
+          description: Canonical name of the base model to fine-tune
+          type: string
+        is_public:
+          default: false
+          description: Whether the resulting fine-tuned model should be public. Defaults to false.
+          type: boolean
+        oxen_model_path:
+          description: Optional override for where the resulting model weights live in Oxen. Defaults to the fine-tune resource.
+          type:
+          - string
+          - 'null'
+        resource:
+          description: Repository path to the training data file or directory
+          type: string
+        script_type:
+          description: Name of the fine-tune script to run
+          type: string
+        training_params:
+          additionalProperties: true
+          description: Training configuration parameters
+          properties:
+            batch_size:
+              description: Per-device batch size used during training.
+              type: integer
+            caption_column:
+              description: Name of the column containing text captions or prompts.
+              type: string
+            gradient_accumulation:
+              description: Number of steps to accumulate gradients before an optimizer step.
+              type: integer
+            image_column:
+              description: Name of the column containing image file paths.
+              type: string
+            learning_rate:
+              description: Base learning rate for the optimizer.
+              format: float
+              type: number
+            lora_alpha:
+              description: LoRA alpha scaling factor for LoRA fine-tuning approaches.
+              type: integer
+            lora_rank:
+              description: LoRA rank used for low-rank adaptation layers.
+              type: integer
+            sample_every:
+              description: Interval (in steps) at which to generate samples.
+              type: integer
+            samples:
+              description: Number of sample generations to produce at each sampling interval.
+              type: integer
+            steps:
+              description: Total number of training steps to run.
+              type: integer
+            timestep_type:
+              description: Strategy for sampling timesteps during training (for example, 'weighted').
+              type: string
+            use_lora:
+              default: true
+              description: Whether to use LoRA fine-tuning (true) or full fine-tuning (false). If omitted, defaults to true.
+              type: boolean
+          type: object
+      required:
+      - resource
+      - base_model
+      - script_type
+      title: CreateFineTuneRequest
+      type: object
+    FineTuneResponse:
+      description: Standard wrapper for fine-tune responses.
+      properties:
+        fine_tune:
+          anyOf:
+          - $ref: '#/components/schemas/FineTune'
+          description: Fine-tune job resource
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+      title: FineTuneResponse
+      type: object
+    Checkpoint:
+      description: 'A single training checkpoint produced by a fine-tune run. Each checkpoint
+
+        corresponds to a step directory in the model''s Oxen branch and may carry
+
+        metrics, inference samples, and (if previously deployed) deployment status.
+
+        '
+      properties:
+        created_at:
+          description: Timestamp of the commit that produced this checkpoint.
+          format: date_time
+          type:
+          - string
+          - 'null'
+        deployment_status:
+          description: Current Baseten deployment status for this checkpoint, if it has been deployed.
+          type:
+          - string
+          - 'null'
+        inference_samples:
+          description: Sample generations produced at this checkpoint, if any.
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        metrics:
+          additionalProperties: true
+          description: Training metrics recorded at this step (when training logs are available).
+          properties:
+            epoch:
+              format: float
+              type:
+              - number
+              - 'null'
+            grad_norm:
+              format: float
+              type:
+              - number
+              - 'null'
+            learning_rate:
+              format: float
+              type:
+              - number
+              - 'null'
+            loss:
+              format: float
+              type:
+              - number
+              - 'null'
+            mean_token_accuracy:
+              format: float
+              type:
+              - number
+              - 'null'
+          type: object
+        model_id:
+          description: ID of the deployed Model row backing this checkpoint, if it has been deployed.
+          type:
+          - string
+          - 'null'
+        model_name:
+          description: Canonical model name used when this checkpoint is deployed (e.g. '<fine_tune_name>-step-<step>').
+          type: string
+        path:
+          description: Path within the model branch where the checkpoint is stored.
+          type: string
+        size_bytes:
+          description: Total size in bytes of the checkpoint directory.
+          type:
+          - integer
+          - 'null'
+        step:
+          description: Training step number this checkpoint was saved at.
+          type: integer
+      title: Checkpoint
+      type: object
+    FineTuneRunResponse:
+      description: Standard wrapper for fine-tune /run responses.
+      properties:
+        fine_tune:
+          anyOf:
+          - $ref: '#/components/schemas/FineTuneRun'
+          description: Fine-tune job resource as returned by /run
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+      title: FineTuneRunResponse
+      type: object
+    CreateCheckpointDeploymentRequest:
+      description: Request payload to deploy a specific checkpoint from a fine-tune job.
+      properties:
+        deployment_type:
+          default: normal
+          description: 'Deployment type: ''fast'' for faster inference instances, ''normal'' for standard instances.'
+          enum:
+          - fast
+          - normal
+          type: string
+      title: CreateCheckpointDeploymentRequest
       type: object
   securitySchemes:
     authorization:

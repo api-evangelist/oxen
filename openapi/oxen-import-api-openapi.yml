@@ -1,11 +1,17 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: oxen Ai Import API
-  version: 0.243.1
+  description: Oxen is a fast, unstructured data version control, to help version large machine learning datasets written in Rust.
+  license:
+    name: ''
+  title: oxen-server Import API
+  version: 0.52.0
 servers:
-- url: https://hub.oxen.ai
-  variables: {}
-security: []
+- description: Production API
+  url: https://hub.oxen.ai
+- description: Local Development
+  url: http://localhost:3000
+security:
+- api_key: []
 tags:
 - name: Import
 paths:
@@ -105,89 +111,6 @@ paths:
       - Import
 components:
   schemas:
-    ZipUploadBody:
-      description: Body for uploading a zip archive via multipart/form-data
-      example:
-        commit_message: Importing full archive of grazing data
-        email: ox@oxen.ai
-        file: <binary zip data>
-        name: ox
-      properties:
-        commit_message:
-          example: Importing dataset archive
-          type:
-          - string
-          - 'null'
-        email:
-          example: ox@oxen.ai
-          type:
-          - string
-          - 'null'
-        file:
-          format: binary
-          type: string
-        name:
-          example: ox
-          type:
-          - string
-          - 'null'
-      required:
-      - file
-      title: ZipUploadBody
-      type: object
-    Commit:
-      example:
-        author: ox
-        email: ox@example.com
-        id: a1b2c3d4e5f67890abcdef1234567890
-        message: Refactor data loading pipeline.
-        parent_ids:
-        - f1e2d3c4b5a67890fedcba9876543210
-        timestamp: '2025-01-01T10:00:00Z'
-      properties:
-        author:
-          type: string
-        email:
-          type: string
-        id:
-          type: string
-        message:
-          type: string
-        parent_ids:
-          items:
-            type: string
-          type: array
-        timestamp:
-          format: date-time
-          type: string
-      required:
-      - id
-      - parent_ids
-      - message
-      - author
-      - email
-      - timestamp
-      type: object
-    CommitResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          commit:
-            $ref: '#/components/schemas/Commit'
-        required:
-        - commit
-        type: object
-      example:
-        commit:
-          author: ox
-          email: ox@example.com
-          id: a1b2c3d4e5f67890abcdef1234567890
-          message: Refactor data loading pipeline.
-          parent_ids:
-          - f1e2d3c4b5a67890fedcba9876543210
-          timestamp: '2025-01-01T10:00:00Z'
-        status: success
-        status_message: resource_found
     ImportFileBody:
       description: Body for importing a file from a URL
       example:
@@ -244,7 +167,91 @@ components:
       - status
       - status_message
       type: object
+    Commit:
+      example:
+        author: ox
+        email: ox@example.com
+        id: a1b2c3d4e5f67890abcdef1234567890
+        message: Refactor data loading pipeline.
+        parent_ids:
+        - f1e2d3c4b5a67890fedcba9876543210
+        timestamp: '2025-01-01T10:00:00Z'
+      properties:
+        author:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        message:
+          type: string
+        parent_ids:
+          items:
+            type: string
+          type: array
+        timestamp:
+          format: date-time
+          type: string
+      required:
+      - id
+      - parent_ids
+      - message
+      - author
+      - email
+      - timestamp
+      type: object
+    ZipUploadBody:
+      description: Body for uploading a zip archive via multipart/form-data
+      example:
+        commit_message: Importing full archive of grazing data
+        email: ox@oxen.ai
+        file: <binary zip data>
+        name: ox
+      properties:
+        commit_message:
+          example: Importing dataset archive
+          type:
+          - string
+          - 'null'
+        email:
+          example: ox@oxen.ai
+          type:
+          - string
+          - 'null'
+        file:
+          format: binary
+          type: string
+        name:
+          example: ox
+          type:
+          - string
+          - 'null'
+      required:
+      - file
+      title: ZipUploadBody
+      type: object
+    CommitResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          commit:
+            $ref: '#/components/schemas/Commit'
+        required:
+        - commit
+        type: object
+      example:
+        commit:
+          author: ox
+          email: ox@example.com
+          id: a1b2c3d4e5f67890abcdef1234567890
+          message: Refactor data loading pipeline.
+          parent_ids:
+          - f1e2d3c4b5a67890fedcba9876543210
+          timestamp: '2025-01-01T10:00:00Z'
+        status: success
+        status_message: resource_found
   securitySchemes:
-    authorization:
+    api_key:
+      bearerFormat: JWT
       scheme: bearer
       type: http

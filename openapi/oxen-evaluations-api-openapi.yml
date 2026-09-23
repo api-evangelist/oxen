@@ -1,13 +1,13 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: oxen Ai evaluations API
+  title: oxen Evaluations API
   version: 0.243.1
 servers:
 - url: https://hub.oxen.ai
   variables: {}
 security: []
 tags:
-- name: evaluations
+- name: Evaluations
 paths:
   /api/repos/{namespace}/{repo_name}/evaluations/*resource_path:
     post:
@@ -39,7 +39,7 @@ paths:
       - authorization: []
       summary: Create an evaluation
       tags:
-      - evaluations
+      - Evaluations
   /api/repos/{namespace}/{repo_name}/evaluations/{evaluation_id}:
     get:
       callbacks: {}
@@ -70,9 +70,24 @@ paths:
       - authorization: []
       summary: Get evaluation status
       tags:
-      - evaluations
+      - Evaluations
 components:
   schemas:
+    EvaluationResponse:
+      description: Standard response wrapper for a single evaluation.
+      properties:
+        evaluation:
+          anyOf:
+          - $ref: '#/components/schemas/Evaluation'
+          description: Evaluation resource
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+      title: EvaluationResponse
+      type: object
     CreateEvaluationRequest:
       description: 'Request payload to create an evaluation.
 
@@ -93,8 +108,9 @@ components:
           type: integer
         commit_message:
           description: Commit message used when auto_commit is true
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         input_type:
           description: Type of input data
           enum:
@@ -150,38 +166,44 @@ components:
       properties:
         cancelled_at:
           format: date_time
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         completed_at:
           format: date_time
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         completion_tokens_used:
           description: Completion tokens consumed
           type: integer
         created_by:
           description: User who created the evaluation
-          nullable: true
           properties:
             id:
               type: string
             image:
-              nullable: true
-              type: string
+              type:
+              - string
+              - 'null'
             name:
-              nullable: true
-              type: string
+              type:
+              - string
+              - 'null'
             username:
               type: string
-          type: object
+          type:
+          - object
+          - 'null'
         credits_used:
           description: Credits consumed
           format: float
           type: number
         error_message:
           description: Error details if status is errored
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         id:
           description: Evaluation ID
           format: uuid
@@ -200,12 +222,14 @@ components:
         model:
           additionalProperties: true
           description: Model used for this evaluation
-          nullable: true
-          type: object
+          type:
+          - object
+          - 'null'
         name:
           description: Evaluation name
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         output_type:
           enum:
           - text
@@ -233,7 +257,6 @@ components:
           type: string
         resource:
           description: Source data resource
-          nullable: true
           properties:
             path:
               description: Path inside the repository
@@ -241,13 +264,16 @@ components:
             version:
               description: Commit ID or version
               type: string
-          type: object
+          type:
+          - object
+          - 'null'
         sample_count:
           type: integer
         started_at:
           format: date_time
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         status:
           description: Current status
           enum:
@@ -259,33 +285,21 @@ components:
           - cancelled
           type: string
         target_branch:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         target_column:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         target_path:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         tokens_used:
           description: Total tokens (prompt + completion)
           type: integer
       title: Evaluation
-      type: object
-    EvaluationResponse:
-      description: Standard response wrapper for a single evaluation.
-      properties:
-        evaluation:
-          anyOf:
-          - $ref: '#/components/schemas/Evaluation'
-          description: Evaluation resource
-        status:
-          description: High-level status string (for example, 'success').
-          type: string
-        status_message:
-          description: Human-readable status message (for example, 'resource_found').
-          type: string
-      title: EvaluationResponse
       type: object
   securitySchemes:
     authorization:
