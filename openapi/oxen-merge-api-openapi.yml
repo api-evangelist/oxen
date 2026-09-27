@@ -118,6 +118,13 @@ paths:
       - Merge
 components:
   schemas:
+    MergeConflictFile:
+      properties:
+        path:
+          type: string
+      required:
+      - path
+      type: object
     MergeResult:
       properties:
         base:
@@ -131,6 +138,10 @@ components:
       - base
       - merge
       type: object
+    MergeableResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - $ref: '#/components/schemas/Mergeable'
     Commit:
       example:
         author: ox
@@ -178,13 +189,6 @@ components:
       - status
       - status_message
       type: object
-    MergeConflictFile:
-      properties:
-        path:
-          type: string
-      required:
-      - path
-      type: object
     MergeSuccessResponse:
       allOf:
       - $ref: '#/components/schemas/StatusMessage'
@@ -194,10 +198,6 @@ components:
         required:
         - commits
         type: object
-    MergeableResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - $ref: '#/components/schemas/Mergeable'
     Mergeable:
       properties:
         commits:

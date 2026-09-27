@@ -225,6 +225,36 @@ paths:
       - Files
 components:
   schemas:
+    FileMoveBody:
+      description: Body for moving/renaming a file
+      example:
+        email: bessie@oxen.ai
+        message: Renamed file to new location
+        name: bessie
+        new_path: new/path/to/file.txt
+      properties:
+        email:
+          example: bessie@oxen.ai
+          type:
+          - string
+          - 'null'
+        message:
+          example: Moved file to new location
+          type:
+          - string
+          - 'null'
+        name:
+          example: bessie
+          type:
+          - string
+          - 'null'
+        new_path:
+          example: new/path/to/file.txt
+          type: string
+      required:
+      - new_path
+      title: FileMoveBody
+      type: object
     FileUploadBody:
       description: Multipart form for uploading files. Use `file` for a single full-path upload, or `files[]` for uploading one or more files into a directory.
       example:
@@ -265,20 +295,6 @@ components:
       - files
       title: FileUploadBody
       type: object
-    StatusMessage:
-      properties:
-        oxen_version:
-          type:
-          - string
-          - 'null'
-        status:
-          type: string
-        status_message:
-          type: string
-      required:
-      - status
-      - status_message
-      type: object
     Commit:
       example:
         author: ox
@@ -312,6 +328,20 @@ components:
       - email
       - timestamp
       type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
     CommitResponse:
       allOf:
       - $ref: '#/components/schemas/StatusMessage'
@@ -332,36 +362,6 @@ components:
           timestamp: '2025-01-01T10:00:00Z'
         status: success
         status_message: resource_found
-    FileMoveBody:
-      description: Body for moving/renaming a file
-      example:
-        email: bessie@oxen.ai
-        message: Renamed file to new location
-        name: bessie
-        new_path: new/path/to/file.txt
-      properties:
-        email:
-          example: bessie@oxen.ai
-          type:
-          - string
-          - 'null'
-        message:
-          example: Moved file to new location
-          type:
-          - string
-          - 'null'
-        name:
-          example: bessie
-          type:
-          - string
-          - 'null'
-        new_path:
-          example: new/path/to/file.txt
-          type: string
-      required:
-      - new_path
-      title: FileMoveBody
-      type: object
   securitySchemes:
     api_key:
       bearerFormat: JWT

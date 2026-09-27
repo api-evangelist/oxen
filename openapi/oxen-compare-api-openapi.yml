@@ -329,12 +329,76 @@ paths:
       - Compare
 components:
   schemas:
-    TabularDiffSummary:
+    GenericDiff:
+      oneOf:
+      - $ref: '#/components/schemas/DirDiff'
+      - $ref: '#/components/schemas/TabularDiffView'
+      - $ref: '#/components/schemas/TextDiff'
+    DirDiffStatus:
       properties:
-        summary:
-          $ref: '#/components/schemas/TabularDiffSummaryImpl'
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/DiffEntryStatus'
       required:
-      - summary
+      - name
+      - status
+      type: object
+    DFOptView:
+      properties:
+        name:
+          type: string
+        value: {}
+      required:
+      - name
+      - value
+      type: object
+    MetadataTextImpl:
+      properties:
+        num_chars:
+          minimum: 0
+          type: integer
+        num_lines:
+          minimum: 0
+          type: integer
+      required:
+      - num_lines
+      - num_chars
+      type: object
+    MetadataTabularImpl:
+      properties:
+        height:
+          minimum: 0
+          type: integer
+        schema:
+          $ref: '#/components/schemas/Schema'
+        width:
+          minimum: 0
+          type: integer
+      required:
+      - width
+      - height
+      - schema
+      type: object
+    Pagination:
+      properties:
+        page_number:
+          minimum: 0
+          type: integer
+        page_size:
+          minimum: 0
+          type: integer
+        total_entries:
+          minimum: 0
+          type: integer
+        total_pages:
+          minimum: 0
+          type: integer
+      required:
+      - page_size
+      - page_number
+      - total_pages
+      - total_entries
       type: object
     DiffEntryStatus:
       enum:
@@ -342,21 +406,131 @@ components:
       - modified
       - removed
       type: string
-    DFOptsView:
+    MetadataText:
       properties:
-        opts:
+        text:
+          $ref: '#/components/schemas/MetadataTextImpl'
+      required:
+      - text
+      type: object
+    DirDiffTreeSummary:
+      properties:
+        can_display:
+          type: boolean
+        children:
           items:
-            $ref: '#/components/schemas/DFOptView'
+            $ref: '#/components/schemas/DirDiffStatus'
+          type: array
+        name:
+          type: string
+        num_subdirs:
+          minimum: 0
+          type: integer
+        status:
+          $ref: '#/components/schemas/DiffEntryStatus'
+      required:
+      - name
+      - status
+      - num_subdirs
+      - can_display
+      - children
+      type: object
+    TabularDiffWrapper:
+      properties:
+        tabular:
+          $ref: '#/components/schemas/TabularDiffSummaryImpl'
+      required:
+      - tabular
+      type: object
+    DFResourceType:
+      enum:
+      - compare
+      - diff
+      - query
+      type: string
+    CompareEntries:
+      properties:
+        base_commit:
+          $ref: '#/components/schemas/Commit'
+        counts:
+          $ref: '#/components/schemas/AddRemoveModifyCounts'
+        entries:
+          items:
+            $ref: '#/components/schemas/DiffEntry'
+          type: array
+        head_commit:
+          $ref: '#/components/schemas/Commit'
+        self:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/DiffEntry'
+      required:
+      - base_commit
+      - head_commit
+      - counts
+      - entries
+      type: object
+    TabularDiffSummary:
+      properties:
+        summary:
+          $ref: '#/components/schemas/TabularDiffSummaryImpl'
+      required:
+      - summary
+      type: object
+    PreviousField:
+      properties:
+        dtype:
+          type: string
+        metadata: {}
+        name:
+          type: string
+      required:
+      - name
+      - dtype
+      type: object
+    CompareEntriesResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - $ref: '#/components/schemas/Pagination'
+      - properties:
+          compare:
+            $ref: '#/components/schemas/CompareEntries'
+        required:
+        - compare
+        type: object
+    JsonDataFrameViews:
+      properties:
+        source:
+          $ref: '#/components/schemas/DataFrameSchemaSize'
+        view:
+          $ref: '#/components/schemas/JsonDataFrameView'
+      required:
+      - source
+      - view
+      type: object
+    MetadataAudio:
+      properties:
+        audio:
+          $ref: '#/components/schemas/MetadataAudioImpl'
+      required:
+      - audio
+      type: object
+    TextDiff:
+      properties:
+        filename1:
+          type:
+          - string
+          - 'null'
+        filename2:
+          type:
+          - string
+          - 'null'
+        lines:
+          items:
+            $ref: '#/components/schemas/LineDiff'
           type: array
       required:
-      - opts
-      type: object
-    DirDiffSummary:
-      properties:
-        dir:
-          $ref: '#/components/schemas/DirDiffSummaryImpl'
-      required:
-      - dir
+      - lines
       type: object
     ParsedResourceView:
       description: External (view) model that is returned to the client with fewer fields.
@@ -391,60 +565,322 @@ components:
       required:
       - video
       type: object
-    GenericDiffSummary:
-      oneOf:
-      - $ref: '#/components/schemas/DirDiffSummary'
-      - $ref: '#/components/schemas/TabularDiffWrapper'
-    DFOptView:
+    DFOptsView:
       properties:
-        name:
-          type: string
-        value: {}
+        opts:
+          items:
+            $ref: '#/components/schemas/DFOptView'
+          type: array
       required:
-      - name
-      - value
+      - opts
       type: object
-    CompareEntriesResponse:
+    JsonDataFrameView:
       allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - $ref: '#/components/schemas/Pagination'
+      - $ref: '#/components/schemas/DFOptsView'
       - properties:
-          compare:
-            $ref: '#/components/schemas/CompareEntries'
+          data: {}
+          pagination:
+            $ref: '#/components/schemas/Pagination'
+          schema:
+            $ref: '#/components/schemas/Schema'
+          size:
+            $ref: '#/components/schemas/DataFrameSize'
         required:
-        - compare
+        - schema
+        - size
+        - data
+        - pagination
         type: object
-    CompareEntries:
+    DirDiffSummary:
+      properties:
+        dir:
+          $ref: '#/components/schemas/DirDiffSummaryImpl'
+      required:
+      - dir
+      type: object
+    MetadataDir:
+      properties:
+        dir:
+          $ref: '#/components/schemas/MetadataDirImpl'
+      required:
+      - dir
+      type: object
+    ImgColorSpace:
+      enum:
+      - RGB
+      - RGBA
+      - Grayscale
+      - GrayscaleAlpha
+      - Rgb16
+      - Rgba16
+      - Grayscale16
+      - GrayscaleAlpha16
+      - Rgb32F
+      - Rgba32F
+      - Unknown
+      type: string
+    MetadataDirImpl:
+      properties:
+        data_types:
+          items:
+            $ref: '#/components/schemas/DataTypeCount'
+          type: array
+      required:
+      - data_types
+      type: object
+    CompareCommits:
       properties:
         base_commit:
           $ref: '#/components/schemas/Commit'
-        counts:
-          $ref: '#/components/schemas/AddRemoveModifyCounts'
-        entries:
+        commits:
           items:
-            $ref: '#/components/schemas/DiffEntry'
+            $ref: '#/components/schemas/Commit'
           type: array
         head_commit:
           $ref: '#/components/schemas/Commit'
-        self:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/DiffEntry'
       required:
       - base_commit
       - head_commit
-      - counts
-      - entries
+      - commits
       type: object
-    JsonDataFrameViews:
+    DiffEntry:
       properties:
-        source:
-          $ref: '#/components/schemas/DataFrameSchemaSize'
-        view:
-          $ref: '#/components/schemas/JsonDataFrameView'
+        base_entry:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/MetadataEntry'
+        base_resource:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ParsedResourceView'
+        data_type:
+          $ref: '#/components/schemas/EntryDataType'
+        diff:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/GenericDiff'
+        diff_summary:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/GenericDiffSummary'
+        filename:
+          type: string
+        head_entry:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/MetadataEntry'
+        head_resource:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ParsedResourceView'
+        is_dir:
+          type: boolean
+        size:
+          format: int64
+          minimum: 0
+          type: integer
+        status:
+          type: string
       required:
-      - source
-      - view
+      - status
+      - data_type
+      - filename
+      - is_dir
+      - size
+      type: object
+    GenericMetadata:
+      oneOf:
+      - $ref: '#/components/schemas/MetadataDir'
+      - $ref: '#/components/schemas/MetadataText'
+      - $ref: '#/components/schemas/MetadataImage'
+      - $ref: '#/components/schemas/MetadataVideo'
+      - $ref: '#/components/schemas/MetadataAudio'
+      - $ref: '#/components/schemas/MetadataTabular'
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
+    DirDiffSummaryImpl:
+      properties:
+        file_counts:
+          $ref: '#/components/schemas/AddRemoveModifyCounts'
+      required:
+      - file_counts
+      type: object
+    TabularDiffView:
+      properties:
+        tabular:
+          $ref: '#/components/schemas/TabularDiffViewImpl'
+      required:
+      - tabular
+      type: object
+    DirDiff:
+      allOf:
+      - $ref: '#/components/schemas/DirDiffSummary'
+    MetadataAudioImpl:
+      properties:
+        num_channels:
+          minimum: 0
+          type: integer
+        num_seconds:
+          format: double
+          type: number
+        sample_rate:
+          minimum: 0
+          type: integer
+      required:
+      - num_seconds
+      - num_channels
+      - sample_rate
+      type: object
+    CompareEntryResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          compare:
+            $ref: '#/components/schemas/DiffEntry'
+        required:
+        - compare
+        type: object
+    MetadataTabular:
+      properties:
+        tabular:
+          $ref: '#/components/schemas/MetadataTabularImpl'
+      required:
+      - tabular
+      type: object
+    DataFrameSize:
+      properties:
+        height:
+          minimum: 0
+          type: integer
+        width:
+          minimum: 0
+          type: integer
+      required:
+      - height
+      - width
+      type: object
+    LineDiff:
+      properties:
+        modification:
+          $ref: '#/components/schemas/ChangeType'
+        text:
+          type: string
+      required:
+      - modification
+      - text
+      type: object
+    TabularDiffSummaryImpl:
+      properties:
+        num_added_cols:
+          minimum: 0
+          type: integer
+        num_added_rows:
+          minimum: 0
+          type: integer
+        num_removed_cols:
+          minimum: 0
+          type: integer
+        num_removed_rows:
+          minimum: 0
+          type: integer
+        schema_has_changed:
+          type: boolean
+      required:
+      - num_added_rows
+      - num_added_cols
+      - num_removed_rows
+      - num_removed_cols
+      - schema_has_changed
+      type: object
+    JsonDataFrame:
+      properties:
+        data: {}
+        full_size:
+          $ref: '#/components/schemas/DataFrameSize'
+        schema:
+          $ref: '#/components/schemas/Schema'
+        view_schema:
+          $ref: '#/components/schemas/Schema'
+        view_size:
+          $ref: '#/components/schemas/DataFrameSize'
+      required:
+      - schema
+      - view_schema
+      - view_size
+      - full_size
+      - data
+      type: object
+    MetadataImageImpl:
+      properties:
+        color_space:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ImgColorSpace'
+        height:
+          format: int32
+          minimum: 0
+          type: integer
+        width:
+          format: int32
+          minimum: 0
+          type: integer
+      required:
+      - width
+      - height
+      type: object
+    ChangeType:
+      enum:
+      - Added
+      - Removed
+      - Modified
+      - Unchanged
+      type: string
+    DataTypeCount:
+      properties:
+        count:
+          minimum: 0
+          type: integer
+        data_type:
+          type: string
+      required:
+      - count
+      - data_type
+      type: object
+    Changes:
+      properties:
+        previous:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/PreviousField'
+        status:
+          type: string
+      required:
+      - status
+      type: object
+    DerivedDFResource:
+      properties:
+        path:
+          type: string
+        resource_id:
+          type: string
+        resource_type:
+          $ref: '#/components/schemas/DFResourceType'
+      required:
+      - resource_id
+      - path
+      - resource_type
       type: object
     DataFrameSchemaSize:
       properties:
@@ -456,12 +892,6 @@ components:
       - schema
       - size
       type: object
-    DFResourceType:
-      enum:
-      - compare
-      - diff
-      - query
-      type: string
     Commit:
       example:
         author: ox
@@ -495,6 +925,104 @@ components:
       - email
       - timestamp
       type: object
+    TabularDiffViewImpl:
+      allOf:
+      - $ref: '#/components/schemas/TabularDiffSummary'
+      - properties:
+          added_cols:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/JsonDataFrame'
+          added_cols_view:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/JsonDataFrameView'
+          added_rows:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/JsonDataFrame'
+          added_rows_view:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/JsonDataFrameView'
+          base_schema:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/Schema'
+          head_schema:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/Schema'
+          removed_cols:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/JsonDataFrame'
+          removed_cols_view:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/JsonDataFrameView'
+          removed_rows:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/JsonDataFrame'
+          removed_rows_view:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/JsonDataFrameView'
+        type: object
+    Field:
+      properties:
+        changes:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Changes'
+        dtype:
+          type: string
+        metadata: {}
+        name:
+          type: string
+      required:
+      - name
+      - dtype
+      type: object
+    MetadataImage:
+      properties:
+        image:
+          $ref: '#/components/schemas/MetadataImageImpl'
+      required:
+      - image
+      type: object
+    MetadataVideoImpl:
+      properties:
+        height:
+          minimum: 0
+          type: integer
+        num_seconds:
+          format: double
+          type: number
+        width:
+          minimum: 0
+          type: integer
+      required:
+      - num_seconds
+      - width
+      - height
+      type: object
+    GenericDiffSummary:
+      oneOf:
+      - $ref: '#/components/schemas/DirDiffSummary'
+      - $ref: '#/components/schemas/TabularDiffWrapper'
+    DirTreeDiffResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          dirs:
+            items:
+              $ref: '#/components/schemas/DirDiffTreeSummary'
+            type: array
+        required:
+        - dirs
+        type: object
     CompareCommitsResponse:
       allOf:
       - $ref: '#/components/schemas/StatusMessage'
@@ -505,6 +1033,56 @@ components:
         required:
         - compare
         type: object
+    WorkspaceView:
+      description: 'Used to send workspace state across the wire. The `Workspace`''s other fields (like
+
+        `LocalRepository`) would bloat the response and leak internal state.'
+      properties:
+        commit:
+          $ref: '#/components/schemas/Commit'
+        id:
+          type: string
+        name:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - commit
+      type: object
+    ResourceVersion:
+      properties:
+        path:
+          type: string
+        version:
+          type: string
+      required:
+      - path
+      - version
+      type: object
+    EntryDataType:
+      enum:
+      - dir
+      - text
+      - image
+      - video
+      - audio
+      - tabular
+      - binary
+      type: string
+    Schema:
+      properties:
+        fields:
+          items:
+            $ref: '#/components/schemas/Field'
+          type: array
+        hash:
+          type: string
+        metadata: {}
+      required:
+      - hash
+      - fields
+      type: object
     MetadataEntry:
       additionalProperties: false
       description: '`deny_unknown_fields` is the discriminator for the untagged `EMetadataEntry` enum:
@@ -560,25 +1138,6 @@ components:
       - mime_type
       - extension
       type: object
-    MetadataText:
-      properties:
-        text:
-          $ref: '#/components/schemas/MetadataTextImpl'
-      required:
-      - text
-      type: object
-    MetadataTextImpl:
-      properties:
-        num_chars:
-          minimum: 0
-          type: integer
-        num_lines:
-          minimum: 0
-          type: integer
-      required:
-      - num_lines
-      - num_chars
-      type: object
     JsonDataFrameViewResponse:
       allOf:
       - $ref: '#/components/schemas/StatusMessage'
@@ -600,539 +1159,6 @@ components:
         required:
         - data_frame
         type: object
-    EntryDataType:
-      enum:
-      - dir
-      - text
-      - image
-      - video
-      - audio
-      - tabular
-      - binary
-      type: string
-    JsonDataFrameView:
-      allOf:
-      - $ref: '#/components/schemas/DFOptsView'
-      - properties:
-          data: {}
-          pagination:
-            $ref: '#/components/schemas/Pagination'
-          schema:
-            $ref: '#/components/schemas/Schema'
-          size:
-            $ref: '#/components/schemas/DataFrameSize'
-        required:
-        - schema
-        - size
-        - data
-        - pagination
-        type: object
-    LineDiff:
-      properties:
-        modification:
-          $ref: '#/components/schemas/ChangeType'
-        text:
-          type: string
-      required:
-      - modification
-      - text
-      type: object
-    DirDiffTreeSummary:
-      properties:
-        can_display:
-          type: boolean
-        children:
-          items:
-            $ref: '#/components/schemas/DirDiffStatus'
-          type: array
-        name:
-          type: string
-        num_subdirs:
-          minimum: 0
-          type: integer
-        status:
-          $ref: '#/components/schemas/DiffEntryStatus'
-      required:
-      - name
-      - status
-      - num_subdirs
-      - can_display
-      - children
-      type: object
-    DirDiffSummaryImpl:
-      properties:
-        file_counts:
-          $ref: '#/components/schemas/AddRemoveModifyCounts'
-      required:
-      - file_counts
-      type: object
-    MetadataImage:
-      properties:
-        image:
-          $ref: '#/components/schemas/MetadataImageImpl'
-      required:
-      - image
-      type: object
-    MetadataTabular:
-      properties:
-        tabular:
-          $ref: '#/components/schemas/MetadataTabularImpl'
-      required:
-      - tabular
-      type: object
-    Pagination:
-      properties:
-        page_number:
-          minimum: 0
-          type: integer
-        page_size:
-          minimum: 0
-          type: integer
-        total_entries:
-          minimum: 0
-          type: integer
-        total_pages:
-          minimum: 0
-          type: integer
-      required:
-      - page_size
-      - page_number
-      - total_pages
-      - total_entries
-      type: object
-    JsonDataFrame:
-      properties:
-        data: {}
-        full_size:
-          $ref: '#/components/schemas/DataFrameSize'
-        schema:
-          $ref: '#/components/schemas/Schema'
-        view_schema:
-          $ref: '#/components/schemas/Schema'
-        view_size:
-          $ref: '#/components/schemas/DataFrameSize'
-      required:
-      - schema
-      - view_schema
-      - view_size
-      - full_size
-      - data
-      type: object
-    ChangeType:
-      enum:
-      - Added
-      - Removed
-      - Modified
-      - Unchanged
-      type: string
-    DataTypeCount:
-      properties:
-        count:
-          minimum: 0
-          type: integer
-        data_type:
-          type: string
-      required:
-      - count
-      - data_type
-      type: object
-    MetadataVideoImpl:
-      properties:
-        height:
-          minimum: 0
-          type: integer
-        num_seconds:
-          format: double
-          type: number
-        width:
-          minimum: 0
-          type: integer
-      required:
-      - num_seconds
-      - width
-      - height
-      type: object
-    DataFrameSize:
-      properties:
-        height:
-          minimum: 0
-          type: integer
-        width:
-          minimum: 0
-          type: integer
-      required:
-      - height
-      - width
-      type: object
-    TabularDiffSummaryImpl:
-      properties:
-        num_added_cols:
-          minimum: 0
-          type: integer
-        num_added_rows:
-          minimum: 0
-          type: integer
-        num_removed_cols:
-          minimum: 0
-          type: integer
-        num_removed_rows:
-          minimum: 0
-          type: integer
-        schema_has_changed:
-          type: boolean
-      required:
-      - num_added_rows
-      - num_added_cols
-      - num_removed_rows
-      - num_removed_cols
-      - schema_has_changed
-      type: object
-    CompareCommits:
-      properties:
-        base_commit:
-          $ref: '#/components/schemas/Commit'
-        commits:
-          items:
-            $ref: '#/components/schemas/Commit'
-          type: array
-        head_commit:
-          $ref: '#/components/schemas/Commit'
-      required:
-      - base_commit
-      - head_commit
-      - commits
-      type: object
-    StatusMessage:
-      properties:
-        oxen_version:
-          type:
-          - string
-          - 'null'
-        status:
-          type: string
-        status_message:
-          type: string
-      required:
-      - status
-      - status_message
-      type: object
-    MetadataAudio:
-      properties:
-        audio:
-          $ref: '#/components/schemas/MetadataAudioImpl'
-      required:
-      - audio
-      type: object
-    DirDiffStatus:
-      properties:
-        name:
-          type: string
-        status:
-          $ref: '#/components/schemas/DiffEntryStatus'
-      required:
-      - name
-      - status
-      type: object
-    DirDiff:
-      allOf:
-      - $ref: '#/components/schemas/DirDiffSummary'
-    Schema:
-      properties:
-        fields:
-          items:
-            $ref: '#/components/schemas/Field'
-          type: array
-        hash:
-          type: string
-        metadata: {}
-      required:
-      - hash
-      - fields
-      type: object
-    DerivedDFResource:
-      properties:
-        path:
-          type: string
-        resource_id:
-          type: string
-        resource_type:
-          $ref: '#/components/schemas/DFResourceType'
-      required:
-      - resource_id
-      - path
-      - resource_type
-      type: object
-    GenericMetadata:
-      oneOf:
-      - $ref: '#/components/schemas/MetadataDir'
-      - $ref: '#/components/schemas/MetadataText'
-      - $ref: '#/components/schemas/MetadataImage'
-      - $ref: '#/components/schemas/MetadataVideo'
-      - $ref: '#/components/schemas/MetadataAudio'
-      - $ref: '#/components/schemas/MetadataTabular'
-    TabularDiffViewImpl:
-      allOf:
-      - $ref: '#/components/schemas/TabularDiffSummary'
-      - properties:
-          added_cols:
-            oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/JsonDataFrame'
-          added_cols_view:
-            oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/JsonDataFrameView'
-          added_rows:
-            oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/JsonDataFrame'
-          added_rows_view:
-            oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/JsonDataFrameView'
-          base_schema:
-            oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/Schema'
-          head_schema:
-            oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/Schema'
-          removed_cols:
-            oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/JsonDataFrame'
-          removed_cols_view:
-            oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/JsonDataFrameView'
-          removed_rows:
-            oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/JsonDataFrame'
-          removed_rows_view:
-            oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/JsonDataFrameView'
-        type: object
-    TabularDiffView:
-      properties:
-        tabular:
-          $ref: '#/components/schemas/TabularDiffViewImpl'
-      required:
-      - tabular
-      type: object
-    Field:
-      properties:
-        changes:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/Changes'
-        dtype:
-          type: string
-        metadata: {}
-        name:
-          type: string
-      required:
-      - name
-      - dtype
-      type: object
-    CompareEntryResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          compare:
-            $ref: '#/components/schemas/DiffEntry'
-        required:
-        - compare
-        type: object
-    MetadataAudioImpl:
-      properties:
-        num_channels:
-          minimum: 0
-          type: integer
-        num_seconds:
-          format: double
-          type: number
-        sample_rate:
-          minimum: 0
-          type: integer
-      required:
-      - num_seconds
-      - num_channels
-      - sample_rate
-      type: object
-    ImgColorSpace:
-      enum:
-      - RGB
-      - RGBA
-      - Grayscale
-      - GrayscaleAlpha
-      - Rgb16
-      - Rgba16
-      - Grayscale16
-      - GrayscaleAlpha16
-      - Rgb32F
-      - Rgba32F
-      - Unknown
-      type: string
-    PreviousField:
-      properties:
-        dtype:
-          type: string
-        metadata: {}
-        name:
-          type: string
-      required:
-      - name
-      - dtype
-      type: object
-    DiffEntry:
-      properties:
-        base_entry:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/MetadataEntry'
-        base_resource:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/ParsedResourceView'
-        data_type:
-          $ref: '#/components/schemas/EntryDataType'
-        diff:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/GenericDiff'
-        diff_summary:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/GenericDiffSummary'
-        filename:
-          type: string
-        head_entry:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/MetadataEntry'
-        head_resource:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/ParsedResourceView'
-        is_dir:
-          type: boolean
-        size:
-          format: int64
-          minimum: 0
-          type: integer
-        status:
-          type: string
-      required:
-      - status
-      - data_type
-      - filename
-      - is_dir
-      - size
-      type: object
-    TextDiff:
-      properties:
-        filename1:
-          type:
-          - string
-          - 'null'
-        filename2:
-          type:
-          - string
-          - 'null'
-        lines:
-          items:
-            $ref: '#/components/schemas/LineDiff'
-          type: array
-      required:
-      - lines
-      type: object
-    Changes:
-      properties:
-        previous:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/PreviousField'
-        status:
-          type: string
-      required:
-      - status
-      type: object
-    GenericDiff:
-      oneOf:
-      - $ref: '#/components/schemas/DirDiff'
-      - $ref: '#/components/schemas/TabularDiffView'
-      - $ref: '#/components/schemas/TextDiff'
-    MetadataTabularImpl:
-      properties:
-        height:
-          minimum: 0
-          type: integer
-        schema:
-          $ref: '#/components/schemas/Schema'
-        width:
-          minimum: 0
-          type: integer
-      required:
-      - width
-      - height
-      - schema
-      type: object
-    DirTreeDiffResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          dirs:
-            items:
-              $ref: '#/components/schemas/DirDiffTreeSummary'
-            type: array
-        required:
-        - dirs
-        type: object
-    WorkspaceView:
-      description: 'Used to send workspace state across the wire. The `Workspace`''s other fields (like
-
-        `LocalRepository`) would bloat the response and leak internal state.'
-      properties:
-        commit:
-          $ref: '#/components/schemas/Commit'
-        id:
-          type: string
-        name:
-          type:
-          - string
-          - 'null'
-      required:
-      - id
-      - commit
-      type: object
-    MetadataImageImpl:
-      properties:
-        color_space:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/ImgColorSpace'
-        height:
-          format: int32
-          minimum: 0
-          type: integer
-        width:
-          format: int32
-          minimum: 0
-          type: integer
-      required:
-      - width
-      - height
-      type: object
-    TabularDiffWrapper:
-      properties:
-        tabular:
-          $ref: '#/components/schemas/TabularDiffSummaryImpl'
-      required:
-      - tabular
-      type: object
     Branch:
       properties:
         commit_id:
@@ -1158,32 +1184,6 @@ components:
       - added
       - removed
       - modified
-      type: object
-    MetadataDirImpl:
-      properties:
-        data_types:
-          items:
-            $ref: '#/components/schemas/DataTypeCount'
-          type: array
-      required:
-      - data_types
-      type: object
-    ResourceVersion:
-      properties:
-        path:
-          type: string
-        version:
-          type: string
-      required:
-      - path
-      - version
-      type: object
-    MetadataDir:
-      properties:
-        dir:
-          $ref: '#/components/schemas/MetadataDirImpl'
-      required:
-      - dir
       type: object
   securitySchemes:
     api_key:

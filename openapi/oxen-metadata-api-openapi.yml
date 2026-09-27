@@ -96,6 +96,65 @@ paths:
       - Metadata
 components:
   schemas:
+    MetadataTextImpl:
+      properties:
+        num_chars:
+          minimum: 0
+          type: integer
+        num_lines:
+          minimum: 0
+          type: integer
+      required:
+      - num_lines
+      - num_chars
+      type: object
+    MetadataTabularImpl:
+      properties:
+        height:
+          minimum: 0
+          type: integer
+        schema:
+          $ref: '#/components/schemas/Schema'
+        width:
+          minimum: 0
+          type: integer
+      required:
+      - width
+      - height
+      - schema
+      type: object
+    MetadataText:
+      properties:
+        text:
+          $ref: '#/components/schemas/MetadataTextImpl'
+      required:
+      - text
+      type: object
+    WorkspaceChanges:
+      properties:
+        status:
+          $ref: '#/components/schemas/StagedEntryStatus'
+      required:
+      - status
+      type: object
+    PreviousField:
+      properties:
+        dtype:
+          type: string
+        metadata: {}
+        name:
+          type: string
+      required:
+      - name
+      - dtype
+      type: object
+    MetadataAudio:
+      properties:
+        audio:
+          $ref: '#/components/schemas/MetadataAudioImpl'
+      required:
+      - audio
+      type: object
     ParsedResourceView:
       description: External (view) model that is returned to the client with fewer fields.
       properties:
@@ -128,6 +187,121 @@ components:
           $ref: '#/components/schemas/MetadataVideoImpl'
       required:
       - video
+      type: object
+    StagedEntryStatus:
+      enum:
+      - Added
+      - Modified
+      - Removed
+      - Unmodified
+      type: string
+    EMetadataEntry:
+      oneOf:
+      - $ref: '#/components/schemas/MetadataEntry'
+      - $ref: '#/components/schemas/WorkspaceMetadataEntry'
+    MetadataDir:
+      properties:
+        dir:
+          $ref: '#/components/schemas/MetadataDirImpl'
+      required:
+      - dir
+      type: object
+    ImgColorSpace:
+      enum:
+      - RGB
+      - RGBA
+      - Grayscale
+      - GrayscaleAlpha
+      - Rgb16
+      - Rgba16
+      - Grayscale16
+      - GrayscaleAlpha16
+      - Rgb32F
+      - Rgba32F
+      - Unknown
+      type: string
+    MetadataDirImpl:
+      properties:
+        data_types:
+          items:
+            $ref: '#/components/schemas/DataTypeCount'
+          type: array
+      required:
+      - data_types
+      type: object
+    GenericMetadata:
+      oneOf:
+      - $ref: '#/components/schemas/MetadataDir'
+      - $ref: '#/components/schemas/MetadataText'
+      - $ref: '#/components/schemas/MetadataImage'
+      - $ref: '#/components/schemas/MetadataVideo'
+      - $ref: '#/components/schemas/MetadataAudio'
+      - $ref: '#/components/schemas/MetadataTabular'
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
+    MetadataAudioImpl:
+      properties:
+        num_channels:
+          minimum: 0
+          type: integer
+        num_seconds:
+          format: double
+          type: number
+        sample_rate:
+          minimum: 0
+          type: integer
+      required:
+      - num_seconds
+      - num_channels
+      - sample_rate
+      type: object
+    MetadataTabular:
+      properties:
+        tabular:
+          $ref: '#/components/schemas/MetadataTabularImpl'
+      required:
+      - tabular
+      type: object
+    MetadataImageImpl:
+      properties:
+        color_space:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ImgColorSpace'
+        height:
+          format: int32
+          minimum: 0
+          type: integer
+        width:
+          format: int32
+          minimum: 0
+          type: integer
+      required:
+      - width
+      - height
+      type: object
+    DataTypeCount:
+      properties:
+        count:
+          minimum: 0
+          type: integer
+        data_type:
+          type: string
+      required:
+      - count
+      - data_type
       type: object
     WorkspaceMetadataEntry:
       properties:
@@ -182,15 +356,17 @@ components:
       - mime_type
       - extension
       type: object
-    EMetadataEntryResponseView:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          entry:
-            $ref: '#/components/schemas/EMetadataEntry'
-        required:
-        - entry
-        type: object
+    Changes:
+      properties:
+        previous:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/PreviousField'
+        status:
+          type: string
+      required:
+      - status
+      type: object
     Commit:
       example:
         author: ox
@@ -224,13 +400,93 @@ components:
       - email
       - timestamp
       type: object
-    StagedEntryStatus:
+    Field:
+      properties:
+        changes:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Changes'
+        dtype:
+          type: string
+        metadata: {}
+        name:
+          type: string
+      required:
+      - name
+      - dtype
+      type: object
+    MetadataImage:
+      properties:
+        image:
+          $ref: '#/components/schemas/MetadataImageImpl'
+      required:
+      - image
+      type: object
+    MetadataVideoImpl:
+      properties:
+        height:
+          minimum: 0
+          type: integer
+        num_seconds:
+          format: double
+          type: number
+        width:
+          minimum: 0
+          type: integer
+      required:
+      - num_seconds
+      - width
+      - height
+      type: object
+    WorkspaceView:
+      description: 'Used to send workspace state across the wire. The `Workspace`''s other fields (like
+
+        `LocalRepository`) would bloat the response and leak internal state.'
+      properties:
+        commit:
+          $ref: '#/components/schemas/Commit'
+        id:
+          type: string
+        name:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - commit
+      type: object
+    EMetadataEntryResponseView:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          entry:
+            $ref: '#/components/schemas/EMetadataEntry'
+        required:
+        - entry
+        type: object
+    EntryDataType:
       enum:
-      - Added
-      - Modified
-      - Removed
-      - Unmodified
+      - dir
+      - text
+      - image
+      - video
+      - audio
+      - tabular
+      - binary
       type: string
+    Schema:
+      properties:
+        fields:
+          items:
+            $ref: '#/components/schemas/Field'
+          type: array
+        hash:
+          type: string
+        metadata: {}
+      required:
+      - hash
+      - fields
+      type: object
     MetadataEntry:
       additionalProperties: false
       description: '`deny_unknown_fields` is the discriminator for the untagged `EMetadataEntry` enum:
@@ -286,234 +542,6 @@ components:
       - mime_type
       - extension
       type: object
-    MetadataText:
-      properties:
-        text:
-          $ref: '#/components/schemas/MetadataTextImpl'
-      required:
-      - text
-      type: object
-    EntryDataType:
-      enum:
-      - dir
-      - text
-      - image
-      - video
-      - audio
-      - tabular
-      - binary
-      type: string
-    MetadataImage:
-      properties:
-        image:
-          $ref: '#/components/schemas/MetadataImageImpl'
-      required:
-      - image
-      type: object
-    MetadataTabular:
-      properties:
-        tabular:
-          $ref: '#/components/schemas/MetadataTabularImpl'
-      required:
-      - tabular
-      type: object
-    DataTypeCount:
-      properties:
-        count:
-          minimum: 0
-          type: integer
-        data_type:
-          type: string
-      required:
-      - count
-      - data_type
-      type: object
-    MetadataVideoImpl:
-      properties:
-        height:
-          minimum: 0
-          type: integer
-        num_seconds:
-          format: double
-          type: number
-        width:
-          minimum: 0
-          type: integer
-      required:
-      - num_seconds
-      - width
-      - height
-      type: object
-    StatusMessage:
-      properties:
-        oxen_version:
-          type:
-          - string
-          - 'null'
-        status:
-          type: string
-        status_message:
-          type: string
-      required:
-      - status
-      - status_message
-      type: object
-    MetadataAudio:
-      properties:
-        audio:
-          $ref: '#/components/schemas/MetadataAudioImpl'
-      required:
-      - audio
-      type: object
-    Schema:
-      properties:
-        fields:
-          items:
-            $ref: '#/components/schemas/Field'
-          type: array
-        hash:
-          type: string
-        metadata: {}
-      required:
-      - hash
-      - fields
-      type: object
-    GenericMetadata:
-      oneOf:
-      - $ref: '#/components/schemas/MetadataDir'
-      - $ref: '#/components/schemas/MetadataText'
-      - $ref: '#/components/schemas/MetadataImage'
-      - $ref: '#/components/schemas/MetadataVideo'
-      - $ref: '#/components/schemas/MetadataAudio'
-      - $ref: '#/components/schemas/MetadataTabular'
-    Field:
-      properties:
-        changes:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/Changes'
-        dtype:
-          type: string
-        metadata: {}
-        name:
-          type: string
-      required:
-      - name
-      - dtype
-      type: object
-    MetadataAudioImpl:
-      properties:
-        num_channels:
-          minimum: 0
-          type: integer
-        num_seconds:
-          format: double
-          type: number
-        sample_rate:
-          minimum: 0
-          type: integer
-      required:
-      - num_seconds
-      - num_channels
-      - sample_rate
-      type: object
-    ImgColorSpace:
-      enum:
-      - RGB
-      - RGBA
-      - Grayscale
-      - GrayscaleAlpha
-      - Rgb16
-      - Rgba16
-      - Grayscale16
-      - GrayscaleAlpha16
-      - Rgb32F
-      - Rgba32F
-      - Unknown
-      type: string
-    PreviousField:
-      properties:
-        dtype:
-          type: string
-        metadata: {}
-        name:
-          type: string
-      required:
-      - name
-      - dtype
-      type: object
-    Changes:
-      properties:
-        previous:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/PreviousField'
-        status:
-          type: string
-      required:
-      - status
-      type: object
-    EMetadataEntry:
-      oneOf:
-      - $ref: '#/components/schemas/MetadataEntry'
-      - $ref: '#/components/schemas/WorkspaceMetadataEntry'
-    MetadataTabularImpl:
-      properties:
-        height:
-          minimum: 0
-          type: integer
-        schema:
-          $ref: '#/components/schemas/Schema'
-        width:
-          minimum: 0
-          type: integer
-      required:
-      - width
-      - height
-      - schema
-      type: object
-    WorkspaceChanges:
-      properties:
-        status:
-          $ref: '#/components/schemas/StagedEntryStatus'
-      required:
-      - status
-      type: object
-    WorkspaceView:
-      description: 'Used to send workspace state across the wire. The `Workspace`''s other fields (like
-
-        `LocalRepository`) would bloat the response and leak internal state.'
-      properties:
-        commit:
-          $ref: '#/components/schemas/Commit'
-        id:
-          type: string
-        name:
-          type:
-          - string
-          - 'null'
-      required:
-      - id
-      - commit
-      type: object
-    MetadataImageImpl:
-      properties:
-        color_space:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/ImgColorSpace'
-        height:
-          format: int32
-          minimum: 0
-          type: integer
-        width:
-          format: int32
-          minimum: 0
-          type: integer
-      required:
-      - width
-      - height
-      type: object
     Branch:
       properties:
         commit_id:
@@ -523,34 +551,6 @@ components:
       required:
       - name
       - commit_id
-      type: object
-    MetadataTextImpl:
-      properties:
-        num_chars:
-          minimum: 0
-          type: integer
-        num_lines:
-          minimum: 0
-          type: integer
-      required:
-      - num_lines
-      - num_chars
-      type: object
-    MetadataDirImpl:
-      properties:
-        data_types:
-          items:
-            $ref: '#/components/schemas/DataTypeCount'
-          type: array
-      required:
-      - data_types
-      type: object
-    MetadataDir:
-      properties:
-        dir:
-          $ref: '#/components/schemas/MetadataDirImpl'
-      required:
-      - dir
       type: object
   securitySchemes:
     api_key:

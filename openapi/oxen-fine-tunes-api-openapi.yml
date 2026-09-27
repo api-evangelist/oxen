@@ -690,62 +690,17 @@ paths:
       - 'Fine Tunes:'
 components:
   schemas:
-    CheckpointListResponse:
-      description: Standard wrapper for the list-checkpoints response.
+    CreateCheckpointDeploymentRequest:
+      description: Request payload to deploy a specific checkpoint from a fine-tune job.
       properties:
-        branch:
-          description: Oxen branch where the model and its checkpoints are stored.
+        deployment_type:
+          default: normal
+          description: 'Deployment type: ''fast'' for faster inference instances, ''normal'' for standard instances.'
+          enum:
+          - fast
+          - normal
           type: string
-        checkpoints:
-          description: Checkpoints saved during the fine-tune run, sorted by step ascending.
-          items:
-            $ref: '#/components/schemas/Checkpoint'
-          type: array
-        fine_tune_id:
-          description: ID of the fine-tune job these checkpoints belong to.
-          type: string
-        status:
-          description: High-level status string (for example, 'success').
-          type: string
-        status_message:
-          description: Human-readable status message (for example, 'resource_found').
-          type: string
-        total_checkpoints:
-          description: Total number of checkpoints returned.
-          type: integer
-      title: CheckpointListResponse
-      type: object
-    FineTuneStopResponse:
-      description: Standard wrapper for fine-tune /stop responses.
-      properties:
-        fine_tune:
-          anyOf:
-          - $ref: '#/components/schemas/FineTuneRun'
-          description: Fine-tune job resource as returned by /stop
-        status:
-          description: High-level status string (for example, 'success').
-          type: string
-        status_message:
-          description: Human-readable status message (for example, 'resource_found').
-          type: string
-      title: FineTuneStopResponse
-      type: object
-    FineTuneListResponse:
-      description: Standard wrapper for fine-tune list responses.
-      properties:
-        fine_tunes:
-          description: List of fine-tune job resources
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/FineTune'
-          type: array
-        status:
-          description: High-level status string (for example, 'success').
-          type: string
-        status_message:
-          description: Human-readable status message (for example, 'resource_found').
-          type: string
-      title: FineTuneListResponse
+      title: CreateCheckpointDeploymentRequest
       type: object
     FineTune:
       description: 'Fine-tune job resource.
@@ -775,6 +730,28 @@ components:
           format: date_time
           type: string
       title: FineTune
+      type: object
+    CheckpointDeploymentResponse:
+      description: Standard wrapper for checkpoint deployment responses.
+      properties:
+        deployment_id:
+          description: ID of the created Baseten deployment.
+          type: string
+        fine_tune:
+          anyOf:
+          - $ref: '#/components/schemas/FineTuneRun'
+          description: Fine-tune job the deployed checkpoint belongs to.
+        model:
+          additionalProperties: true
+          description: Model record created for this checkpoint deployment.
+          type: object
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+      title: CheckpointDeploymentResponse
       type: object
     FineTuneRun:
       additionalProperties: true
@@ -1017,27 +994,37 @@ components:
           type: boolean
       title: FineTuneRun
       type: object
-    CheckpointDeploymentResponse:
-      description: Standard wrapper for checkpoint deployment responses.
+    FineTuneResponse:
+      description: Standard wrapper for fine-tune responses.
       properties:
-        deployment_id:
-          description: ID of the created Baseten deployment.
-          type: string
         fine_tune:
           anyOf:
-          - $ref: '#/components/schemas/FineTuneRun'
-          description: Fine-tune job the deployed checkpoint belongs to.
-        model:
-          additionalProperties: true
-          description: Model record created for this checkpoint deployment.
-          type: object
+          - $ref: '#/components/schemas/FineTune'
+          description: Fine-tune job resource
         status:
           description: High-level status string (for example, 'success').
           type: string
         status_message:
           description: Human-readable status message (for example, 'resource_found').
           type: string
-      title: CheckpointDeploymentResponse
+      title: FineTuneResponse
+      type: object
+    FineTuneListResponse:
+      description: Standard wrapper for fine-tune list responses.
+      properties:
+        fine_tunes:
+          description: List of fine-tune job resources
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/FineTune'
+          type: array
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+      title: FineTuneListResponse
       type: object
     CreateFineTuneRequest:
       description: 'Request payload to create a fine-tune job for a repository.
@@ -1111,20 +1098,35 @@ components:
       - script_type
       title: CreateFineTuneRequest
       type: object
-    FineTuneResponse:
-      description: Standard wrapper for fine-tune responses.
+    FineTuneRunResponse:
+      description: Standard wrapper for fine-tune /run responses.
       properties:
         fine_tune:
           anyOf:
-          - $ref: '#/components/schemas/FineTune'
-          description: Fine-tune job resource
+          - $ref: '#/components/schemas/FineTuneRun'
+          description: Fine-tune job resource as returned by /run
         status:
           description: High-level status string (for example, 'success').
           type: string
         status_message:
           description: Human-readable status message (for example, 'resource_found').
           type: string
-      title: FineTuneResponse
+      title: FineTuneRunResponse
+      type: object
+    FineTuneStopResponse:
+      description: Standard wrapper for fine-tune /stop responses.
+      properties:
+        fine_tune:
+          anyOf:
+          - $ref: '#/components/schemas/FineTuneRun'
+          description: Fine-tune job resource as returned by /stop
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+      title: FineTuneStopResponse
       type: object
     Checkpoint:
       description: 'A single training checkpoint produced by a fine-tune run. Each checkpoint
@@ -1203,32 +1205,30 @@ components:
           type: integer
       title: Checkpoint
       type: object
-    FineTuneRunResponse:
-      description: Standard wrapper for fine-tune /run responses.
+    CheckpointListResponse:
+      description: Standard wrapper for the list-checkpoints response.
       properties:
-        fine_tune:
-          anyOf:
-          - $ref: '#/components/schemas/FineTuneRun'
-          description: Fine-tune job resource as returned by /run
+        branch:
+          description: Oxen branch where the model and its checkpoints are stored.
+          type: string
+        checkpoints:
+          description: Checkpoints saved during the fine-tune run, sorted by step ascending.
+          items:
+            $ref: '#/components/schemas/Checkpoint'
+          type: array
+        fine_tune_id:
+          description: ID of the fine-tune job these checkpoints belong to.
+          type: string
         status:
           description: High-level status string (for example, 'success').
           type: string
         status_message:
           description: Human-readable status message (for example, 'resource_found').
           type: string
-      title: FineTuneRunResponse
-      type: object
-    CreateCheckpointDeploymentRequest:
-      description: Request payload to deploy a specific checkpoint from a fine-tune job.
-      properties:
-        deployment_type:
-          default: normal
-          description: 'Deployment type: ''fast'' for faster inference instances, ''normal'' for standard instances.'
-          enum:
-          - fast
-          - normal
-          type: string
-      title: CreateCheckpointDeploymentRequest
+        total_checkpoints:
+          description: Total number of checkpoints returned.
+          type: integer
+      title: CheckpointListResponse
       type: object
   securitySchemes:
     authorization:

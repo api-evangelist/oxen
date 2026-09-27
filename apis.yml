@@ -49,7 +49,7 @@ image: https://github.com/Oxen-AI.png
 tags:
 - Company
 - Data Version Control
-- Machine-Learning
+- Machine Learning
 - Artificial Intelligence
 - Fine-Tuning
 - Inference
@@ -72,6 +72,7 @@ tags_raw:
 - Model Deployment
 - Developer Tools
 - Version Control
+- Machine-Learning
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -143,7 +144,7 @@ apis:
   - type: OpenAPI
     url: openapi/oxen-directories-api-openapi.yml
 - aid: oxen:oxen-evaluations-api
-  name: Oxen evaluations API
+  name: Oxen Evaluations API
   description: The evaluations API from Oxen — 2 operation(s) for evaluations.
   humanURL: https://docs.oxen.ai/fine-tuning-api/overview
   baseURL: https://hub.oxen.ai
@@ -177,7 +178,7 @@ apis:
   - type: OpenAPI
     url: openapi/oxen-files-api-openapi.yml
 - aid: oxen:oxen-fine-tunes-api
-  name: Oxen fine_tunes API
+  name: Oxen Fine Tunes API
   description: The fine_tunes API from Oxen — 13 operation(s) for fine_tunes.
   humanURL: https://docs.oxen.ai/fine-tuning-api/overview
   baseURL: https://hub.oxen.ai

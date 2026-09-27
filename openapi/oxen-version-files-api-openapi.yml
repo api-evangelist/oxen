@@ -198,17 +198,13 @@ paths:
       - Version Files
 components:
   schemas:
-    VersionFile:
+    UploadVersionFile:
       properties:
-        hash:
+        file:
+          format: binary
           type: string
-        size:
-          format: int64
-          minimum: 0
-          type: integer
       required:
-      - hash
-      - size
+      - file
       type: object
     ErrorFileInfo:
       properties:
@@ -223,28 +219,6 @@ components:
       required:
       - hash
       - error
-      type: object
-    StatusMessage:
-      properties:
-        oxen_version:
-          type:
-          - string
-          - 'null'
-        status:
-          type: string
-        status_message:
-          type: string
-      required:
-      - status
-      - status_message
-      type: object
-    UploadVersionFile:
-      properties:
-        file:
-          format: binary
-          type: string
-      required:
-      - file
       type: object
     VersionFileResponse:
       allOf:
@@ -264,6 +238,32 @@ components:
               $ref: '#/components/schemas/ErrorFileInfo'
             type: array
         type: object
+    VersionFile:
+      properties:
+        hash:
+          type: string
+        size:
+          format: int64
+          minimum: 0
+          type: integer
+      required:
+      - hash
+      - size
+      type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
   securitySchemes:
     api_key:
       bearerFormat: JWT
