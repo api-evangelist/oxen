@@ -373,47 +373,6 @@ paths:
       - Workspace Files
 components:
   schemas:
-    ErrorFileInfo:
-      properties:
-        error:
-          type: string
-        hash:
-          type: string
-        path:
-          type:
-          - string
-          - 'null'
-      required:
-      - hash
-      - error
-      type: object
-    FileWithHash:
-      properties:
-        hash:
-          type: string
-        path:
-          type: string
-      required:
-      - hash
-      - path
-      type: object
-    ErrorFilesResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          err_files:
-            items:
-              $ref: '#/components/schemas/ErrorFileInfo'
-            type: array
-        type: object
-    FileUpload:
-      properties:
-        file:
-          format: binary
-          type: string
-      required:
-      - file
-      type: object
     StatusMessage:
       properties:
         oxen_version:
@@ -428,6 +387,24 @@ components:
       - status
       - status_message
       type: object
+    FileUpload:
+      properties:
+        file:
+          format: binary
+          type: string
+      required:
+      - file
+      type: object
+    FileWithHash:
+      properties:
+        hash:
+          type: string
+        path:
+          type: string
+      required:
+      - hash
+      - path
+      type: object
     FilePathsResponse:
       allOf:
       - $ref: '#/components/schemas/StatusMessage'
@@ -439,6 +416,29 @@ components:
         required:
         - paths
         type: object
+    ErrorFilesResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          err_files:
+            items:
+              $ref: '#/components/schemas/ErrorFileInfo'
+            type: array
+        type: object
+    ErrorFileInfo:
+      properties:
+        error:
+          type: string
+        hash:
+          type: string
+        path:
+          type:
+          - string
+          - 'null'
+      required:
+      - hash
+      - error
+      type: object
   securitySchemes:
     api_key:
       bearerFormat: JWT

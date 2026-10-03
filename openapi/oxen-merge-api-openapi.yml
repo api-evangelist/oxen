@@ -118,30 +118,20 @@ paths:
       - Merge
 components:
   schemas:
-    MergeConflictFile:
+    StatusMessage:
       properties:
-        path:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
           type: string
       required:
-      - path
+      - status
+      - status_message
       type: object
-    MergeResult:
-      properties:
-        base:
-          $ref: '#/components/schemas/Commit'
-        head:
-          $ref: '#/components/schemas/Commit'
-        merge:
-          $ref: '#/components/schemas/Commit'
-      required:
-      - head
-      - base
-      - merge
-      type: object
-    MergeableResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - $ref: '#/components/schemas/Mergeable'
     Commit:
       example:
         author: ox
@@ -175,20 +165,6 @@ components:
       - email
       - timestamp
       type: object
-    StatusMessage:
-      properties:
-        oxen_version:
-          type:
-          - string
-          - 'null'
-        status:
-          type: string
-        status_message:
-          type: string
-      required:
-      - status
-      - status_message
-      type: object
     MergeSuccessResponse:
       allOf:
       - $ref: '#/components/schemas/StatusMessage'
@@ -198,6 +174,17 @@ components:
         required:
         - commits
         type: object
+    MergeableResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - $ref: '#/components/schemas/Mergeable'
+    MergeConflictFile:
+      properties:
+        path:
+          type: string
+      required:
+      - path
+      type: object
     Mergeable:
       properties:
         commits:
@@ -214,6 +201,19 @@ components:
       - is_mergeable
       - conflicts
       - commits
+      type: object
+    MergeResult:
+      properties:
+        base:
+          $ref: '#/components/schemas/Commit'
+        head:
+          $ref: '#/components/schemas/Commit'
+        merge:
+          $ref: '#/components/schemas/Commit'
+      required:
+      - head
+      - base
+      - merge
       type: object
   securitySchemes:
     api_key:

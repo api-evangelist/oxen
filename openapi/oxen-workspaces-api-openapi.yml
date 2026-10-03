@@ -309,91 +309,6 @@ paths:
       - Workspaces
 components:
   schemas:
-    ListWorkspaceResponseView:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          workspaces:
-            items:
-              $ref: '#/components/schemas/WorkspaceResponse'
-            type: array
-        required:
-        - workspaces
-        type: object
-    NewWorkspace:
-      properties:
-        branch_name:
-          type: string
-        entity_type:
-          type:
-          - string
-          - 'null'
-        force:
-          type:
-          - boolean
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        resource_path:
-          type:
-          - string
-          - 'null'
-        workspace_id:
-          type: string
-      required:
-      - workspace_id
-      - branch_name
-      type: object
-    WorkspaceResponseView:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          workspace:
-            $ref: '#/components/schemas/WorkspaceResponse'
-        required:
-        - workspace
-        type: object
-    WorkspaceResponse:
-      properties:
-        commit:
-          $ref: '#/components/schemas/Commit'
-        id:
-          type: string
-        name:
-          type:
-          - string
-          - 'null'
-      required:
-      - id
-      - commit
-      type: object
-    MergeConflictFile:
-      properties:
-        path:
-          type: string
-      required:
-      - path
-      type: object
-    NewCommitBody:
-      description: NewCommitBody is used to parse the json into a Commit from the API
-      properties:
-        author:
-          type: string
-        email:
-          type: string
-        message:
-          type: string
-      required:
-      - message
-      - author
-      - email
-      type: object
-    MergeableResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - $ref: '#/components/schemas/Mergeable'
     Commit:
       example:
         author: ox
@@ -441,6 +356,45 @@ components:
       - status
       - status_message
       type: object
+    NewCommitBody:
+      description: NewCommitBody is used to parse the json into a Commit from the API
+      properties:
+        author:
+          type: string
+        email:
+          type: string
+        message:
+          type: string
+      required:
+      - message
+      - author
+      - email
+      type: object
+    WorkspaceResponse:
+      properties:
+        commit:
+          $ref: '#/components/schemas/Commit'
+        id:
+          type: string
+        name:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - commit
+      type: object
+    ListWorkspaceResponseView:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          workspaces:
+            items:
+              $ref: '#/components/schemas/WorkspaceResponse'
+            type: array
+        required:
+        - workspaces
+        type: object
     CommitResponse:
       allOf:
       - $ref: '#/components/schemas/StatusMessage'
@@ -461,6 +415,43 @@ components:
           timestamp: '2025-01-01T10:00:00Z'
         status: success
         status_message: resource_found
+    NewWorkspace:
+      properties:
+        branch_name:
+          type: string
+        entity_type:
+          type:
+          - string
+          - 'null'
+        force:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        resource_path:
+          type:
+          - string
+          - 'null'
+        workspace_id:
+          type: string
+      required:
+      - workspace_id
+      - branch_name
+      type: object
+    MergeableResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - $ref: '#/components/schemas/Mergeable'
+    MergeConflictFile:
+      properties:
+        path:
+          type: string
+      required:
+      - path
+      type: object
     Mergeable:
       properties:
         commits:
@@ -478,6 +469,15 @@ components:
       - conflicts
       - commits
       type: object
+    WorkspaceResponseView:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          workspace:
+            $ref: '#/components/schemas/WorkspaceResponse'
+        required:
+        - workspace
+        type: object
   securitySchemes:
     api_key:
       bearerFormat: JWT

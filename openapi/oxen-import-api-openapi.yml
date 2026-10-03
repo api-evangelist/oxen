@@ -111,48 +111,6 @@ paths:
       - Import
 components:
   schemas:
-    ImportFileBody:
-      description: Body for importing a file from a URL
-      example:
-        auth: Bearer <token>
-        download_url: https://example.com/datasets/data.csv
-        email: ox@oxen.ai
-        filename: data.csv
-        message: Import dataset
-        name: ox
-      properties:
-        auth:
-          example: Bearer <token>
-          type:
-          - string
-          - 'null'
-        download_url:
-          example: https://example.com/datasets/data.csv
-          type: string
-        email:
-          example: ox@oxen.ai
-          type:
-          - string
-          - 'null'
-        filename:
-          example: data.csv
-          type:
-          - string
-          - 'null'
-        message:
-          example: Import dataset
-          type:
-          - string
-          - 'null'
-        name:
-          example: ox
-          type:
-          - string
-          - 'null'
-      required:
-      - download_url
-      title: ImportFileBody
-      type: object
     Commit:
       example:
         author: ox
@@ -220,6 +178,48 @@ components:
           timestamp: '2025-01-01T10:00:00Z'
         status: success
         status_message: resource_found
+    ImportFileBody:
+      description: Body for importing a file from a URL
+      example:
+        auth: Bearer <token>
+        download_url: https://example.com/datasets/data.csv
+        email: ox@oxen.ai
+        filename: data.csv
+        message: Import dataset
+        name: ox
+      properties:
+        auth:
+          example: Bearer <token>
+          type:
+          - string
+          - 'null'
+        download_url:
+          example: https://example.com/datasets/data.csv
+          type: string
+        email:
+          example: ox@oxen.ai
+          type:
+          - string
+          - 'null'
+        filename:
+          example: data.csv
+          type:
+          - string
+          - 'null'
+        message:
+          example: Import dataset
+          type:
+          - string
+          - 'null'
+        name:
+          example: ox
+          type:
+          - string
+          - 'null'
+      required:
+      - download_url
+      title: ImportFileBody
+      type: object
     ZipUploadBody:
       description: Body for uploading a zip archive via multipart/form-data
       example:

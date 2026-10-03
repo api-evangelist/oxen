@@ -441,58 +441,32 @@ paths:
       - Data Frames
 components:
   schemas:
-    DFOptView:
+    StatusMessage:
       properties:
-        name:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
           type: string
-        value: {}
+        status_message:
+          type: string
       required:
-      - name
-      - value
+      - status
+      - status_message
       type: object
-    CompareSchemaDiff:
+    OxenMessage:
       properties:
-        added_cols:
-          items:
-            $ref: '#/components/schemas/CompareSchemaColumn'
-          type: array
-        removed_cols:
-          items:
-            $ref: '#/components/schemas/CompareSchemaColumn'
-          type: array
+        description:
+          type: string
+        level:
+          $ref: '#/components/schemas/MessageLevel'
+        title:
+          type: string
       required:
-      - added_cols
-      - removed_cols
-      type: object
-    Pagination:
-      properties:
-        page_number:
-          minimum: 0
-          type: integer
-        page_size:
-          minimum: 0
-          type: integer
-        total_entries:
-          minimum: 0
-          type: integer
-        total_pages:
-          minimum: 0
-          type: integer
-      required:
-      - page_size
-      - page_number
-      - total_pages
-      - total_entries
-      type: object
-    CompareSummary:
-      properties:
-        modifications:
-          $ref: '#/components/schemas/CompareTabularMods'
-        schema:
-          $ref: '#/components/schemas/Schema'
-      required:
-      - modifications
-      - schema
+      - level
+      - title
+      - description
       type: object
     DFResourceType:
       enum:
@@ -500,69 +474,6 @@ components:
       - diff
       - query
       type: string
-    CompareSourceSchemas:
-      properties:
-        left:
-          $ref: '#/components/schemas/Schema'
-        right:
-          $ref: '#/components/schemas/Schema'
-      required:
-      - left
-      - right
-      type: object
-    JsonDataFrameViews:
-      properties:
-        source:
-          $ref: '#/components/schemas/DataFrameSchemaSize'
-        view:
-          $ref: '#/components/schemas/JsonDataFrameView'
-      required:
-      - source
-      - view
-      type: object
-    PreviousField:
-      properties:
-        dtype:
-          type: string
-        metadata: {}
-        name:
-          type: string
-      required:
-      - name
-      - dtype
-      type: object
-    DFOptsView:
-      properties:
-        opts:
-          items:
-            $ref: '#/components/schemas/DFOptView'
-          type: array
-      required:
-      - opts
-      type: object
-    MessageLevel:
-      enum:
-      - Info
-      - Warning
-      - Error
-      type: string
-    JsonDataFrameView:
-      allOf:
-      - $ref: '#/components/schemas/DFOptsView'
-      - properties:
-          data: {}
-          pagination:
-            $ref: '#/components/schemas/Pagination'
-          schema:
-            $ref: '#/components/schemas/Schema'
-          size:
-            $ref: '#/components/schemas/DataFrameSize'
-        required:
-        - schema
-        - size
-        - data
-        - pagination
-        type: object
     FromDirectoryRequest:
       properties:
         commit_message:
@@ -592,76 +503,41 @@ components:
           - string
           - 'null'
       type: object
-    NewColumn:
+    DFOptView:
       properties:
-        data_type:
-          type: string
         name:
           type: string
+        value: {}
       required:
       - name
-      - data_type
+      - value
       type: object
-    StatusMessage:
+    DataFrameSchemaSize:
       properties:
-        oxen_version:
-          type:
-          - string
-          - 'null'
-        status:
-          type: string
-        status_message:
-          type: string
+        schema:
+          $ref: '#/components/schemas/Schema'
+        size:
+          $ref: '#/components/schemas/DataFrameSize'
       required:
-      - status
-      - status_message
+      - schema
+      - size
       type: object
-    CommitResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          commit:
-            $ref: '#/components/schemas/Commit'
-        required:
-        - commit
-        type: object
-      example:
-        commit:
-          author: ox
-          email: ox@example.com
-          id: a1b2c3d4e5f67890abcdef1234567890
-          message: Refactor data loading pipeline.
-          parent_ids:
-          - f1e2d3c4b5a67890fedcba9876543210
-          timestamp: '2025-01-01T10:00:00Z'
-        status: success
-        status_message: resource_found
-    DataFrameSize:
+    JsonDataFrameViews:
       properties:
-        height:
-          minimum: 0
-          type: integer
-        width:
-          minimum: 0
-          type: integer
+        source:
+          $ref: '#/components/schemas/DataFrameSchemaSize'
+        view:
+          $ref: '#/components/schemas/JsonDataFrameView'
       required:
-      - height
-      - width
+      - source
+      - view
       type: object
-    CompareTabularResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          dfs:
-            $ref: '#/components/schemas/CompareTabular'
-          messages:
-            items:
-              $ref: '#/components/schemas/OxenMessage'
-            type: array
-        required:
-        - dfs
-        - messages
-        type: object
+    MessageLevel:
+      enum:
+      - Info
+      - Warning
+      - Error
+      type: string
     CompareTabular:
       properties:
         display:
@@ -698,69 +574,71 @@ components:
       - dupes
       - source_schemas
       type: object
-    CompareTabularMods:
+    Field:
       properties:
-        added_rows:
-          minimum: 0
-          type: integer
-        modified_rows:
-          minimum: 0
-          type: integer
-        removed_rows:
-          minimum: 0
-          type: integer
-      required:
-      - added_rows
-      - removed_rows
-      - modified_rows
-      type: object
-    Changes:
-      properties:
-        previous:
+        changes:
           oneOf:
           - type: 'null'
-          - $ref: '#/components/schemas/PreviousField'
-        status:
+          - $ref: '#/components/schemas/Changes'
+        dtype:
+          type: string
+        metadata: {}
+        name:
           type: string
       required:
-      - status
+      - name
+      - dtype
       type: object
-    DerivedDFResource:
+    CompareSchemaColumn:
+      properties:
+        dtype:
+          type: string
+        key:
+          type: string
+        name:
+          type: string
+      required:
+      - name
+      - key
+      - dtype
+      type: object
+    PreviousField:
+      properties:
+        dtype:
+          type: string
+        metadata: {}
+        name:
+          type: string
+      required:
+      - name
+      - dtype
+      type: object
+    JsonDataFrameView:
+      allOf:
+      - $ref: '#/components/schemas/DFOptsView'
+      - properties:
+          data: {}
+          pagination:
+            $ref: '#/components/schemas/Pagination'
+          schema:
+            $ref: '#/components/schemas/Schema'
+          size:
+            $ref: '#/components/schemas/DataFrameSize'
+        required:
+        - schema
+        - size
+        - data
+        - pagination
+        type: object
+    ResourceVersion:
       properties:
         path:
           type: string
-        resource_id:
+        version:
           type: string
-        resource_type:
-          $ref: '#/components/schemas/DFResourceType'
       required:
-      - resource_id
       - path
-      - resource_type
-      type: object
-    DataFrameSchemaSize:
-      properties:
-        schema:
-          $ref: '#/components/schemas/Schema'
-        size:
-          $ref: '#/components/schemas/DataFrameSize'
-      required:
-      - schema
-      - size
-      type: object
-    CompareDupes:
-      properties:
-        left:
-          format: int64
-          minimum: 0
-          type: integer
-        right:
-          format: int64
-          minimum: 0
-          type: integer
-      required:
-      - left
-      - right
+      - version
       type: object
     Commit:
       example:
@@ -795,77 +673,126 @@ components:
       - email
       - timestamp
       type: object
-    TabularCompareTargetBody:
-      properties:
-        compare_method:
-          type:
-          - string
-          - 'null'
-        left:
-          type:
-          - string
-          - 'null'
-        right:
-          type:
-          - string
-          - 'null'
-      type: object
-    Field:
-      properties:
-        changes:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/Changes'
-        dtype:
-          type: string
-        metadata: {}
-        name:
-          type: string
-      required:
-      - name
-      - dtype
-      type: object
-    OxenMessage:
-      properties:
-        description:
-          type: string
-        level:
-          $ref: '#/components/schemas/MessageLevel'
-        title:
-          type: string
-      required:
-      - level
-      - title
-      - description
-      type: object
-    ResourceVersion:
+    DerivedDFResource:
       properties:
         path:
           type: string
-        version:
+        resource_id:
           type: string
+        resource_type:
+          $ref: '#/components/schemas/DFResourceType'
       required:
+      - resource_id
       - path
-      - version
+      - resource_type
       type: object
-    TabularCompareFieldBody:
+    CompareTabularResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          dfs:
+            $ref: '#/components/schemas/CompareTabular'
+          messages:
+            items:
+              $ref: '#/components/schemas/OxenMessage'
+            type: array
+        required:
+        - dfs
+        - messages
+        type: object
+    CommitResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          commit:
+            $ref: '#/components/schemas/Commit'
+        required:
+        - commit
+        type: object
+      example:
+        commit:
+          author: ox
+          email: ox@example.com
+          id: a1b2c3d4e5f67890abcdef1234567890
+          message: Refactor data loading pipeline.
+          parent_ids:
+          - f1e2d3c4b5a67890fedcba9876543210
+          timestamp: '2025-01-01T10:00:00Z'
+        status: success
+        status_message: resource_found
+    CompareSummary:
       properties:
-        alias_as:
-          type:
-          - string
-          - 'null'
-        compare_method:
-          type:
-          - string
-          - 'null'
-        left:
-          type: string
-        right:
-          type: string
+        modifications:
+          $ref: '#/components/schemas/CompareTabularMods'
+        schema:
+          $ref: '#/components/schemas/Schema'
       required:
-      - left
-      - right
+      - modifications
+      - schema
       type: object
+    CompareTabularMods:
+      properties:
+        added_rows:
+          minimum: 0
+          type: integer
+        modified_rows:
+          minimum: 0
+          type: integer
+        removed_rows:
+          minimum: 0
+          type: integer
+      required:
+      - added_rows
+      - removed_rows
+      - modified_rows
+      type: object
+    CompareSchemaDiff:
+      properties:
+        added_cols:
+          items:
+            $ref: '#/components/schemas/CompareSchemaColumn'
+          type: array
+        removed_cols:
+          items:
+            $ref: '#/components/schemas/CompareSchemaColumn'
+          type: array
+      required:
+      - added_cols
+      - removed_cols
+      type: object
+    DataFrameSize:
+      properties:
+        height:
+          minimum: 0
+          type: integer
+        width:
+          minimum: 0
+          type: integer
+      required:
+      - height
+      - width
+      type: object
+    JsonDataFrameViewResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          commit:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/Commit'
+          data_frame:
+            $ref: '#/components/schemas/JsonDataFrameViews'
+          derived_resource:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/DerivedDFResource'
+          resource:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/ResourceVersion'
+        required:
+        - data_frame
+        type: object
     TabularCompareBody:
       properties:
         compare:
@@ -894,15 +821,15 @@ components:
       - compare
       - display
       type: object
-    TabularCompareResourceBody:
+    CompareSourceSchemas:
       properties:
-        path:
-          type: string
-        version:
-          type: string
+        left:
+          $ref: '#/components/schemas/Schema'
+        right:
+          $ref: '#/components/schemas/Schema'
       required:
-      - path
-      - version
+      - left
+      - right
       type: object
     Schema:
       properties:
@@ -917,39 +844,112 @@ components:
       - hash
       - fields
       type: object
-    JsonDataFrameViewResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          commit:
-            oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/Commit'
-          data_frame:
-            $ref: '#/components/schemas/JsonDataFrameViews'
-          derived_resource:
-            oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/DerivedDFResource'
-          resource:
-            oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/ResourceVersion'
-        required:
-        - data_frame
-        type: object
-    CompareSchemaColumn:
+    TabularCompareResourceBody:
       properties:
-        dtype:
+        path:
           type: string
-        key:
+        version:
+          type: string
+      required:
+      - path
+      - version
+      type: object
+    TabularCompareFieldBody:
+      properties:
+        alias_as:
+          type:
+          - string
+          - 'null'
+        compare_method:
+          type:
+          - string
+          - 'null'
+        left:
+          type: string
+        right:
+          type: string
+      required:
+      - left
+      - right
+      type: object
+    Pagination:
+      properties:
+        page_number:
+          minimum: 0
+          type: integer
+        page_size:
+          minimum: 0
+          type: integer
+        total_entries:
+          minimum: 0
+          type: integer
+        total_pages:
+          minimum: 0
+          type: integer
+      required:
+      - page_size
+      - page_number
+      - total_pages
+      - total_entries
+      type: object
+    TabularCompareTargetBody:
+      properties:
+        compare_method:
+          type:
+          - string
+          - 'null'
+        left:
+          type:
+          - string
+          - 'null'
+        right:
+          type:
+          - string
+          - 'null'
+      type: object
+    Changes:
+      properties:
+        previous:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/PreviousField'
+        status:
+          type: string
+      required:
+      - status
+      type: object
+    NewColumn:
+      properties:
+        data_type:
           type: string
         name:
           type: string
       required:
       - name
-      - key
-      - dtype
+      - data_type
+      type: object
+    DFOptsView:
+      properties:
+        opts:
+          items:
+            $ref: '#/components/schemas/DFOptView'
+          type: array
+      required:
+      - opts
+      type: object
+    CompareDupes:
+      properties:
+        left:
+          format: int64
+          minimum: 0
+          type: integer
+        right:
+          format: int64
+          minimum: 0
+          type: integer
+      required:
+      - left
+      - right
       type: object
   securitySchemes:
     api_key:

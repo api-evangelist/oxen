@@ -690,6 +690,28 @@ paths:
       - 'Fine Tunes:'
 components:
   schemas:
+    CheckpointDeploymentResponse:
+      description: Standard wrapper for checkpoint deployment responses.
+      properties:
+        deployment_id:
+          description: ID of the created Baseten deployment.
+          type: string
+        fine_tune:
+          anyOf:
+          - $ref: '#/components/schemas/FineTuneRun'
+          description: Fine-tune job the deployed checkpoint belongs to.
+        model:
+          additionalProperties: true
+          description: Model record created for this checkpoint deployment.
+          type: object
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+      title: CheckpointDeploymentResponse
+      type: object
     CreateCheckpointDeploymentRequest:
       description: Request payload to deploy a specific checkpoint from a fine-tune job.
       properties:
@@ -701,6 +723,212 @@ components:
           - normal
           type: string
       title: CreateCheckpointDeploymentRequest
+      type: object
+    CheckpointListResponse:
+      description: Standard wrapper for the list-checkpoints response.
+      properties:
+        branch:
+          description: Oxen branch where the model and its checkpoints are stored.
+          type: string
+        checkpoints:
+          description: Checkpoints saved during the fine-tune run, sorted by step ascending.
+          items:
+            $ref: '#/components/schemas/Checkpoint'
+          type: array
+        fine_tune_id:
+          description: ID of the fine-tune job these checkpoints belong to.
+          type: string
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+        total_checkpoints:
+          description: Total number of checkpoints returned.
+          type: integer
+      title: CheckpointListResponse
+      type: object
+    FineTuneListResponse:
+      description: Standard wrapper for fine-tune list responses.
+      properties:
+        fine_tunes:
+          description: List of fine-tune job resources
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/FineTune'
+          type: array
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+      title: FineTuneListResponse
+      type: object
+    FineTuneResponse:
+      description: Standard wrapper for fine-tune responses.
+      properties:
+        fine_tune:
+          anyOf:
+          - $ref: '#/components/schemas/FineTune'
+          description: Fine-tune job resource
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+      title: FineTuneResponse
+      type: object
+    CreateFineTuneRequest:
+      description: 'Request payload to create a fine-tune job for a repository.
+
+        '
+      properties:
+        base_model:
+          description: Canonical name of the base model to fine-tune
+          type: string
+        is_public:
+          default: false
+          description: Whether the resulting fine-tuned model should be public. Defaults to false.
+          type: boolean
+        oxen_model_path:
+          description: Optional override for where the resulting model weights live in Oxen. Defaults to the fine-tune resource.
+          type:
+          - string
+          - 'null'
+        resource:
+          description: Repository path to the training data file or directory
+          type: string
+        script_type:
+          description: Name of the fine-tune script to run
+          type: string
+        training_params:
+          additionalProperties: true
+          description: Training configuration parameters
+          properties:
+            batch_size:
+              description: Per-device batch size used during training.
+              type: integer
+            caption_column:
+              description: Name of the column containing text captions or prompts.
+              type: string
+            gradient_accumulation:
+              description: Number of steps to accumulate gradients before an optimizer step.
+              type: integer
+            image_column:
+              description: Name of the column containing image file paths.
+              type: string
+            learning_rate:
+              description: Base learning rate for the optimizer.
+              format: float
+              type: number
+            lora_alpha:
+              description: LoRA alpha scaling factor for LoRA fine-tuning approaches.
+              type: integer
+            lora_rank:
+              description: LoRA rank used for low-rank adaptation layers.
+              type: integer
+            sample_every:
+              description: Interval (in steps) at which to generate samples.
+              type: integer
+            samples:
+              description: Number of sample generations to produce at each sampling interval.
+              type: integer
+            steps:
+              description: Total number of training steps to run.
+              type: integer
+            timestep_type:
+              description: Strategy for sampling timesteps during training (for example, 'weighted').
+              type: string
+            use_lora:
+              default: true
+              description: Whether to use LoRA fine-tuning (true) or full fine-tuning (false). If omitted, defaults to true.
+              type: boolean
+          type: object
+      required:
+      - resource
+      - base_model
+      - script_type
+      title: CreateFineTuneRequest
+      type: object
+    Checkpoint:
+      description: 'A single training checkpoint produced by a fine-tune run. Each checkpoint
+
+        corresponds to a step directory in the model''s Oxen branch and may carry
+
+        metrics, inference samples, and (if previously deployed) deployment status.
+
+        '
+      properties:
+        created_at:
+          description: Timestamp of the commit that produced this checkpoint.
+          format: date_time
+          type:
+          - string
+          - 'null'
+        deployment_status:
+          description: Current Baseten deployment status for this checkpoint, if it has been deployed.
+          type:
+          - string
+          - 'null'
+        inference_samples:
+          description: Sample generations produced at this checkpoint, if any.
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        metrics:
+          additionalProperties: true
+          description: Training metrics recorded at this step (when training logs are available).
+          properties:
+            epoch:
+              format: float
+              type:
+              - number
+              - 'null'
+            grad_norm:
+              format: float
+              type:
+              - number
+              - 'null'
+            learning_rate:
+              format: float
+              type:
+              - number
+              - 'null'
+            loss:
+              format: float
+              type:
+              - number
+              - 'null'
+            mean_token_accuracy:
+              format: float
+              type:
+              - number
+              - 'null'
+          type: object
+        model_id:
+          description: ID of the deployed Model row backing this checkpoint, if it has been deployed.
+          type:
+          - string
+          - 'null'
+        model_name:
+          description: Canonical model name used when this checkpoint is deployed (e.g. '<fine_tune_name>-step-<step>').
+          type: string
+        path:
+          description: Path within the model branch where the checkpoint is stored.
+          type: string
+        size_bytes:
+          description: Total size in bytes of the checkpoint directory.
+          type:
+          - integer
+          - 'null'
+        step:
+          description: Training step number this checkpoint was saved at.
+          type: integer
+      title: Checkpoint
       type: object
     FineTune:
       description: 'Fine-tune job resource.
@@ -731,27 +959,35 @@ components:
           type: string
       title: FineTune
       type: object
-    CheckpointDeploymentResponse:
-      description: Standard wrapper for checkpoint deployment responses.
+    FineTuneStopResponse:
+      description: Standard wrapper for fine-tune /stop responses.
       properties:
-        deployment_id:
-          description: ID of the created Baseten deployment.
-          type: string
         fine_tune:
           anyOf:
           - $ref: '#/components/schemas/FineTuneRun'
-          description: Fine-tune job the deployed checkpoint belongs to.
-        model:
-          additionalProperties: true
-          description: Model record created for this checkpoint deployment.
-          type: object
+          description: Fine-tune job resource as returned by /stop
         status:
           description: High-level status string (for example, 'success').
           type: string
         status_message:
           description: Human-readable status message (for example, 'resource_found').
           type: string
-      title: CheckpointDeploymentResponse
+      title: FineTuneStopResponse
+      type: object
+    FineTuneRunResponse:
+      description: Standard wrapper for fine-tune /run responses.
+      properties:
+        fine_tune:
+          anyOf:
+          - $ref: '#/components/schemas/FineTuneRun'
+          description: Fine-tune job resource as returned by /run
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+      title: FineTuneRunResponse
       type: object
     FineTuneRun:
       additionalProperties: true
@@ -993,242 +1229,6 @@ components:
           description: Whether LoRA fine-tuning is enabled
           type: boolean
       title: FineTuneRun
-      type: object
-    FineTuneResponse:
-      description: Standard wrapper for fine-tune responses.
-      properties:
-        fine_tune:
-          anyOf:
-          - $ref: '#/components/schemas/FineTune'
-          description: Fine-tune job resource
-        status:
-          description: High-level status string (for example, 'success').
-          type: string
-        status_message:
-          description: Human-readable status message (for example, 'resource_found').
-          type: string
-      title: FineTuneResponse
-      type: object
-    FineTuneListResponse:
-      description: Standard wrapper for fine-tune list responses.
-      properties:
-        fine_tunes:
-          description: List of fine-tune job resources
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/FineTune'
-          type: array
-        status:
-          description: High-level status string (for example, 'success').
-          type: string
-        status_message:
-          description: Human-readable status message (for example, 'resource_found').
-          type: string
-      title: FineTuneListResponse
-      type: object
-    CreateFineTuneRequest:
-      description: 'Request payload to create a fine-tune job for a repository.
-
-        '
-      properties:
-        base_model:
-          description: Canonical name of the base model to fine-tune
-          type: string
-        is_public:
-          default: false
-          description: Whether the resulting fine-tuned model should be public. Defaults to false.
-          type: boolean
-        oxen_model_path:
-          description: Optional override for where the resulting model weights live in Oxen. Defaults to the fine-tune resource.
-          type:
-          - string
-          - 'null'
-        resource:
-          description: Repository path to the training data file or directory
-          type: string
-        script_type:
-          description: Name of the fine-tune script to run
-          type: string
-        training_params:
-          additionalProperties: true
-          description: Training configuration parameters
-          properties:
-            batch_size:
-              description: Per-device batch size used during training.
-              type: integer
-            caption_column:
-              description: Name of the column containing text captions or prompts.
-              type: string
-            gradient_accumulation:
-              description: Number of steps to accumulate gradients before an optimizer step.
-              type: integer
-            image_column:
-              description: Name of the column containing image file paths.
-              type: string
-            learning_rate:
-              description: Base learning rate for the optimizer.
-              format: float
-              type: number
-            lora_alpha:
-              description: LoRA alpha scaling factor for LoRA fine-tuning approaches.
-              type: integer
-            lora_rank:
-              description: LoRA rank used for low-rank adaptation layers.
-              type: integer
-            sample_every:
-              description: Interval (in steps) at which to generate samples.
-              type: integer
-            samples:
-              description: Number of sample generations to produce at each sampling interval.
-              type: integer
-            steps:
-              description: Total number of training steps to run.
-              type: integer
-            timestep_type:
-              description: Strategy for sampling timesteps during training (for example, 'weighted').
-              type: string
-            use_lora:
-              default: true
-              description: Whether to use LoRA fine-tuning (true) or full fine-tuning (false). If omitted, defaults to true.
-              type: boolean
-          type: object
-      required:
-      - resource
-      - base_model
-      - script_type
-      title: CreateFineTuneRequest
-      type: object
-    FineTuneRunResponse:
-      description: Standard wrapper for fine-tune /run responses.
-      properties:
-        fine_tune:
-          anyOf:
-          - $ref: '#/components/schemas/FineTuneRun'
-          description: Fine-tune job resource as returned by /run
-        status:
-          description: High-level status string (for example, 'success').
-          type: string
-        status_message:
-          description: Human-readable status message (for example, 'resource_found').
-          type: string
-      title: FineTuneRunResponse
-      type: object
-    FineTuneStopResponse:
-      description: Standard wrapper for fine-tune /stop responses.
-      properties:
-        fine_tune:
-          anyOf:
-          - $ref: '#/components/schemas/FineTuneRun'
-          description: Fine-tune job resource as returned by /stop
-        status:
-          description: High-level status string (for example, 'success').
-          type: string
-        status_message:
-          description: Human-readable status message (for example, 'resource_found').
-          type: string
-      title: FineTuneStopResponse
-      type: object
-    Checkpoint:
-      description: 'A single training checkpoint produced by a fine-tune run. Each checkpoint
-
-        corresponds to a step directory in the model''s Oxen branch and may carry
-
-        metrics, inference samples, and (if previously deployed) deployment status.
-
-        '
-      properties:
-        created_at:
-          description: Timestamp of the commit that produced this checkpoint.
-          format: date_time
-          type:
-          - string
-          - 'null'
-        deployment_status:
-          description: Current Baseten deployment status for this checkpoint, if it has been deployed.
-          type:
-          - string
-          - 'null'
-        inference_samples:
-          description: Sample generations produced at this checkpoint, if any.
-          items:
-            additionalProperties: true
-            type: object
-          type: array
-        metrics:
-          additionalProperties: true
-          description: Training metrics recorded at this step (when training logs are available).
-          properties:
-            epoch:
-              format: float
-              type:
-              - number
-              - 'null'
-            grad_norm:
-              format: float
-              type:
-              - number
-              - 'null'
-            learning_rate:
-              format: float
-              type:
-              - number
-              - 'null'
-            loss:
-              format: float
-              type:
-              - number
-              - 'null'
-            mean_token_accuracy:
-              format: float
-              type:
-              - number
-              - 'null'
-          type: object
-        model_id:
-          description: ID of the deployed Model row backing this checkpoint, if it has been deployed.
-          type:
-          - string
-          - 'null'
-        model_name:
-          description: Canonical model name used when this checkpoint is deployed (e.g. '<fine_tune_name>-step-<step>').
-          type: string
-        path:
-          description: Path within the model branch where the checkpoint is stored.
-          type: string
-        size_bytes:
-          description: Total size in bytes of the checkpoint directory.
-          type:
-          - integer
-          - 'null'
-        step:
-          description: Training step number this checkpoint was saved at.
-          type: integer
-      title: Checkpoint
-      type: object
-    CheckpointListResponse:
-      description: Standard wrapper for the list-checkpoints response.
-      properties:
-        branch:
-          description: Oxen branch where the model and its checkpoints are stored.
-          type: string
-        checkpoints:
-          description: Checkpoints saved during the fine-tune run, sorted by step ascending.
-          items:
-            $ref: '#/components/schemas/Checkpoint'
-          type: array
-        fine_tune_id:
-          description: ID of the fine-tune job these checkpoints belong to.
-          type: string
-        status:
-          description: High-level status string (for example, 'success').
-          type: string
-        status_message:
-          description: Human-readable status message (for example, 'resource_found').
-          type: string
-        total_checkpoints:
-          description: Total number of checkpoints returned.
-          type: integer
-      title: CheckpointListResponse
       type: object
   securitySchemes:
     authorization:

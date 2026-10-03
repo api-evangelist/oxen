@@ -73,79 +73,6 @@ paths:
       - Evaluations
 components:
   schemas:
-    CreateEvaluationRequest:
-      description: 'Request payload to create an evaluation.
-
-
-        The resource path (branch + file path) is specified in the URL after `/evaluations/`,
-
-        for example: `POST /api/repos/{namespace}/{repo}/evaluations/main/datasets/training.parquet`.
-
-        '
-      properties:
-        auto_commit:
-          default: false
-          description: If true, automatically commit the results when the evaluation completes
-          type: boolean
-        batch_size:
-          default: 10
-          description: Number of rows to process per inference batch
-          type: integer
-        commit_message:
-          description: Commit message used when auto_commit is true
-          type:
-          - string
-          - 'null'
-        input_type:
-          description: Type of input data
-          enum:
-          - text
-          - image
-          - video
-          type: string
-        is_sample:
-          default: false
-          description: If true, only evaluate a subset of rows. If false, evaluate all rows.
-          type: boolean
-        model_id:
-          description: ID of the model to run inference with
-          format: uuid
-          type: string
-        name:
-          description: Human-readable name for the evaluation
-          type: string
-        output_type:
-          description: Type of output produced by the model
-          enum:
-          - text
-          - image
-          - video
-          - embeddings
-          type: string
-        prompt:
-          description: Prompt template sent to the model. Use `{column_name}` placeholders to inject values from each row.
-          type: string
-        sample_count:
-          default: 10
-          description: Number of rows to sample when is_sample is true
-          type: integer
-        target_branch:
-          description: Branch where evaluation results are committed
-          type: string
-        target_column:
-          description: Column where the model output will be written
-          type: string
-        target_path:
-          description: File path for the output data frame
-          type: string
-      required:
-      - prompt
-      - input_type
-      - output_type
-      - model_id
-      - target_column
-      title: CreateEvaluationRequest
-      type: object
     Evaluation:
       description: An evaluation resource representing a model inference run over a dataset.
       properties:
@@ -300,6 +227,79 @@ components:
           description: Human-readable status message (for example, 'resource_found').
           type: string
       title: EvaluationResponse
+      type: object
+    CreateEvaluationRequest:
+      description: 'Request payload to create an evaluation.
+
+
+        The resource path (branch + file path) is specified in the URL after `/evaluations/`,
+
+        for example: `POST /api/repos/{namespace}/{repo}/evaluations/main/datasets/training.parquet`.
+
+        '
+      properties:
+        auto_commit:
+          default: false
+          description: If true, automatically commit the results when the evaluation completes
+          type: boolean
+        batch_size:
+          default: 10
+          description: Number of rows to process per inference batch
+          type: integer
+        commit_message:
+          description: Commit message used when auto_commit is true
+          type:
+          - string
+          - 'null'
+        input_type:
+          description: Type of input data
+          enum:
+          - text
+          - image
+          - video
+          type: string
+        is_sample:
+          default: false
+          description: If true, only evaluate a subset of rows. If false, evaluate all rows.
+          type: boolean
+        model_id:
+          description: ID of the model to run inference with
+          format: uuid
+          type: string
+        name:
+          description: Human-readable name for the evaluation
+          type: string
+        output_type:
+          description: Type of output produced by the model
+          enum:
+          - text
+          - image
+          - video
+          - embeddings
+          type: string
+        prompt:
+          description: Prompt template sent to the model. Use `{column_name}` placeholders to inject values from each row.
+          type: string
+        sample_count:
+          default: 10
+          description: Number of rows to sample when is_sample is true
+          type: integer
+        target_branch:
+          description: Branch where evaluation results are committed
+          type: string
+        target_column:
+          description: Column where the model output will be written
+          type: string
+        target_path:
+          description: File path for the output data frame
+          type: string
+      required:
+      - prompt
+      - input_type
+      - output_type
+      - model_id
+      - target_column
+      title: CreateEvaluationRequest
       type: object
   securitySchemes:
     authorization:

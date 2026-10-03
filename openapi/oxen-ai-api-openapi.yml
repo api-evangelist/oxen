@@ -664,135 +664,6 @@ paths:
       - AI
 components:
   schemas:
-    ImageEditRequest:
-      properties:
-        image:
-          description: URL of the source image
-          type: string
-        mask:
-          description: URL of the mask image
-          type:
-          - string
-          - 'null'
-        model:
-          type: string
-        n:
-          default: 1
-          type: integer
-        prompt:
-          description: Text instruction for the edit
-          type: string
-        size:
-          type:
-          - string
-          - 'null'
-      required:
-      - model
-      - prompt
-      - image
-      title: ImageEditRequest
-      type: object
-    QueueListResponse:
-      description: Lean polling view of the workbench render queue. Active (`queued`/`processing`) rows by default; pass an explicit `status=` filter to include terminal rows. For paginated browse with cost aggregates, see `/api/ai/generations`.
-      properties:
-        count:
-          type: integer
-        generations:
-          items:
-            properties:
-              completed_at:
-                description: Unix timestamp
-                type:
-                - integer
-                - 'null'
-              enqueued_at:
-                description: Unix timestamp
-                type: integer
-              error_message:
-                type:
-                - string
-                - 'null'
-              generation_id:
-                format: uuid
-                type: string
-              media_type:
-                enum:
-                - image
-                - video
-                type: string
-              model_name:
-                type: string
-              result_url:
-                type:
-                - string
-                - 'null'
-              started_at:
-                description: Unix timestamp
-                type:
-                - integer
-                - 'null'
-              status:
-                enum:
-                - queued
-                - processing
-                - succeeded
-                - failed
-                - cancelled
-                type: string
-              target_directory:
-                type:
-                - string
-                - 'null'
-              target_namespace:
-                type:
-                - string
-                - 'null'
-              target_repo:
-                type:
-                - string
-                - 'null'
-            required:
-            - generation_id
-            - model_name
-            - media_type
-            - status
-            - enqueued_at
-            type: object
-          type: array
-      required:
-      - count
-      - generations
-      title: QueueListResponse
-      type: object
-    AudioGenerateResponse:
-      properties:
-        audios:
-          items:
-            properties:
-              url:
-                type: string
-            type: object
-          type: array
-        created:
-          type: integer
-        model:
-          type: string
-      title: AudioGenerateResponse
-      type: object
-    QueueDeleteResponse:
-      properties:
-        generation_id:
-          format: uuid
-          type: string
-        status:
-          enum:
-          - success
-          type: string
-      required:
-      - status
-      - generation_id
-      title: QueueDeleteResponse
-      type: object
     Model:
       description: Represents a model available for inference or fine-tuning. Compatible with the OpenAI model object.
       properties:
@@ -1002,45 +873,384 @@ components:
       - owned_by
       title: Model
       type: object
-    VideoGenerateRequest:
+    ChatCompletionResponse:
       properties:
-        aspect_ratio:
-          type:
-          - string
-          - 'null'
-        duration:
-          description: Duration in seconds
-          type:
-          - integer
-          - 'null'
+        choices:
+          items:
+            properties:
+              finish_reason:
+                type: string
+              index:
+                type: integer
+              message:
+                properties:
+                  content:
+                    type:
+                    - string
+                    - 'null'
+                  role:
+                    type: string
+                  tool_calls:
+                    items:
+                      type: object
+                    type:
+                    - array
+                    - 'null'
+                type: object
+            type: object
+          type: array
+        created:
+          type: integer
+        id:
+          type: string
         model:
           type: string
-        prompt:
-          description: Text prompt describing the desired video
+        object:
+          enum:
+          - chat.completion
           type: string
-        seed:
+        usage:
+          properties:
+            completion_tokens:
+              type: integer
+            prompt_tokens:
+              type: integer
+            total_tokens:
+              type: integer
+          type:
+          - object
+          - 'null'
+      title: ChatCompletionResponse
+      type: object
+    QueueDeleteResponse:
+      properties:
+        generation_id:
+          format: uuid
+          type: string
+        status:
+          enum:
+          - success
+          type: string
+      required:
+      - status
+      - generation_id
+      title: QueueDeleteResponse
+      type: object
+    ChatCompletionRequest:
+      description: Request to generate a chat completion. Compatible with the OpenAI chat completions API.
+      properties:
+        frequency_penalty:
+          type:
+          - number
+          - 'null'
+        max_tokens:
           type:
           - integer
+          - 'null'
+        messages:
+          items:
+            properties:
+              content:
+                oneOf:
+                - type: string
+                - items:
+                    type: object
+                  type: array
+              name:
+                type:
+                - string
+                - 'null'
+              role:
+                enum:
+                - system
+                - user
+                - assistant
+                - tool
+                type: string
+              tool_call_id:
+                type:
+                - string
+                - 'null'
+              tool_calls:
+                items:
+                  type: object
+                type:
+                - array
+                - 'null'
+            required:
+            - role
+            - content
+            type: object
+          type: array
+        model:
+          description: Model ID to use
+          example: gpt-4o
+          type: string
+        presence_penalty:
+          type:
+          - number
+          - 'null'
+        response_format:
+          type:
+          - object
+          - 'null'
+        stream:
+          default: false
+          type: boolean
+        temperature:
+          type:
+          - number
+          - 'null'
+        tool_choice:
+          oneOf:
+          - type: string
+          - type: object
+        tools:
+          items:
+            type: object
+          type:
+          - array
+          - 'null'
+        top_p:
+          type:
+          - number
           - 'null'
       required:
       - model
-      - prompt
-      title: VideoGenerateRequest
+      - messages
+      title: ChatCompletionRequest
       type: object
-    VideoGenerateResponse:
+    AudioGenerateResponse:
       properties:
-        created:
-          type: integer
-        model:
-          type: string
-        videos:
+        audios:
           items:
             properties:
               url:
                 type: string
             type: object
           type: array
-      title: VideoGenerateResponse
+        created:
+          type: integer
+        model:
+          type: string
+      title: AudioGenerateResponse
+      type: object
+    QueueCreateRequest:
+      description: Enqueue an async image or video generation job.
+      properties:
+        aspect_ratio:
+          type:
+          - string
+          - 'null'
+        duration:
+          type:
+          - integer
+          - 'null'
+        model:
+          description: Model ID to use
+          type: string
+        num_generations:
+          default: 1
+          maximum: 12
+          minimum: 1
+          type: integer
+        prompt:
+          description: Text prompt for generation
+          type: string
+        seed:
+          type:
+          - integer
+          - 'null'
+        target_directory:
+          type:
+          - string
+          - 'null'
+        target_namespace:
+          description: Namespace to store results. Defaults to current user.
+          type:
+          - string
+          - 'null'
+        target_repo:
+          type:
+          - string
+          - 'null'
+      required:
+      - model
+      - prompt
+      title: QueueCreateRequest
+      type: object
+    ImageGenerateResponse:
+      properties:
+        created:
+          type: integer
+        images:
+          items:
+            properties:
+              revised_prompt:
+                type:
+                - string
+                - 'null'
+              url:
+                type: string
+            type: object
+          type: array
+        model:
+          type: string
+      title: ImageGenerateResponse
+      type: object
+    QueueCreateResponse:
+      properties:
+        generations:
+          items:
+            properties:
+              generation_id:
+                format: uuid
+                type: string
+              status:
+                enum:
+                - queued
+                type: string
+            required:
+            - generation_id
+            - status
+            type: object
+          type: array
+      required:
+      - generations
+      title: QueueCreateResponse
+      type: object
+    QueueListResponse:
+      description: Lean polling view of the workbench render queue. Active (`queued`/`processing`) rows by default; pass an explicit `status=` filter to include terminal rows. For paginated browse with cost aggregates, see `/api/ai/generations`.
+      properties:
+        count:
+          type: integer
+        generations:
+          items:
+            properties:
+              completed_at:
+                description: Unix timestamp
+                type:
+                - integer
+                - 'null'
+              enqueued_at:
+                description: Unix timestamp
+                type: integer
+              error_message:
+                type:
+                - string
+                - 'null'
+              generation_id:
+                format: uuid
+                type: string
+              media_type:
+                enum:
+                - image
+                - video
+                type: string
+              model_name:
+                type: string
+              result_url:
+                type:
+                - string
+                - 'null'
+              started_at:
+                description: Unix timestamp
+                type:
+                - integer
+                - 'null'
+              status:
+                enum:
+                - queued
+                - processing
+                - succeeded
+                - failed
+                - cancelled
+                type: string
+              target_directory:
+                type:
+                - string
+                - 'null'
+              target_namespace:
+                type:
+                - string
+                - 'null'
+              target_repo:
+                type:
+                - string
+                - 'null'
+            required:
+            - generation_id
+            - model_name
+            - media_type
+            - status
+            - enqueued_at
+            type: object
+          type: array
+      required:
+      - count
+      - generations
+      title: QueueListResponse
+      type: object
+    AudioGenerateRequest:
+      properties:
+        audio_urls:
+          description: Reference audio URLs for voice cloning
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        image_url:
+          description: Reference image URL
+          type:
+          - string
+          - 'null'
+        model:
+          type: string
+        output_format:
+          description: wav, mp3, pcm, or ogg_opus
+          type:
+          - string
+          - 'null'
+        pitch:
+          type:
+          - integer
+          - 'null'
+        prompt:
+          description: Text prompt or text to synthesize
+          type: string
+        response_format:
+          description: url (default) or b64_json
+          type:
+          - string
+          - 'null'
+        sample_rate:
+          description: Output sample rate in Hz
+          type:
+          - integer
+          - 'null'
+        save_to_workbench:
+          description: Persist the generated audio to the workbench (default true)
+          type:
+          - boolean
+          - 'null'
+        speed:
+          type:
+          - number
+          - 'null'
+        voice:
+          description: Preset voice name or cloned voice ID
+          type:
+          - string
+          - 'null'
+        volume:
+          type:
+          - number
+          - 'null'
+      required:
+      - model
+      - prompt
+      title: AudioGenerateRequest
       type: object
     QueueGenerationResponse:
       description: Compact status payload for a single queued generation, used by the workbench to poll progress. For the full payload (cost, user, etc.), see `/api/ai/generations/:id`.
@@ -1103,22 +1313,6 @@ components:
       - status
       - enqueued_at
       title: QueueGenerationResponse
-      type: object
-    ListModelsResponse:
-      description: OpenAI-compatible response for listing models.
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/Model'
-          type: array
-        object:
-          enum:
-          - list
-          type: string
-      required:
-      - object
-      - data
-      title: ListModelsResponse
       type: object
     ImageGenerateRequest:
       properties:
@@ -1256,131 +1450,49 @@ components:
       - total_cost
       title: GenerationsListResponse
       type: object
-    AudioGenerateRequest:
+    ImageEditRequest:
       properties:
-        audio_urls:
-          description: Reference audio URLs for voice cloning
-          items:
-            type: string
-          type:
-          - array
-          - 'null'
-        image_url:
-          description: Reference image URL
+        image:
+          description: URL of the source image
+          type: string
+        mask:
+          description: URL of the mask image
           type:
           - string
           - 'null'
         model:
           type: string
-        output_format:
-          description: wav, mp3, pcm, or ogg_opus
-          type:
-          - string
-          - 'null'
-        pitch:
-          type:
-          - integer
-          - 'null'
-        prompt:
-          description: Text prompt or text to synthesize
-          type: string
-        response_format:
-          description: url (default) or b64_json
-          type:
-          - string
-          - 'null'
-        sample_rate:
-          description: Output sample rate in Hz
-          type:
-          - integer
-          - 'null'
-        save_to_workbench:
-          description: Persist the generated audio to the workbench (default true)
-          type:
-          - boolean
-          - 'null'
-        speed:
-          type:
-          - number
-          - 'null'
-        voice:
-          description: Preset voice name or cloned voice ID
-          type:
-          - string
-          - 'null'
-        volume:
-          type:
-          - number
-          - 'null'
-      required:
-      - model
-      - prompt
-      title: AudioGenerateRequest
-      type: object
-    QueueCreateResponse:
-      properties:
-        generations:
-          items:
-            properties:
-              generation_id:
-                format: uuid
-                type: string
-              status:
-                enum:
-                - queued
-                type: string
-            required:
-            - generation_id
-            - status
-            type: object
-          type: array
-      required:
-      - generations
-      title: QueueCreateResponse
-      type: object
-    QueueCreateRequest:
-      description: Enqueue an async image or video generation job.
-      properties:
-        aspect_ratio:
-          type:
-          - string
-          - 'null'
-        duration:
-          type:
-          - integer
-          - 'null'
-        model:
-          description: Model ID to use
-          type: string
-        num_generations:
+        n:
           default: 1
-          maximum: 12
-          minimum: 1
           type: integer
         prompt:
-          description: Text prompt for generation
+          description: Text instruction for the edit
           type: string
-        seed:
-          type:
-          - integer
-          - 'null'
-        target_directory:
-          type:
-          - string
-          - 'null'
-        target_namespace:
-          description: Namespace to store results. Defaults to current user.
-          type:
-          - string
-          - 'null'
-        target_repo:
+        size:
           type:
           - string
           - 'null'
       required:
       - model
       - prompt
-      title: QueueCreateRequest
+      - image
+      title: ImageEditRequest
+      type: object
+    ListModelsResponse:
+      description: OpenAI-compatible response for listing models.
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Model'
+          type: array
+        object:
+          enum:
+          - list
+          type: string
+      required:
+      - object
+      - data
+      title: ListModelsResponse
       type: object
     GenerationsShowResponse:
       description: Standard success envelope wrapping a single generation under `generation`. The inner object is the same per-row shape returned by the list endpoint (request params merged in at the top level), so the frontend can reuse one type for both.
@@ -1475,157 +1587,45 @@ components:
       - status_message
       title: GenerationsShowResponse
       type: object
-    ChatCompletionRequest:
-      description: Request to generate a chat completion. Compatible with the OpenAI chat completions API.
-      properties:
-        frequency_penalty:
-          type:
-          - number
-          - 'null'
-        max_tokens:
-          type:
-          - integer
-          - 'null'
-        messages:
-          items:
-            properties:
-              content:
-                oneOf:
-                - type: string
-                - items:
-                    type: object
-                  type: array
-              name:
-                type:
-                - string
-                - 'null'
-              role:
-                enum:
-                - system
-                - user
-                - assistant
-                - tool
-                type: string
-              tool_call_id:
-                type:
-                - string
-                - 'null'
-              tool_calls:
-                items:
-                  type: object
-                type:
-                - array
-                - 'null'
-            required:
-            - role
-            - content
-            type: object
-          type: array
-        model:
-          description: Model ID to use
-          example: gpt-4o
-          type: string
-        presence_penalty:
-          type:
-          - number
-          - 'null'
-        response_format:
-          type:
-          - object
-          - 'null'
-        stream:
-          default: false
-          type: boolean
-        temperature:
-          type:
-          - number
-          - 'null'
-        tool_choice:
-          oneOf:
-          - type: string
-          - type: object
-        tools:
-          items:
-            type: object
-          type:
-          - array
-          - 'null'
-        top_p:
-          type:
-          - number
-          - 'null'
-      required:
-      - model
-      - messages
-      title: ChatCompletionRequest
-      type: object
-    ChatCompletionResponse:
-      properties:
-        choices:
-          items:
-            properties:
-              finish_reason:
-                type: string
-              index:
-                type: integer
-              message:
-                properties:
-                  content:
-                    type:
-                    - string
-                    - 'null'
-                  role:
-                    type: string
-                  tool_calls:
-                    items:
-                      type: object
-                    type:
-                    - array
-                    - 'null'
-                type: object
-            type: object
-          type: array
-        created:
-          type: integer
-        id:
-          type: string
-        model:
-          type: string
-        object:
-          enum:
-          - chat.completion
-          type: string
-        usage:
-          properties:
-            completion_tokens:
-              type: integer
-            prompt_tokens:
-              type: integer
-            total_tokens:
-              type: integer
-          type:
-          - object
-          - 'null'
-      title: ChatCompletionResponse
-      type: object
-    ImageGenerateResponse:
+    VideoGenerateResponse:
       properties:
         created:
           type: integer
-        images:
+        model:
+          type: string
+        videos:
           items:
             properties:
-              revised_prompt:
-                type:
-                - string
-                - 'null'
               url:
                 type: string
             type: object
           type: array
+      title: VideoGenerateResponse
+      type: object
+    VideoGenerateRequest:
+      properties:
+        aspect_ratio:
+          type:
+          - string
+          - 'null'
+        duration:
+          description: Duration in seconds
+          type:
+          - integer
+          - 'null'
         model:
           type: string
-      title: ImageGenerateResponse
+        prompt:
+          description: Text prompt describing the desired video
+          type: string
+        seed:
+          type:
+          - integer
+          - 'null'
+      required:
+      - model
+      - prompt
+      title: VideoGenerateRequest
       type: object
   securitySchemes:
     authorization:

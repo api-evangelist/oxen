@@ -198,6 +198,20 @@ paths:
       - Version Files
 components:
   schemas:
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
     UploadVersionFile:
       properties:
         file:
@@ -206,6 +220,24 @@ components:
       required:
       - file
       type: object
+    ErrorFilesResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          err_files:
+            items:
+              $ref: '#/components/schemas/ErrorFileInfo'
+            type: array
+        type: object
+    VersionFileResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          version:
+            $ref: '#/components/schemas/VersionFile'
+        required:
+        - version
+        type: object
     ErrorFileInfo:
       properties:
         error:
@@ -220,24 +252,6 @@ components:
       - hash
       - error
       type: object
-    VersionFileResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          version:
-            $ref: '#/components/schemas/VersionFile'
-        required:
-        - version
-        type: object
-    ErrorFilesResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          err_files:
-            items:
-              $ref: '#/components/schemas/ErrorFileInfo'
-            type: array
-        type: object
     VersionFile:
       properties:
         hash:
@@ -249,20 +263,6 @@ components:
       required:
       - hash
       - size
-      type: object
-    StatusMessage:
-      properties:
-        oxen_version:
-          type:
-          - string
-          - 'null'
-        status:
-          type: string
-        status_message:
-          type: string
-      required:
-      - status
-      - status_message
       type: object
   securitySchemes:
     api_key:
