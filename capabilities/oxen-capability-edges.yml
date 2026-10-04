@@ -1,0 +1,36 @@
+slug: oxen
+provider: Oxen
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: 'Fine Tunes:'
+  spec_file: oxen-fine-tunes-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.9
+  evidence: POST /api/repos/{namespace}/{repo_name}/fine_tunes Create a fine-tune job; List checkpoints
+    for a fine-tune job; Deploy a checkpoint from a fine-tune job
+  reason: Full training-job lifecycle — create, run, stop, checkpoints, deployment, logs, tokenisation
+    — which is squarely AI/ML model lifecycle and MLOps management.
+- tag: AI
+  spec_file: oxen-ai-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.8
+  evidence: POST /api/ai/chat/completions ... Create chat completion; GET /api/ai/models List models;
+    DELETE /api/ai/models/{id} Delete custom model
+  reason: Operations expose model inference (chat, image, audio generation) and management of a model
+    catalogue including custom models — AI/ML model lifecycle and serving, i.e. Artificial Intelligence
+    Management. Not an industry-specific capability; the vendor is an AI/data platform.

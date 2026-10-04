@@ -287,6 +287,9 @@ x-enrichment:
   artifacts_added: 20
   pass: local-v1
 common:
+- type: CapabilityMap
+  url: capabilities/oxen-capability-edges.yml
+  name: Oxen Business Capability Map
 - type: Overlay
   url: overlays/oxen-hub-api-overlay.yaml
 - type: DomainSecurity
