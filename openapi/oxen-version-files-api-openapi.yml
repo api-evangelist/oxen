@@ -198,27 +198,17 @@ paths:
       - Version Files
 components:
   schemas:
-    StatusMessage:
+    VersionFile:
       properties:
-        oxen_version:
-          type:
-          - string
-          - 'null'
-        status:
+        hash:
           type: string
-        status_message:
-          type: string
+        size:
+          format: int64
+          minimum: 0
+          type: integer
       required:
-      - status
-      - status_message
-      type: object
-    UploadVersionFile:
-      properties:
-        file:
-          format: binary
-          type: string
-      required:
-      - file
+      - hash
+      - size
       type: object
     ErrorFilesResponse:
       allOf:
@@ -252,17 +242,27 @@ components:
       - hash
       - error
       type: object
-    VersionFile:
+    UploadVersionFile:
       properties:
-        hash:
+        file:
+          format: binary
           type: string
-        size:
-          format: int64
-          minimum: 0
-          type: integer
       required:
-      - hash
-      - size
+      - file
+      type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
       type: object
   securitySchemes:
     api_key:

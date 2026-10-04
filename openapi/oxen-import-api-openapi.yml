@@ -144,20 +144,6 @@ components:
       - email
       - timestamp
       type: object
-    StatusMessage:
-      properties:
-        oxen_version:
-          type:
-          - string
-          - 'null'
-        status:
-          type: string
-        status_message:
-          type: string
-      required:
-      - status
-      - status_message
-      type: object
     CommitResponse:
       allOf:
       - $ref: '#/components/schemas/StatusMessage'
@@ -249,6 +235,20 @@ components:
       required:
       - file
       title: ZipUploadBody
+      type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
       type: object
   securitySchemes:
     api_key:

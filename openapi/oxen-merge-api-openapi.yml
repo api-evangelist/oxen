@@ -118,20 +118,6 @@ paths:
       - Merge
 components:
   schemas:
-    StatusMessage:
-      properties:
-        oxen_version:
-          type:
-          - string
-          - 'null'
-        status:
-          type: string
-        status_message:
-          type: string
-      required:
-      - status
-      - status_message
-      type: object
     Commit:
       example:
         author: ox
@@ -165,26 +151,6 @@ components:
       - email
       - timestamp
       type: object
-    MergeSuccessResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          commits:
-            $ref: '#/components/schemas/MergeResult'
-        required:
-        - commits
-        type: object
-    MergeableResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - $ref: '#/components/schemas/Mergeable'
-    MergeConflictFile:
-      properties:
-        path:
-          type: string
-      required:
-      - path
-      type: object
     Mergeable:
       properties:
         commits:
@@ -214,6 +180,40 @@ components:
       - head
       - base
       - merge
+      type: object
+    MergeSuccessResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          commits:
+            $ref: '#/components/schemas/MergeResult'
+        required:
+        - commits
+        type: object
+    MergeConflictFile:
+      properties:
+        path:
+          type: string
+      required:
+      - path
+      type: object
+    MergeableResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - $ref: '#/components/schemas/Mergeable'
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
       type: object
   securitySchemes:
     api_key:

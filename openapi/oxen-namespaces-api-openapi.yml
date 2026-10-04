@@ -57,31 +57,6 @@ paths:
       - Namespaces
 components:
   schemas:
-    StatusMessage:
-      properties:
-        oxen_version:
-          type:
-          - string
-          - 'null'
-        status:
-          type: string
-        status_message:
-          type: string
-      required:
-      - status
-      - status_message
-      type: object
-    Namespace:
-      properties:
-        name:
-          type: string
-        storage_usage_gb:
-          format: double
-          type: number
-      required:
-      - name
-      - storage_usage_gb
-      type: object
     ListNamespacesResponse:
       allOf:
       - $ref: '#/components/schemas/StatusMessage'
@@ -99,13 +74,6 @@ components:
         - name: oxen
         status: success
         status_message: resource_found
-    NamespaceView:
-      properties:
-        namespace:
-          type: string
-      required:
-      - namespace
-      type: object
     NamespaceResponse:
       allOf:
       - $ref: '#/components/schemas/StatusMessage'
@@ -115,6 +83,38 @@ components:
         required:
         - namespace
         type: object
+    NamespaceView:
+      properties:
+        namespace:
+          type: string
+      required:
+      - namespace
+      type: object
+    Namespace:
+      properties:
+        name:
+          type: string
+        storage_usage_gb:
+          format: double
+          type: number
+      required:
+      - name
+      - storage_usage_gb
+      type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
   securitySchemes:
     api_key:
       bearerFormat: JWT

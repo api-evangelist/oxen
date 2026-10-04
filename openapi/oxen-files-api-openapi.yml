@@ -288,20 +288,6 @@ components:
       - new_path
       title: FileMoveBody
       type: object
-    StatusMessage:
-      properties:
-        oxen_version:
-          type:
-          - string
-          - 'null'
-        status:
-          type: string
-        status_message:
-          type: string
-      required:
-      - status
-      - status_message
-      type: object
     CommitResponse:
       allOf:
       - $ref: '#/components/schemas/StatusMessage'
@@ -361,6 +347,20 @@ components:
       required:
       - files
       title: FileUploadBody
+      type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
       type: object
   securitySchemes:
     api_key:

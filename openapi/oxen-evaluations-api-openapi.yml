@@ -73,6 +73,21 @@ paths:
       - Evaluations
 components:
   schemas:
+    EvaluationResponse:
+      description: Standard response wrapper for a single evaluation.
+      properties:
+        evaluation:
+          anyOf:
+          - $ref: '#/components/schemas/Evaluation'
+          description: Evaluation resource
+        status:
+          description: High-level status string (for example, 'success').
+          type: string
+        status_message:
+          description: Human-readable status message (for example, 'resource_found').
+          type: string
+      title: EvaluationResponse
+      type: object
     Evaluation:
       description: An evaluation resource representing a model inference run over a dataset.
       properties:
@@ -212,21 +227,6 @@ components:
           description: Total tokens (prompt + completion)
           type: integer
       title: Evaluation
-      type: object
-    EvaluationResponse:
-      description: Standard response wrapper for a single evaluation.
-      properties:
-        evaluation:
-          anyOf:
-          - $ref: '#/components/schemas/Evaluation'
-          description: Evaluation resource
-        status:
-          description: High-level status string (for example, 'success').
-          type: string
-        status_message:
-          description: Human-readable status message (for example, 'resource_found').
-          type: string
-      title: EvaluationResponse
       type: object
     CreateEvaluationRequest:
       description: 'Request payload to create an evaluation.
