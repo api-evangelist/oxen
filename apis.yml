@@ -287,6 +287,8 @@ x-enrichment:
   artifacts_added: 20
   pass: local-v1
 common:
+- type: Plans
+  url: plans/oxen-plans-pricing.yml
 - type: CapabilityMap
   url: capabilities/oxen-capability-edges.yml
   name: Oxen Business Capability Map
