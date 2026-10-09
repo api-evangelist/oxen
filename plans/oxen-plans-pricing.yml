@@ -1,0 +1,202 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-07'
+method: searched
+source: https://www.oxen.ai/pricing
+sources:
+- https://www.oxen.ai/pricing
+provenance:
+  tool: all/0-working/economics/harvest_pricing.py
+  run: 20261007T104522
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: tiered-subscription
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-07'
+  managed_tier: Hacker
+published: true
+note: Page combines subscription tiers (monthly/yearly, Save 8%), pay-as-you-go model token/image/video
+  pricing, hourly GPU pricing, and per-second fine-tuning. Non-profit/academic discounting via contact.
+plan_count: 12
+currency: USD
+plans:
+- name: Explorer
+  price_text: Free Forever!
+  currency: USD
+  period: month
+  included_quota: Unlimited public repositories with unlimited collaborators; 5 private repositories (max
+    3 collaborators); 50gb of data storage; 50gb of data transfer
+- name: Hacker
+  price_text: $30.00 per month
+  price: 30
+  currency: USD
+  period: month
+  included_quota: Everything in Explorer + unlimited private repositories; 100gb of data storage; 100gb
+    of data transfer
+  overage: more available
+- name: Pro
+  price_text: $60.00 per month
+  price: 60
+  currency: USD
+  period: month
+  included_quota: Everything in Hacker + 500gb of data storage; 500gb of data transfer
+  overage: more available
+- name: Claude Fable 5.1 input
+  price_text: $11.00 / 1M tokens
+  price: 11
+  currency: USD
+  period: per-use
+  unit: 1M input tokens
+- name: Claude Fable 5.1 output
+  price_text: $55.00 / 1M tokens
+  price: 55
+  currency: USD
+  period: per-use
+  unit: 1M output tokens
+- name: GPT 6.1 Sol input
+  price_text: $2.60 / 1M tokens
+  price: 2.6
+  currency: USD
+  period: per-use
+  unit: 1M input tokens
+- name: GPT 6 Luna input
+  price_text: $0.13 / 1M tokens
+  price: 0.13
+  currency: USD
+  period: per-use
+  unit: 1M input tokens
+- name: Seedance 2.5 video 1080p
+  price_text: $0.61 / sec
+  price: 0.61
+  currency: USD
+  period: per-use
+  unit: video output second
+- name: GPU A10G
+  price_text: $1.65/hr
+  price: 1.65
+  currency: USD
+  period: per-use
+  unit: hour
+- name: GPU H100
+  price_text: $4.87/hr
+  price: 4.87
+  currency: USD
+  period: per-use
+  unit: hour
+- name: GPU H200
+  price_text: $9.98/hr
+  price: 9.98
+  currency: USD
+  period: per-use
+  unit: hour
+- name: GPU 8xH100
+  price_text: $38.99/hr
+  price: 38.99
+  currency: USD
+  period: per-use
+  unit: hour
+rate_limit_statements:
+- Dedicated GPUs charge per second of use and will automatically shut down after 15 minutes of inactivity.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - hybrid
+  units:
+  - compute
+  - token
+  plans:
+  - name: Explorer
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Hacker
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Pro
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Claude Fable 5.1 input
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - token
+    periods:
+    - other
+  - name: Claude Fable 5.1 output
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - token
+    periods:
+    - other
+  - name: GPT 6.1 Sol input
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - token
+    periods:
+    - other
+  - name: GPT 6 Luna input
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - token
+    periods:
+    - other
+  - name: Seedance 2.5 video 1080p
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: GPU A10G
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: GPU H100
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: GPU H200
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: GPU 8xH100
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
