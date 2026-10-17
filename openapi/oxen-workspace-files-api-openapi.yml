@@ -373,15 +373,6 @@ paths:
       - Workspace Files
 components:
   schemas:
-    ErrorFilesResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          err_files:
-            items:
-              $ref: '#/components/schemas/ErrorFileInfo'
-            type: array
-        type: object
     FileWithHash:
       properties:
         hash:
@@ -392,6 +383,15 @@ components:
       - hash
       - path
       type: object
+    ErrorFilesResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          err_files:
+            items:
+              $ref: '#/components/schemas/ErrorFileInfo'
+            type: array
+        type: object
     FilePathsResponse:
       allOf:
       - $ref: '#/components/schemas/StatusMessage'
@@ -403,6 +403,20 @@ components:
         required:
         - paths
         type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
     ErrorFileInfo:
       properties:
         error:
@@ -424,20 +438,6 @@ components:
           type: string
       required:
       - file
-      type: object
-    StatusMessage:
-      properties:
-        oxen_version:
-          type:
-          - string
-          - 'null'
-        status:
-          type: string
-        status_message:
-          type: string
-      required:
-      - status
-      - status_message
       type: object
   securitySchemes:
     api_key:

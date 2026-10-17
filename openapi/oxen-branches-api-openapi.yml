@@ -345,13 +345,6 @@ paths:
       - Branches
 components:
   schemas:
-    BranchUpdate:
-      properties:
-        commit_id:
-          type: string
-      required:
-      - commit_id
-      type: object
     PaginatedEntryVersions:
       allOf:
       - $ref: '#/components/schemas/Pagination'
@@ -362,6 +355,30 @@ components:
             type: array
         required:
         - versions
+        type: object
+    ListBranchesResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          branches:
+            items:
+              $ref: '#/components/schemas/Branch'
+            type: array
+        required:
+        - branches
+        type: object
+    PaginatedEntryVersionsResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - $ref: '#/components/schemas/PaginatedEntryVersions'
+      - properties:
+          branch:
+            $ref: '#/components/schemas/Branch'
+          path:
+            type: string
+        required:
+        - branch
+        - path
         type: object
     Commit:
       example:
@@ -396,35 +413,20 @@ components:
       - email
       - timestamp
       type: object
-    Pagination:
+    StatusMessage:
       properties:
-        page_number:
-          minimum: 0
-          type: integer
-        page_size:
-          minimum: 0
-          type: integer
-        total_entries:
-          minimum: 0
-          type: integer
-        total_pages:
-          minimum: 0
-          type: integer
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
       required:
-      - page_size
-      - page_number
-      - total_pages
-      - total_entries
+      - status
+      - status_message
       type: object
-    BranchResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          branch:
-            $ref: '#/components/schemas/Branch'
-        required:
-        - branch
-        type: object
     ResourceVersion:
       properties:
         path:
@@ -449,6 +451,16 @@ components:
       - commit
       - resource
       type: object
+    BranchNewFromBranchName:
+      properties:
+        from_name:
+          type: string
+        new_name:
+          type: string
+      required:
+      - new_name
+      - from_name
+      type: object
     CommitResponse:
       allOf:
       - $ref: '#/components/schemas/StatusMessage'
@@ -469,50 +481,26 @@ components:
           timestamp: '2025-01-01T10:00:00Z'
         status: success
         status_message: resource_found
-    BranchNewFromBranchName:
+    Pagination:
       properties:
-        from_name:
-          type: string
-        new_name:
-          type: string
+        page_number:
+          minimum: 0
+          type: integer
+        page_size:
+          minimum: 0
+          type: integer
+        total_entries:
+          minimum: 0
+          type: integer
+        total_pages:
+          minimum: 0
+          type: integer
       required:
-      - new_name
-      - from_name
+      - page_size
+      - page_number
+      - total_pages
+      - total_entries
       type: object
-    BranchRemoteMerge:
-      properties:
-        client_commit_id:
-          type: string
-        server_commit_id:
-          type: string
-      required:
-      - client_commit_id
-      - server_commit_id
-      type: object
-    PaginatedEntryVersionsResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - $ref: '#/components/schemas/PaginatedEntryVersions'
-      - properties:
-          branch:
-            $ref: '#/components/schemas/Branch'
-          path:
-            type: string
-        required:
-        - branch
-        - path
-        type: object
-    ListBranchesResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          branches:
-            items:
-              $ref: '#/components/schemas/Branch'
-            type: array
-        required:
-        - branches
-        type: object
     Branch:
       properties:
         commit_id:
@@ -523,19 +511,31 @@ components:
       - name
       - commit_id
       type: object
-    StatusMessage:
+    BranchResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          branch:
+            $ref: '#/components/schemas/Branch'
+        required:
+        - branch
+        type: object
+    BranchRemoteMerge:
       properties:
-        oxen_version:
-          type:
-          - string
-          - 'null'
-        status:
+        client_commit_id:
           type: string
-        status_message:
+        server_commit_id:
           type: string
       required:
-      - status
-      - status_message
+      - client_commit_id
+      - server_commit_id
+      type: object
+    BranchUpdate:
+      properties:
+        commit_id:
+          type: string
+      required:
+      - commit_id
       type: object
   securitySchemes:
     api_key:

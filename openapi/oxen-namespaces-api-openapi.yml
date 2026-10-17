@@ -74,32 +74,12 @@ components:
         - name: oxen
         status: success
         status_message: resource_found
-    NamespaceResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          namespace:
-            $ref: '#/components/schemas/Namespace'
-        required:
-        - namespace
-        type: object
     NamespaceView:
       properties:
         namespace:
           type: string
       required:
       - namespace
-      type: object
-    Namespace:
-      properties:
-        name:
-          type: string
-        storage_usage_gb:
-          format: double
-          type: number
-      required:
-      - name
-      - storage_usage_gb
       type: object
     StatusMessage:
       properties:
@@ -114,6 +94,26 @@ components:
       required:
       - status
       - status_message
+      type: object
+    NamespaceResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          namespace:
+            $ref: '#/components/schemas/Namespace'
+        required:
+        - namespace
+        type: object
+    Namespace:
+      properties:
+        name:
+          type: string
+        storage_usage_gb:
+          format: double
+          type: number
+      required:
+      - name
+      - storage_usage_gb
       type: object
   securitySchemes:
     api_key:

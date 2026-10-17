@@ -118,6 +118,10 @@ paths:
       - Merge
 components:
   schemas:
+    MergeableResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - $ref: '#/components/schemas/Mergeable'
     Commit:
       example:
         author: ox
@@ -151,6 +155,49 @@ components:
       - email
       - timestamp
       type: object
+    StatusMessage:
+      properties:
+        oxen_version:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        status_message:
+          type: string
+      required:
+      - status
+      - status_message
+      type: object
+    MergeSuccessResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          commits:
+            $ref: '#/components/schemas/MergeResult'
+        required:
+        - commits
+        type: object
+    MergeResult:
+      properties:
+        base:
+          $ref: '#/components/schemas/Commit'
+        head:
+          $ref: '#/components/schemas/Commit'
+        merge:
+          $ref: '#/components/schemas/Commit'
+      required:
+      - head
+      - base
+      - merge
+      type: object
+    MergeConflictFile:
+      properties:
+        path:
+          type: string
+      required:
+      - path
+      type: object
     Mergeable:
       properties:
         commits:
@@ -167,53 +214,6 @@ components:
       - is_mergeable
       - conflicts
       - commits
-      type: object
-    MergeResult:
-      properties:
-        base:
-          $ref: '#/components/schemas/Commit'
-        head:
-          $ref: '#/components/schemas/Commit'
-        merge:
-          $ref: '#/components/schemas/Commit'
-      required:
-      - head
-      - base
-      - merge
-      type: object
-    MergeSuccessResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          commits:
-            $ref: '#/components/schemas/MergeResult'
-        required:
-        - commits
-        type: object
-    MergeConflictFile:
-      properties:
-        path:
-          type: string
-      required:
-      - path
-      type: object
-    MergeableResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - $ref: '#/components/schemas/Mergeable'
-    StatusMessage:
-      properties:
-        oxen_version:
-          type:
-          - string
-          - 'null'
-        status:
-          type: string
-        status_message:
-          type: string
-      required:
-      - status
-      - status_message
       type: object
   securitySchemes:
     api_key:

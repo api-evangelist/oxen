@@ -198,6 +198,23 @@ paths:
       - Version Files
 components:
   schemas:
+    ErrorFilesResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          err_files:
+            items:
+              $ref: '#/components/schemas/ErrorFileInfo'
+            type: array
+        type: object
+    UploadVersionFile:
+      properties:
+        file:
+          format: binary
+          type: string
+      required:
+      - file
+      type: object
     VersionFile:
       properties:
         hash:
@@ -209,46 +226,6 @@ components:
       required:
       - hash
       - size
-      type: object
-    ErrorFilesResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          err_files:
-            items:
-              $ref: '#/components/schemas/ErrorFileInfo'
-            type: array
-        type: object
-    VersionFileResponse:
-      allOf:
-      - $ref: '#/components/schemas/StatusMessage'
-      - properties:
-          version:
-            $ref: '#/components/schemas/VersionFile'
-        required:
-        - version
-        type: object
-    ErrorFileInfo:
-      properties:
-        error:
-          type: string
-        hash:
-          type: string
-        path:
-          type:
-          - string
-          - 'null'
-      required:
-      - hash
-      - error
-      type: object
-    UploadVersionFile:
-      properties:
-        file:
-          format: binary
-          type: string
-      required:
-      - file
       type: object
     StatusMessage:
       properties:
@@ -264,6 +241,29 @@ components:
       - status
       - status_message
       type: object
+    ErrorFileInfo:
+      properties:
+        error:
+          type: string
+        hash:
+          type: string
+        path:
+          type:
+          - string
+          - 'null'
+      required:
+      - hash
+      - error
+      type: object
+    VersionFileResponse:
+      allOf:
+      - $ref: '#/components/schemas/StatusMessage'
+      - properties:
+          version:
+            $ref: '#/components/schemas/VersionFile'
+        required:
+        - version
+        type: object
   securitySchemes:
     api_key:
       bearerFormat: JWT
