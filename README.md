@@ -64,6 +64,165 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Oxen is a company surfaced as a portfolio company of uncork-capital and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Oxen.ai is a blazing-fast data version control system and AI platform for teams building with their own data. Its open-source Rust core (liboxen) versions, branches, and shares terabyte-scale datasets, model weights, and experiments without Git's large-file limits. On top of the version control layer, Oxen.ai offers a unified, OpenAI-compatible inference API across 200+ text, image, video, and audio models, plus a fine-tuning API for training and deploying custom LLMs, vision-language, image, and video models. Developers work through a Python SDK (oxenai), a command-line tool (oxen), and an HTTP API for repository management, workspaces, data-frame diffing, generation queues, and model deployment.
 
-Backed by: uncork-capital — https://www.oxen.ai
+**Areas:** Company · Data Version Control · Machine Learning · Artificial Intelligence · Fine-Tuning · Inference · Datasets · MLOps · LLM · Model Deployment · Developer Tools · Version Control
+
+## Oxen on APIs.io
+
+Everything profiled for Oxen is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/oxen/](https://apis.io/providers/oxen/)** — or go straight to one of the APIs or properties below.
+
+### APIs (19)
+
+- [Oxen Ai API](https://apis.io/apis/oxen/oxen-ai-api/) — The Ai API from Oxen — 17 operation(s) for ai.
+- [Oxen Branches API](https://apis.io/apis/oxen/oxen-branches-api/) — The Branches API from Oxen — 4 operation(s) for branches.
+- [Oxen Commits API](https://apis.io/apis/oxen/oxen-commits-api/) — The Commits API from Oxen — 17 operation(s) for commits.
+- [Oxen Compare API](https://apis.io/apis/oxen/oxen-compare-api/) — The Compare API from Oxen — 6 operation(s) for compare.
+- [Oxen Data Frames API](https://apis.io/apis/oxen/oxen-data-frames-api/) — The Data Frames API from Oxen — 5 operation(s) for data frames.
+- [Oxen Directories API](https://apis.io/apis/oxen/oxen-directories-api/) — The Directories API from Oxen — 1 operation(s) for directories.
+- [Oxen Evaluations API](https://apis.io/apis/oxen/oxen-evaluations-api/) — The evaluations API from Oxen — 2 operation(s) for evaluations.
+- [Oxen Export API](https://apis.io/apis/oxen/oxen-export-api/) — The Export API from Oxen — 1 operation(s) for export.
+- [Oxen Files API](https://apis.io/apis/oxen/oxen-files-api/) — The Files API from Oxen — 1 operation(s) for files.
+- [Oxen Fine Tunes API](https://apis.io/apis/oxen/oxen-fine-tunes-api/) — The fine_tunes API from Oxen — 13 operation(s) for fine_tunes.
+- [Oxen Health API](https://apis.io/apis/oxen/oxen-health-api/) — The Health API from Oxen — 1 operation(s) for health.
+- [Oxen Import API](https://apis.io/apis/oxen/oxen-import-api/) — The Import API from Oxen — 2 operation(s) for import.
+- [Oxen Merge API](https://apis.io/apis/oxen/oxen-merge-api/) — The Merge API from Oxen — 1 operation(s) for merge.
+- [Oxen Metadata API](https://apis.io/apis/oxen/oxen-metadata-api/) — The Metadata API from Oxen — 1 operation(s) for metadata.
+- [Oxen Namespaces API](https://apis.io/apis/oxen/oxen-namespaces-api/) — Namespace management endpoints
+- [Oxen Repositories API](https://apis.io/apis/oxen/oxen-repositories-api/) — Repository management endpoints.
+- [Oxen Version Files API](https://apis.io/apis/oxen/oxen-version-files-api/) — The Version Files API from Oxen — 4 operation(s) for version files.
+- [Oxen Workspace Files API](https://apis.io/apis/oxen/oxen-workspace-files-api/) — The Workspace Files API from Oxen — 5 operation(s) for workspace files.
+- [Oxen Workspaces API](https://apis.io/apis/oxen/oxen-workspaces-api/) — The Workspaces API from Oxen — 5 operation(s) for workspaces.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [oxen](https://apis.io/servers/oxen/oxen/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Oxen Agentic Access](https://apis.io/agentic-access/oxen/oxen-agentic-access/)
+
+#### Collections (19)
+
+Postman and Open Collection request collections.
+
+- [oxen Ai API](https://apis.io/collections/oxen/open-oxen-ai-api/)
+- [oxen Ai Branches API](https://apis.io/collections/oxen/open-oxen-branches-api/)
+- [oxen Ai Commits API](https://apis.io/collections/oxen/open-oxen-commits-api/)
+- [oxen Ai Compare API](https://apis.io/collections/oxen/open-oxen-compare-api/)
+- [oxen Ai Data Frames API](https://apis.io/collections/oxen/open-oxen-data-frames-api/)
+- [oxen Ai Directories API](https://apis.io/collections/oxen/open-oxen-directories-api/)
+- [oxen Ai evaluations API](https://apis.io/collections/oxen/open-oxen-evaluations-api/)
+- [oxen Ai Export API](https://apis.io/collections/oxen/open-oxen-export-api/)
+- [oxen Ai Files API](https://apis.io/collections/oxen/open-oxen-files-api/)
+- [oxen Ai fine_tunes API](https://apis.io/collections/oxen/open-oxen-fine-tunes-api/)
+- [oxen Ai Health API](https://apis.io/collections/oxen/open-oxen-health-api/)
+- [oxen Ai Import API](https://apis.io/collections/oxen/open-oxen-import-api/)
+- [oxen Ai Merge API](https://apis.io/collections/oxen/open-oxen-merge-api/)
+- [oxen Ai Metadata API](https://apis.io/collections/oxen/open-oxen-metadata-api/)
+- [oxen Ai Namespaces API](https://apis.io/collections/oxen/open-oxen-namespaces-api/)
+- [oxen Ai Repositories API](https://apis.io/collections/oxen/open-oxen-repositories-api/)
+- [oxen Ai Version Files API](https://apis.io/collections/oxen/open-oxen-version-files-api/)
+- [oxen Ai Workspace Files API](https://apis.io/collections/oxen/open-oxen-workspace-files-api/)
+- [oxen Ai Workspaces API](https://apis.io/collections/oxen/open-oxen-workspaces-api/)
+
+#### Overlays (2)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Oxen Hub Api Overlay](https://apis.io/overlays/oxen/oxen-hub-api-overlay/)
+- [Oxen Server Overlay](https://apis.io/overlays/oxen/oxen-server-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Oxen Authentication](https://apis.io/security/oxen/oxen-authentication/)
+- [Oxen Domain Security](https://apis.io/security/oxen/oxen-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Oxen Plans Pricing](https://apis.io/plans/oxen/oxen-plans-pricing/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.oxen.ai)
+- [Documentation](https://docs.oxen.ai)
+- [Getting started](https://docs.oxen.ai/getting-started/install)
+- [API reference](https://docs.oxen.ai/fine-tuning-api/overview)
+- [Pricing](https://www.oxen.ai/pricing)
+- [Sign up](https://www.oxen.ai/register)
+- [Support](https://www.oxen.ai/community)
+- [Changelog](https://www.oxen.ai/changelog)
+- [Blog](https://www.oxen.ai/blog)
+- [Terms of service](https://www.oxen.ai/about/terms_of_service)
+- [Privacy policy](https://www.oxen.ai/about/privacy)
+- [GitHub](https://github.com/Oxen-AI)
+- [Status](https://oxenai.statuspage.io)
+
+## API Evangelist rating
+
+**Kin Score 43.1** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 50.5 |
+| Contract governance | 4.5 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 66.1 |
+| Access clarity | 38.2 |
+
+**Agent readiness 26.3** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 15.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/oxen/](https://apis.io/providers/oxen/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Oxen: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/oxen/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
